@@ -1,0 +1,15 @@
+@import 'src/styles/shared.scss';
+
+.header-notice {
+    position: relative;
+    width: 100%;
+    height: 44px;
+    text-align: center;
+    background-color: $C1-color;
+
+    b {
+        font-size: $T2;
+        color: $C4-color;
+        line-height: 44px;
+    }
+}
