@@ -1,0 +1,19 @@
+@import '../../../styles/shared.scss';
+
+.sustainableItem {
+    height: $baseHeight;
+    background-color: $C5-color;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    color: $C6-color;
+    line-height: $baseHeight;
+    text-align: center;
+    font-size: $T1;
+    font-weight: bold;
+
+    &.isTitle {
+        font-weight: normal;
+        color: $C4-color;
+    }
+}

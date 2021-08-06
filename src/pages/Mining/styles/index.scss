@@ -1,0 +1,19 @@
+@import '../../../styles/shared.scss';
+
+.mining {
+    position: relative;
+    width: 100%;
+    background-color: $C0-color;
+    padding-bottom: 20px;
+
+    .mining-top {
+        @extend .cardMain2;
+        height: 592px;
+    }
+
+    .mining-middle {
+        @extend .cardMain2;
+        height: 536px;
+        margin-top: 20px;
+    }
+}

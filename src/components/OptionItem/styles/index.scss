@@ -1,0 +1,72 @@
+@import '../../../styles/shared.scss';
+
+.optionItem {
+    height: $baseHeight;
+    background-color: $C5-color;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    color: $C6-color;
+    line-height: $baseHeight;
+    text-align: center;
+    font-size: $T1;
+    font-weight: bold;
+
+    &.isTitle {
+        font-weight: normal;
+    }
+
+    .optionItem-icon {
+        margin-left: 44px;
+        padding-top: 8px;
+        width: 28px;
+    }
+
+    .optionItem-pairName {
+        width: 170px;
+    }
+
+    .optionItem-pair {
+        width: 90px;
+    }
+
+    .optionItem-num {
+        width: 90px;
+    }
+
+    .optionItem-price {
+        width: 110px;
+    }
+
+    .optionItem-time {
+        width: 140px;
+        display: block;
+
+        .optionItem-time-span {
+            height: $baseHeight / 2;
+            line-height: $baseHeight / 2;
+            width: 140px;
+        }
+
+        .optionItem-time-block {
+            height: $baseHeight / 2;
+            line-height: $baseHeight / 2;
+            width: 140px;
+            font-weight: normal;
+            color: $C4-color;
+        }
+    }
+
+    .optionItem-money {
+        width: 100px;
+    }
+
+    .optionItem-address {
+        width: 140px;
+    }
+
+    .optionItem-doit {
+        width: 64px;
+        margin-right: 44px;
+    }
+}
