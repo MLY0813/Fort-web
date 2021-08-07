@@ -5,10 +5,35 @@
     width: 100%;
     background-color: $C0-color;
     padding-bottom: 20px;
+    padding-top: 44px;
+
+    .mining-info {
+        width: 500px;
+        height: 132px;
+        margin-left: calc((100% - #{500px}) / 2);
+        display: flex;
+        justify-content: space-between;
+    }
 
     .mining-top {
         @extend .cardMain2;
-        height: 592px;
+        // height: 592px;
+        margin-top: 44px;
+        padding: 36px 0 36px 0;
+
+        p.mining-top-title {
+            text-align: center;
+            font: $T3 bold;
+            color: $C6-color;
+        }
+
+        p.mining-top-text {
+            margin-top: 28px;
+            padding: 0 144px 0 144px;
+            text-align: center;
+            font: $T1 normal;
+            color: $C2-color;
+        }
     }
 
     .mining-middle {

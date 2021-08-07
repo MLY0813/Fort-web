@@ -78,7 +78,7 @@ const Option: FC = () => {
                     </li>
                     {list}
                     <li className={`${option}-list-add`}>
-                        <p>记录不全, </p><button>点击添加 +</button>
+                        <p>记录不全,</p><button>点击添加 +</button>
                     </li>
                 </ul>
             </div>

@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { FC } from 'react'
+import MainButton from '../Button/MainButton'
 import './styles'
 
 type Props = {
@@ -18,10 +19,22 @@ type Props = {
 
 export const SustainableItem: FC<Props> = ({...props}) => {
     const sustainableItem = 'sustainableItem'
+    var doitView
+    if (props.isTitle) {
+        doitView = <div className={`${sustainableItem}-doit`}>{props.doit}</div>
+    } else {
+        doitView = (
+            <div className={`${sustainableItem}-doit`}>
+                <MainButton title={'平仓'} className={'over'}/>
+                <MainButton title={'追加抵押'}className={'second'}/>
+            </div>
+        )
+    }
     return (
         <div className={classNames({
             [`${sustainableItem}`]: true,
             [`isTitle`]: props.isTitle,
+            [`isMore`]: props.isMore
         })}>
             <div className={`${sustainableItem}-type`}>{props.type}</div>
             <div className={`${sustainableItem}-pair`}>{props.pair}</div>
@@ -31,7 +44,7 @@ export const SustainableItem: FC<Props> = ({...props}) => {
             <div className={`${sustainableItem}-rate`}>{props.rate}</div>
             <div className={`${sustainableItem}-willGet`}>{props.willGet}</div>
             <div className={`${sustainableItem}-willPrice`}>{props.willPrice}</div>
-            <div className={`${sustainableItem}-doit`}>{props.doit}</div>
+            {doitView}
         </div>
     )
 }

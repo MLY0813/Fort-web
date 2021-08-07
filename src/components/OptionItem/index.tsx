@@ -51,7 +51,6 @@ const OptionItem: FC<Props> = ({...props}) => {
         }
         doitView = (
             <div className={`${optionItem}-doit`}>
-                
                 {buttonView}
             </div>
         )

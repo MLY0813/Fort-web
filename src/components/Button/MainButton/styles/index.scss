@@ -53,3 +53,16 @@
     border-radius: 14px;
     font-size: $T1;
 }
+
+.fortButton-second {
+    // @extend .fortButton-normal;
+    background: $C5-color;
+    position: relative;
+    width: 64px;
+    height: 28px;
+    border-radius: 14px;
+    border: 1.5px $C8-color solid;
+    font-size: $T1;
+    font-weight: bold;
+    color: $C6-color;
+}
