@@ -47,7 +47,7 @@ const OptionItem: FC<Props> = ({...props}) => {
         if (props.doit) {
             buttonView = <MainButton title={'结算'} className={'over'}/>
         } else {
-            buttonView = <DisableButton title={'已过期'} className={'normal'}/>
+            buttonView = <MainButton title={'已过期'} className={'over'} disable/>
         }
         doitView = (
             <div className={`${optionItem}-doit`}>
