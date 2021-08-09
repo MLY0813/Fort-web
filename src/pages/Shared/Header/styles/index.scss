@@ -1,3 +1,4 @@
+@use "sass:math";
 @import 'src/styles/shared.scss';
 
 .header-notice {
@@ -44,10 +45,10 @@
         li {
             text-align: center;
             line-height: $baseHeight;
-            width: ($baseWidth - 30) / 3;
+            width: math.div($baseWidth - 30, 3);
             
             &.selected {
-                border-radius: $baseHeight / 2;
+                border-radius: math.div($baseHeight, 2);
                 background-color: $C5-color;
                 color: $main-background;
 

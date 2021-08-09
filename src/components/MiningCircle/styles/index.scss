@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../styles/shared.scss';
 
 $miningInfoSize: 132px;
@@ -7,11 +8,11 @@ $miningInfoSize: 132px;
     height: $miningInfoSize;
     border-radius: 50%;
     text-align: center;
-    padding-top: $miningInfoSize / 3;
+    padding-top: math.div($miningInfoSize, 3);
 
     p {
-        height: $miningInfoSize / 5;
-        line-height: $miningInfoSize / 5;
+        height: math.div($miningInfoSize, 5);
+        line-height: math.div($miningInfoSize, 5);
         width: $miningInfoSize;
         font: $T3 bold;
     }

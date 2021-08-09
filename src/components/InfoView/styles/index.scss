@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../styles/shared.scss';
 
 .infoView {
@@ -32,18 +33,18 @@
         position: relative;
         height: $baseHeight;
         margin: 0 0 0 0;
-        border-radius: $baseHeight / 2;
+        border-radius: math.div($baseHeight, 2);
         background-color: $C1-color;
         display: flex; 
         justify-content: space-between;
 
         .showToken {
-            margin: (($baseHeight - 28px) / 2) 0 0 44px;
+            margin: math.div($baseHeight - 28px, 2) 0 0 44px;
         }
 
         .infoView-putDown {
             justify-self: flex-end;
-            margin: (($baseHeight - 22px) / 2) 44px 0 0;
+            margin: math.div($baseHeight - 28px, 2) 44px 0 0;
         }
 
         .infoView-text {

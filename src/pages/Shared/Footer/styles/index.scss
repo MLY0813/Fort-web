@@ -1,9 +1,10 @@
+@use "sass:math";
 @import 'src/styles/shared.scss';
 
 footer {
     $footerHeight: 66px;
     $iconSize: 28px;
-    $iconMargin: ($footerHeight - $iconSize) / 2;
+    $iconMargin: math.div($footerHeight - $iconSize, 2);
     $footerWidth: 100%;
     position: relative;
     width: $footerWidth;

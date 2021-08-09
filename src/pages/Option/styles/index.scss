@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import '../../../styles/shared.scss';
 
 .option {
@@ -133,7 +134,7 @@
                 display: flex;
                 justify-content: flex-end;
                 background-color: $c10-color;
-                border-radius: $baseHeight / 2;
+                border-radius: math.div($baseHeight, 2);
 
                 p {
                     height: $baseHeight;

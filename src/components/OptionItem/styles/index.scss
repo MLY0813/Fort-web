@@ -1,3 +1,4 @@
+@use "sass:math";
 @import '../../../styles/shared.scss';
 
 .optionItem {
@@ -44,14 +45,14 @@
         display: block;
 
         .optionItem-time-span {
-            height: $baseHeight / 2;
-            line-height: $baseHeight / 2;
+            height: math.div($baseHeight, 2);
+            line-height: math.div($baseHeight, 2);
             width: 140px;
         }
 
         .optionItem-time-block {
-            height: $baseHeight / 2;
-            line-height: $baseHeight / 2;
+            height: math.div($baseHeight, 2);
+            line-height: math.div($baseHeight, 2);
             width: 140px;
             font-weight: normal;
             color: $C4-color;
