@@ -87,36 +87,4 @@
             margin: 20px 114px 0 114px;  
         }
     }
-
-    .mining-middle {
-        @extend .cardMain2;
-        margin-top: 20px;
-        padding: 36px 144px 36px 144px;
-
-        hr {
-            @extend .hrStyle;
-            margin: 20px 114px 0 114px;
-        }
-
-        a {
-            display: block;
-            font-size: $T1;
-            color: $C8-color;
-            width: 100%;
-            text-align: center;
-        }
-
-        .mining-top-title {
-            text-align: center;
-            font: $T3 bold;
-            color: $C6-color;
-        }
-
-        p.mining-top-text {
-            margin-top: 28px;
-            text-align: center;
-            font: $T1 normal;
-            color: $C2-color;
-        }
-    }
 }

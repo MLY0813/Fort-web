@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import { FC } from 'react'
 import { tokenList } from '../../libs/constants/tokens'
-import DisableButton from '../Button/DisableButton'
 import MainButton from '../Button/MainButton'
 import './styles'
 
