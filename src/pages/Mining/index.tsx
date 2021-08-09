@@ -54,9 +54,6 @@ const Mining: FC = () => {
                     <MainButton title={'取回NEST'} className={'mining'} disable/>
                 </div>
             </div>
-            <div className={`${mining}-middle`}>
-
-            </div>
         </div>
     )
 }
