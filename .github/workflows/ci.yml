@@ -27,12 +27,12 @@ jobs:
       - name: build
         run: yarn build
 
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY}}
-          ARGS: '-rltgoDzvO'
-          SOURCE: 'build/'
-          REMOTE_USER: ${{ secrets.REMOTE_USER}}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+      - name: upload files to OSS
+        uses: fangbinwei/aliyun-oss-website-action@v1
+        with:
+          accessKeyId: ${{secrets.ACCESS_KEY_ID}}
+          accessKeySecret: ${{ secrets.ACCESS_KEY_SECRET }}
+          bucket: 'fort-web'
+          # use your own endpoint
+          endpoint: 'oss-cn-qingdao.aliyuncs.com'
+          folder: 'build'
