@@ -26,6 +26,8 @@ jobs:
 
       - name: build
         run: yarn build
+        env:
+          CI: true
 
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@v2.1.2
