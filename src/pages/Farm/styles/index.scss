@@ -1,0 +1,192 @@
+@use "sass:math";
+@import 'src/styles/shared.scss';
+
+@mixin circleInfo {
+    width: 132px;
+    height: 132px;
+    text-align: center;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 45px 0;
+
+    .farm-circleInfo-value {
+        font-size: $T1;
+        font-family: $boldFont;
+    }
+
+    p + p {
+        font-size: $T4;
+    }
+}
+
+.farm {
+
+    &-circleInfo {
+        margin: 0 auto;
+        margin-top: 44px;
+        display: flex;
+        justify-content: center;
+
+        div + div {
+            margin-left: 40px;
+        }
+
+        &-one {
+            @include circleInfo;
+            background: linear-gradient(135deg, #DC706A 0%, #DD8751 100%);
+            box-shadow: 0px 0px 10px #E5E5E5;
+        }
+
+        &-two {
+            @include circleInfo;
+            background: linear-gradient(135deg, #85D6F7 0%, #56BFF4 100%);
+            box-shadow: 0px 0px 10px #E5E5E5;
+        }
+
+        &-three {
+            @include circleInfo;
+            background: linear-gradient(135deg, #98CF71 0%, #63C8A7 100%);
+            box-shadow: 0px 0px 10px #E5E5E5;
+        }
+
+        &-four {
+            @include circleInfo;
+            background: linear-gradient(135deg, #E4CB58 0%, #E8BB58 100%);
+            box-shadow: 0px 0px 10px #E5E5E5;
+        }
+    }
+
+    ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding-bottom: 40px;
+
+        li {
+            margin: 0 22px;
+            margin-top: 44px;
+            .mainCard{
+                width: 400px;
+                margin-top: 33px;
+
+                .farm-li-tokenInfo {
+                    margin: 0 44px;
+                    margin-top: -33px;
+                    padding-bottom: 20px;
+                    text-align: center;
+                    border-bottom: 1px solid $gray-line-color;
+
+                    svg {
+                        width: 66px;
+                        height:66px;
+                    }
+
+                    p {
+                        margin-top: 10px;
+                        font-size: $T2;
+                        font-family: $boldFont;
+                    }
+                }
+
+                .lineShowInfo {
+                    &-leftText {
+                        font-size: $T4;
+                    }
+                    &-rightText {
+                        font-size: $T3;
+                    }
+                }
+
+                .lineShowInfo + .lineShowInfo {
+                    margin-top: 32px;
+                }
+
+                .farm-middleInfo {
+                    padding: 32px 0;
+                    margin: 0 44px;
+                    border-bottom: 1px solid $gray-line-color;
+
+                    & > div:first-child {
+                        .lineShowInfo-rightText {
+                            color: #00B388;
+                        }
+                    }
+
+                    & :nth-child(2) {
+                        .lineShowInfo-rightText {
+                            color: #E57200;
+                        }
+                    }
+                }
+
+                .farm-bottomInfo {
+                    padding-top: 32px;
+                    margin: 0 44px;
+
+                    & > div:last-child {
+                        .lineShowInfo-rightText {
+                            color: $main-button-color;
+                        }
+                    }
+                }
+
+                .stake-button {
+                    margin: 20px 22px 0 22px;
+                    height: 84px;
+                    &-inputView {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        height: 44px;
+                        border-radius: 22px;
+                        background: $gray-info-background-color;
+                        border: 1px solid $gray-background-color;
+                        box-sizing: border-box;
+                        box-shadow: $shadow-inside;
+
+                        &-input {
+                            display: flex;
+                            justify-content: space-between;
+
+                            input {
+                                margin: 0 22px;
+                                width: 100%;
+                                border: 0;
+                                font-size: $T2;
+                            }
+
+                            button {
+                                justify-self: flex-end;
+                                display: block;
+                                margin-right: 10px;
+                            }
+                        }
+
+                        div + button {
+                            width: 100px;
+                            height: 44px;
+                            background-color: $main-button-color;
+                            color: $main-button-text-color;
+                            font-family: $boldFont;
+                            font-size: $T2;
+                            border-bottom-right-radius: 22px;
+                            border-top-right-radius: 22px;
+                        }
+                    }
+
+                    p {
+                        width: 100%;
+                        height: 40px;
+                        line-height: 40px;
+                        padding: 0 22px;
+                        text-align: right;
+                        font-size: $T4;
+                        color: $gray-info-text-color;
+                    }
+                }
+            }
+        }
+    }
+}

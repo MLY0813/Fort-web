@@ -1,0 +1,29 @@
+@use "sass:math";
+@import 'src/styles/shared.scss';
+
+.TokenShow {
+    display: flex;
+    justify-content: flex-start;
+    height: 100%;
+
+    svg {
+        margin: auto 0;
+        z-index: 10;
+    }
+
+    svg + svg {
+        margin-left: -8px;
+        z-index: 0;
+    }
+
+    &-text {
+        font-size: $T2;
+        margin-left: 10px;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        &.isBold {
+            font-family: $boldFont;
+        }
+    }
+}
