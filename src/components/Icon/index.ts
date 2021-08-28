@@ -13,6 +13,8 @@ export { ReactComponent as NormalTokenIcon} from './svg/normalTokenIcon.svg'
 export { ReactComponent as OptionLiChoose} from './svg/optionLiChoose.svg'
 export { ReactComponent as TokenFORTBig} from './svg/TokenFORTBig.svg'
 export { ReactComponent as CopyIcon} from './svg/copyIcon.svg'
+export { ReactComponent as BackIcon} from './svg/backIcon.svg'
+
 
 
 

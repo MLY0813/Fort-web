@@ -59,8 +59,10 @@ const CloseOptions: FC = () => {
                     <p className={`${classPrefix}-rightCard-bottomInfo-title`}><Trans>Expected get after close</Trans></p>
                     <TokenFORTBig/>
                     <div className={`${classPrefix}-rightCard-bottomInfo-fortNum`}>
-                        <p className={`${classPrefix}-rightCard-bottomInfo-fortNum-value`}>23.2345353<span className={`${classPrefix}-rightCard-bottomInfo-fortNum-name`}>FORT</span></p>
-                        
+                        <div className={`${classPrefix}-rightCard-bottomInfo-fortNum-value`}>
+                            23.2345353
+                            <span className={`${classPrefix}-rightCard-bottomInfo-fortNum-name`}>FORT</span>
+                        </div>
                     </div>
                     <MainButton><Trans>Close</Trans></MainButton>
                 </div>
