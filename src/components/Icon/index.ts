@@ -14,6 +14,10 @@ export { ReactComponent as OptionLiChoose} from './svg/optionLiChoose.svg'
 export { ReactComponent as TokenFORTBig} from './svg/TokenFORTBig.svg'
 export { ReactComponent as CopyIcon} from './svg/copyIcon.svg'
 export { ReactComponent as BackIcon} from './svg/backIcon.svg'
+export { ReactComponent as XIcon} from './svg/xIcon.svg'
+export { ReactComponent as MetamaskIcon} from './svg/metamaskIcon.svg'
+export { ReactComponent as WalletConnectIcon} from './svg/walletConnectIcon.svg'
+
 
 
 

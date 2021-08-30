@@ -1,12 +1,17 @@
 import { t } from '@lingui/macro'
 import classNames from 'classnames'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link, Redirect, Route, Switch, useLocation } from 'react-router-dom'
+import OptionsReview from '../Review/OptionsReview'
 import CloseOptions from './Close'
 import MintOptions from './Mint'
 import './styles'
 
 const Options: FC = () => {
+    const [review, setReview] = useState({
+        isReview: false,
+        isMint: true,
+    })
     const location = useLocation()
     const classPrefix = 'options'
     const routes = [
@@ -19,18 +24,18 @@ const Options: FC = () => {
             <Link to={item.path}>{item.content}</Link>
         </li>
     ))
-    return (
+    return review.isReview ? <OptionsReview back={() => setReview({...review, isReview:false})} isMint={review.isMint}/> : (
         <div className={classPrefix}>
             <ul className={`${classPrefix}-route`}>
                 {routes}
             </ul>
             <Switch>
                 <Route path="/options/mint" exact>
-                    <MintOptions/>
+                    <MintOptions reviewCall={() => setReview({...review, isReview:true, isMint:true})}/>
                 </Route>
 
                 <Route path="/options/close" exact>
-                    <CloseOptions/>
+                    <CloseOptions reviewCall={() => setReview({...review, isReview:true, isMint:false})}/>
                 </Route>
 
                 <Redirect to="/options/mint" />

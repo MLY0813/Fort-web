@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { FC, useState } from 'react'
+import { FC, MouseEventHandler, useState } from 'react'
 import ChooseType from '../../../components/ChooseType'
 import { PutDownIcon } from '../../../components/Icon'
 import InfoShow from '../../../components/InfoShow'
@@ -8,7 +8,11 @@ import MainCard from '../../../components/MainCard'
 import { DoubleTokenShow, SingleTokenShow } from '../../../components/TokenShow'
 import './styles'
 
-const MintOptions: FC = () => {
+type Props = {
+    reviewCall: MouseEventHandler<HTMLButtonElement>
+}
+
+const MintOptions: FC<Props> = ({...props}) => {
     const classPrefix = 'options-mintOptions'
     const [fortValue, setFortValue] = useState('198,365.88')
     return (
@@ -37,7 +41,7 @@ const MintOptions: FC = () => {
                 <p className={`${classPrefix}-rightCard-tokenTitle`}><Trans>Estimated number of European Options Token</Trans></p>
                 <p className={`${classPrefix}-rightCard-tokenValue`}>21.7876574</p>
                 <p className={`${classPrefix}-rightCard-tokenName`}>ETH-Call3000-38721293823</p>
-                <MainButton>BUY</MainButton>
+                <MainButton onClick={props.reviewCall}>BUY</MainButton>
                 <div className={`${classPrefix}-rightCard-time`}>
                     <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>Compare the spot price with the Srike price at</Trans></p>
                     <p className={`${classPrefix}-rightCard-timeValue`}>2021-10-02 09:34</p>

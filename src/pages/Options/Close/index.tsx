@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import classNames from 'classnames'
-import { FC, useState } from 'react'
+import { FC, MouseEventHandler, useState } from 'react'
 import { CopyIcon, OptionLiChoose, TokenFORTBig } from '../../../components/Icon'
 import LineShowInfo from '../../../components/LineShowInfo'
 import MainButton from '../../../components/MainButton'
@@ -8,7 +8,11 @@ import MainCard from '../../../components/MainCard'
 import { SingleTokenShow } from '../../../components/TokenShow'
 import './styles'
 
-const CloseOptions: FC = () => {
+type Props = {
+    reviewCall: MouseEventHandler<HTMLButtonElement>
+}
+
+const CloseOptions: FC<Props> = ({...props}) => {
     const classPrefix = 'options-closeOptions'
     const [selectToken, setSelectToken] = useState<string>()
     const routes = [
@@ -64,7 +68,7 @@ const CloseOptions: FC = () => {
                             <span className={`${classPrefix}-rightCard-bottomInfo-fortNum-name`}>FORT</span>
                         </div>
                     </div>
-                    <MainButton><Trans>Close</Trans></MainButton>
+                    <MainButton onClick={props.reviewCall}><Trans>Close</Trans></MainButton>
                 </div>
             </MainCard>
         </div>

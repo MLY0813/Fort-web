@@ -7,7 +7,7 @@ import { ExchangeIcon, PutDownIcon } from '../../components/Icon'
 import MainButton from '../../components/MainButton'
 import LineShowInfo from '../../components/LineShowInfo'
 import { SingleTokenShow } from '../../components/TokenShow'
-import LeverReview from './LeverReview'
+import LeverReview from '../Review/LeverReview'
 
 const Lever: FC = () => {
     const [isReview, setIsReview] = useState(false)
