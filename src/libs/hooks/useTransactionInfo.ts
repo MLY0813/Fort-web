@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 import useWeb3 from "./useWeb3";
-import { toast } from "react-toastify";
+import { TransactionModalType } from "../../pages/Shared/TransactionModal";
+import { notifyTransaction } from "../../pages/Shared/TransactionToast";
 
 export enum TransactionState {
     Pending = 0,
@@ -15,7 +16,7 @@ export type TransactionBaseInfoType = {
     info: string
 }
 
-type TransactionInfoType = {
+export type TransactionInfoType = {
     title: string,
     info: string,
     hash: string,
@@ -27,7 +28,7 @@ type TransactionInfoType = {
 const _useTransactionList = () => {
     const {chainId, library} = useWeb3()
     const [txList, setTxList] = useState<TransactionInfoType[]>([])
-    const [showModal, setShowModal] = useState({isShow:false, hash:'0x0', txState:TransactionState.Pending})
+    const [showModal, setShowModal] = useState({isShow:false, hash:'0x0', txType:TransactionModalType.wait})
     const [pendingList, setPendingList] = useState<TransactionInfoType[]>([])
     const [checking, setChecking] = useState(false)
 
@@ -68,9 +69,9 @@ const _useTransactionList = () => {
                     setChecking(false)
                     console.log('成功' + {index})
                     notifyTransaction(element)
-                    if (element.hash === showModal.hash) {
-                        setShowModal({isShow:true, hash: element.hash, txState:TransactionState.Success})
-                    }
+                    // if (element.hash === showModal.hash) {
+                    //     setShowModal({isShow:true, hash: element.hash, txState:TransactionState.Success})
+                    // }
                     return
                 }
                 console.log('下一个' + {index})
@@ -94,7 +95,6 @@ const _useTransactionList = () => {
             endTime: monthDate
         }
         updateList(newTxInfo)
-        setShowModal({isShow:false, hash: hash, txState:TransactionState.Pending})
     }
 
     const updateList = (item:TransactionInfoType) => {
@@ -108,17 +108,13 @@ const _useTransactionList = () => {
     }
 
     const closeModal = () => {
-        setShowModal({isShow:false, hash:'0x0', txState:TransactionState.Pending})
+        setShowModal({isShow:false, hash:'0x0', txType:TransactionModalType.wait})
     }
 
     return {txList, showModal, setShowModal, pushTx, closeModal, pendingList}
 }
 
-const notifyTransaction = (txInfo:TransactionInfoType) => {
-    toast.success(txInfo.title + txInfo.info, {
-        position: toast.POSITION.TOP_RIGHT
-    })
-}
+
 
 const transactionList = createContainer(_useTransactionList)
 

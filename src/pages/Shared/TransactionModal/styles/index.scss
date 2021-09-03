@@ -1,0 +1,23 @@
+@use "sass:math";
+@import 'src/styles/shared.scss';
+
+.modal-transaction {
+    width: $baseWidth;
+    text-align: center;
+
+    & > svg {
+        margin: 0 auto;
+    }
+
+    &-text {
+        margin-top: 20px;
+        font-family: $boldFont;
+        font-size: $T1;
+    }
+
+    & > a {
+        color: $main-button-color;
+        font-size: $T4;
+        margin-top: 12px;
+    }
+}

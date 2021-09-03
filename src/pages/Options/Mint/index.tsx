@@ -32,7 +32,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                     <span>USDT</span>
                 </InfoShow>
                 <InfoShow topLeftText={t`Mint amount`} bottomRightText={'Balance: 20,000 FORT'}>
-                    <SingleTokenShow tokenNameOne={'FORT'} isBold/>
+                    <SingleTokenShow tokenNameOne={'DCU'} isBold/>
                     <button className={'max-button'}>MAX</button>
                 </InfoShow>
             </MainCard>

@@ -1,3 +1,4 @@
+import { NestPrice as NestPriceAddress } from './../constants/addresses';
 import useWeb3 from '../hooks/useWeb3';
 import { getAddress } from "@ethersproject/address"
 import { Contract } from "@ethersproject/contracts"
@@ -8,6 +9,7 @@ import { AddressesType } from '../constants/addresses';
 import ERC20ABI from '../../contracts/abis/ERC20.json'
 import FortEuropeanOptionABI from '../../contracts/abis/FortEuropeanOption.json';
 import FortLeverABI from '../../contracts/abis/FortLever.json';
+import NestPriceABI from '../../contracts/abis/NestPrice.json';
 
 function isAddress(value: any): string | false {
     try {
@@ -62,4 +64,8 @@ export function FortEuropeanOption(addresses: AddressesType): Contract | null {
 
 export function FortLever(addresses: AddressesType): Contract | null {
     return useContract(addresses, FortLeverABI)
+}
+
+export function NestPriceContract(): Contract | null {
+    return useContract(NestPriceAddress, NestPriceABI)
 }

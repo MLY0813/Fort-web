@@ -12,6 +12,7 @@
 
     &-mainView {
         margin: 20px 0;
+        margin-bottom: 5px;
         background-color: $gray-info-background-color;
         border: 1px solid $gray-background-color;
         box-sizing: border-box;
@@ -27,9 +28,18 @@
             justify-content: space-between;
 
             & > svg {
+                display: block;
                 margin-top: auto;
                 margin-bottom: auto;
                 margin-left: 14px;
+            }
+        }
+
+        &.noSelect {
+            .infoView-mainView-leftSelect {
+                & > svg {
+                    display: none;
+                }
             }
         }
 
@@ -54,9 +64,53 @@
 
     &-bottomRight {
         margin: 0 20px;
+        margin-top: 15px;
         color: $gray-info-text-color;
         font-size: $T4;
         text-align: right;
         height: 20px;
+
+        &.balanceRed {
+            color: $wrongAndNotice-color;
+        }
+    }
+
+    &-tokenSelect {
+        display: none;
+        background-color: $gray-info-background-color;
+        height: 150px;
+        margin-bottom: -155px;
+        overflow: scroll;
+        border: 1px solid $gray-line-color;
+        box-shadow: $shadow-inside;
+        border-radius: 22px;
+
+        li {
+            display: flex;
+            justify-content: flex-start;
+            padding: 0 20px;
+            line-height: 40px;
+            height: 40px;
+
+            p {
+                margin-left: 10px;
+            }
+
+            &:hover {
+                background-color: $gray-line-color;
+            }
+
+            svg {
+                margin: auto 0;
+            }
+        }
+
+        &.isShow{
+            display: block;
+        }
+
+        &.hover {
+            display: block;
+        }
     }
 }

@@ -11,4 +11,8 @@
     font-weight: $T3;
     padding-left: 35px;
     padding-right: 35px;
+
+    &.disable {
+        background-color: $button-disable-color;
+    }
 }

@@ -4,6 +4,7 @@ import './styles'
 
 type Props = {
     className?: string
+    disable?: boolean
     onClick?: MouseEventHandler<HTMLButtonElement>
 }
 
@@ -14,7 +15,8 @@ const MainButton: FC<Props> = ({children, ...props}) => {
         onClick={props.onClick} 
         className={classNames({
             [`${classPrefix}`]: true,
-            [props.className || '']: true
+            [props.className || '']: true,
+            [`disable`]: props.disable
         })}>
             {children}
         </button>

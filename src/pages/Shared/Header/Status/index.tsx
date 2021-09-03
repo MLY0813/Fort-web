@@ -3,21 +3,24 @@ import classNames from 'classnames'
 import { FC, useRef } from 'react'
 import Popup from 'reactjs-popup'
 import MainButton from '../../../../components/MainButton'
+import { SupportedChains } from '../../../../libs/constants/chain'
 import useWeb3 from '../../../../libs/hooks/useWeb3'
 import { showEllipsisAddress } from '../../../../libs/utils'
 import Modal from './Modal'
 import './styles'
 
 const ConnectStatus: FC = () => {
-    const { account } = useWeb3()
+    const { account, chainId } = useWeb3()
     const modal = useRef<any>()
+    const thisChain = SupportedChains.filter((item) => item.chainId === chainId)[0]
     const classPrefix = 'connectStatus'
     return (
         <div className={classNames({
             [`${classPrefix}`]: true,
             [`isConnect`]: false
         })}>
-            <div className={`${classPrefix}-chainName`}>Rinkeby</div>
+            {thisChain !== undefined ? (<div className={`${classPrefix}-chainName`}>{thisChain.name}</div>) : null}
+            
             {account === undefined ?
              (<Popup
                 modal

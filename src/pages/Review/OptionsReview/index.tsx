@@ -22,7 +22,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
                     <p><Trans>{props.isMint ? 'Mint Confirm' : 'Close Confirm'}</Trans></p>
                     <button></button>
                 </div>
-                <ReviewInfo title={props.isMint ? t`Mint amount` : t`Close amount`} value={'23.4657'} name={'FORT'}/>
+                <ReviewInfo title={props.isMint ? t`Mint amount` : t`Close amount`} value={'23.4657'} name={'DCU'}/>
                 {props.isMint ? null : (<ReviewInfo title={t`Expected get `} value={'23.4657'} name={'Margin-ETH2L'}/>)}
                 <div className={`${classPrefix}-mainCard-details`}>
                     <p className={`${classPrefix}-mainCard-details-title`}><Trans>Leveraged Token details</Trans></p>

@@ -1,0 +1,40 @@
+@use "sass:math";
+@import 'src/styles/shared.scss';
+
+.transactionToast {
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+
+    &-left {
+        display: flex;
+        justify-content: space-between;
+
+        svg {
+            margin: auto 0;
+        }
+
+        &-info {
+            margin: 15px 10px;
+            font-size: $T4;
+            color: $gray-info-text-color;
+
+            &-value {
+                font-family: $boldFont;
+                color: $black-text-color;
+            }
+        }
+    }
+
+    & > a {
+        display: block;
+        text-align: center;
+        color: $main-button-text-color;
+        font-size: $T4;
+        height: 20px;
+        padding: 0 10px;
+        border-radius: 10px;
+        background-color: $main-button-color;
+        margin: auto 0
+    }
+}

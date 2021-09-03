@@ -3,7 +3,6 @@ import { tokenList } from "../../libs/constants/addresses";
 import { ERC20Contract } from "../../libs/hooks/useContract";
 import { useSendTransaction } from "../../libs/hooks/useSendTransaction";
 import useWeb3 from "../../libs/hooks/useWeb3";
-import { PRICE_FEE } from "../../libs/utils";
 
 export function useERC20Approve(
     tokenName: string, 
