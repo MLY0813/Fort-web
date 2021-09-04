@@ -8,9 +8,7 @@ type Props = {
     bottomRightText: string,
     balanceRed?: boolean,
     tokenSelect?: boolean,
-    timeSelect?: boolean,
-    selectClick?: () => void
-    tokenList?: Array<TokenType>
+    tokenList?: Array<TokenType>,
     getSelectedToken?: (token: string) => void
 }
 
@@ -43,10 +41,12 @@ const InfoShow: FC<Props> = ({children, ...props}) => {
     }, [isShowSelect]);
 
     function clickCallback(event: any) {
-        const current: any = selectRef.current
-        if (!current.contains(event.target)) {
-            setIsShowSelect(false)
-            return;
+        if (props.tokenSelect) {
+            const current: any = selectRef.current
+            if (!current.contains(event.target)) {
+                setIsShowSelect(false)
+                return;
+            }
         }
     }
 
@@ -61,7 +61,7 @@ const InfoShow: FC<Props> = ({children, ...props}) => {
             <p className={`${classPrefix}-topLeft`}>{props.topLeftText}</p>
             <div className={classNames({
                 [`${classPrefix}-mainView`]: true,
-                [`noSelect`]: !props.tokenSelect && !props.timeSelect
+                [`noSelect`]: !props.tokenSelect
             })} onClick={(e) => {clickSelect(e)}} ref={selectRef}>
                 {children}
             </div>

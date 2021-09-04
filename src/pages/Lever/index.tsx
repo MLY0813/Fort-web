@@ -40,15 +40,15 @@ const Lever: FC = () => {
     })
     
     useEffect(() => {
-        if (nestPriceContract && priceNow === '--.--') {
+        if (nestPriceContract && priceNow === '--.--' && chainId) {
             nestPriceContract
-            .latestPrice('0x2d750210c0b5343a0b79beff8F054C9add7d2411')
+            .latestPrice(tokenList['USDT'].addresses[chainId])
             .then((value:any) => {
-                setPriceNow(bigNumberToNormal(value[1], 6))
+                setPriceNow(bigNumberToNormal(value[1], tokenList['USDT'].decimals))
             })
         }
 
-    }, [priceNow, nestPriceContract])
+    }, [priceNow, nestPriceContract, chainId])
 
     useEffect(() => {
         if (account && chainId) {

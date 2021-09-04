@@ -30,7 +30,7 @@ const TransactionToast: FC<Props> = ({...props}) => {
                     <div className={`${classPrefix}-left-info-value`}>{props.info.value}</div>
                 </div>
             </div>
-            <a href={`${ETHERSCAN_BASE_URL}${props.info.hash}`} target="view_window" className={`${classPrefix}-right`}><Trans>View</Trans></a>
+            <a href={`${ETHERSCAN_BASE_URL}${props.info.hash}`} target="view_window" className={`${classPrefix}-right`}><p><Trans>View</Trans></p></a>
         </div>
     )
 }

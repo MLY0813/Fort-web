@@ -61,8 +61,6 @@ const LeverReview: FC<Props> = ({...props}) => {
                         <LineShowInfo leftText={t`Leverage factor`} rightText={details_factor}/>
                     </div>
                 </div>
-                {props.model.fromToken !== 'DCU' ? (
-                <LineShowInfo leftText={t`Buying price`} rightText={`1 ETH = ${props.model.frontPrice} USDT`}/>) : null}
                 <LineShowInfo leftText={t`Current price`} rightText={`1 ETH = ${props.model.price} USDT`}/>
                 <LineShowInfo leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
                 <MainButton onClick={buy}><Trans>Swap Confirm</Trans></MainButton>

@@ -13,15 +13,17 @@ export const ETHERSCAN_BASE_URL = 'https://etherscan.io/tx/'
 export function bigNumberToNormal(num: BigNumber, decimals: number = 18): string {
     const str = num.toString()
     const strLength = str.length
+    var newStr: string
     if (strLength > decimals) {
-        return str.substr(0, strLength - decimals) + "." + str.substr(strLength - decimals, strLength)
+        newStr = str.substr(0, strLength - decimals) + "." + str.substr(strLength - decimals, strLength)
     } else {
         var baseStr: string = "";
         for (var i = 0; i < decimals - strLength; i++) {
             baseStr += "0"
         }
-        return "0." + baseStr + str
+        newStr = "0." + baseStr + str
     }
+    return parseFloat(newStr).toString()
 }
 
 /**
@@ -34,12 +36,12 @@ export function normalToBigNumber(num: string, decimals: number = 18): BigNumber
     const pointNum = num.indexOf(".")
     var baseStr: string = ""
     var i = 0
-    if (pointNum > 1) {
-        throw new Error("normalToBigNumber, numString is wrong!");
-    }
-    if (num.indexOf(".") === 1) {
+    if (pointNum !== -1) {
         // 有小数
         const strArray = num.split(".")
+        if (strArray[1].length > 18) {
+            throw Error('normalToBigNumber:more decimals')
+        }
         for(i; i < decimals - strArray[1].length; i++) {
             baseStr += "0"
         }

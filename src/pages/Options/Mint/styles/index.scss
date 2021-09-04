@@ -7,6 +7,7 @@
 }
 
 .options-mintOptions {
+    
     margin: 0 auto;
     margin-bottom: 44px;
     display: flex;
@@ -18,6 +19,7 @@
     }
 
     &-leftCard{
+        
         margin-right: 22px;
 
         .infoView + .infoView, .chooseType + .infoView {
@@ -91,6 +93,20 @@
 
         .fort-button {
             font-size: $T2;
+        }
+    }
+
+    .ant-picker {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .ant-picker-suffix {
+        justify-self: end;
+        line-height: 0;
+        & > svg {
+            margin: auto 0;
         }
     }
 }

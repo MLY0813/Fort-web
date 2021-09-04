@@ -7,11 +7,23 @@ import CloseOptions from './Close'
 import MintOptions from './Mint'
 import './styles'
 
+export type OptionsInfo = {
+    fortAmount: string,
+    optionTokenAmount: string,
+    optionToken?: string,
+    optionTokenName?: string,
+    type: boolean,
+    strikePrice: string,
+    exerciseTime: string,
+    blockNumber: number
+}
+
 const Options: FC = () => {
     const [review, setReview] = useState({
         isReview: false,
-        isMint: true,
+        isMint: true
     })
+    const [optionInfo, setOptionInfo] = useState<OptionsInfo>()
     const location = useLocation()
     const classPrefix = 'options'
     const routes = [
@@ -24,18 +36,22 @@ const Options: FC = () => {
             <Link to={item.path}>{item.content}</Link>
         </li>
     ))
-    return review.isReview ? <OptionsReview back={() => setReview({...review, isReview:false})} isMint={review.isMint}/> : (
+    const handleInfo = (info:OptionsInfo, isMint:boolean) => {
+        setReview({...review, isReview:true, isMint:isMint})
+        setOptionInfo(info)
+    }
+    return review.isReview ? <OptionsReview back={() => setReview({...review, isReview:false})} isMint={review.isMint} optionsInfo={optionInfo}/> : (
         <div className={classPrefix}>
             <ul className={`${classPrefix}-route`}>
                 {routes}
             </ul>
             <Switch>
                 <Route path="/options/mint" exact>
-                    <MintOptions reviewCall={() => setReview({...review, isReview:true, isMint:true})}/>
+                    <MintOptions reviewCall={handleInfo}/>
                 </Route>
 
                 <Route path="/options/close" exact>
-                    <CloseOptions reviewCall={() => setReview({...review, isReview:true, isMint:false})}/>
+                    {/* <CloseOptions reviewCall={handleInfo}/> */}
                 </Route>
 
                 <Redirect to="/options/mint" />

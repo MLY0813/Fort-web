@@ -2,6 +2,12 @@
 @import 'src/styles/shared.scss';
 
 .infoView{
+
+    .select-button {
+        & > svg {
+            margin: auto 0
+        }
+    }
     &-topLeft {
         margin: 0 20px;
         color: $gray-info-text-color;
@@ -43,10 +49,16 @@
             }
         }
 
-        .input-right, .input-left {
+        .input-right, .input-left, .input-middle {
             font-family: $boldFont;
             border: 0;
             font-size: $T2;
+            width: 50%;
+        }
+
+        .input-middle {
+            width: 100%;
+            text-align: right;
         }
 
         .input-right {
@@ -54,6 +66,7 @@
         }
 
         .max-button {
+            margin-left: 5px;
             display: block;
         }
 
