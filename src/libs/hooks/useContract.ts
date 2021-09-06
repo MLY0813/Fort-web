@@ -70,7 +70,6 @@ export function FortLever(addresses: AddressesType): Contract | null {
 
 export function FortOptionToken(address: string): Contract | null {
     const {library, account} = useWeb3()
-    console.log(111111111)
     if (!library || !(library instanceof Web3Provider) || !account) return null
     return getContract(address, OptionTokenABI, library, account)
 }
