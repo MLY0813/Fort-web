@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import Footer from './Shared/Footer'
 import Header from './Shared/Header'
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom'
@@ -6,14 +6,14 @@ import loadable from '@loadable/component'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TransactionModal from './Shared/TransactionModal'
-import useWeb3 from '../libs/hooks/useWeb3'
+// import useWeb3 from '../libs/hooks/useWeb3'
 
 const Sustainable = loadable(() => import('./Lever'))
 const Option = loadable(() => import('./Options'))
 const Mining = loadable(() => import('./Farm'))
 
 const App: FC = () => {
-    const {account, library, chainId} = useWeb3()
+    // const {account, library, chainId} = useWeb3()
     // useEffect(() => {
     //     console.log(account, library, chainId)
     // }, [account, library, chainId])

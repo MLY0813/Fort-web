@@ -2,7 +2,7 @@ import { BigNumber } from "@ethersproject/bignumber"
 import { t, Trans } from '@lingui/macro'
 import classNames from 'classnames'
 import moment from "moment"
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { OptionsInfo } from ".."
 import { CopyIcon, OptionLiChoose, TokenFORTBig } from '../../../components/Icon'
 import LineShowInfo from '../../../components/LineShowInfo'
@@ -26,7 +26,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
     const [closeButtonDis, setCloseButtonDis] = useState<boolean>()
     const [optionInfo, setOptionInfo] = useState<OptionsInfo | null>()
     var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
-    var optionTokenList = cache ? JSON.parse(cache) : []
+    var optionTokenList = useMemo(() => cache ? JSON.parse(cache) : [], [cache])
     const routes = optionTokenList.map((item: any) => (
         <li key={item.address} className={classNames({
             selected: item.address === selectToken,
