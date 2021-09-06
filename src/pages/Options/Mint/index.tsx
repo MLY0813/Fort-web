@@ -10,7 +10,7 @@ import { DoubleTokenShow, SingleTokenShow } from '../../../components/TokenShow'
 import { tokenList } from '../../../libs/constants/addresses'
 import { ERC20Contract, NestPriceContract } from '../../../libs/hooks/useContract'
 import useWeb3 from '../../../libs/hooks/useWeb3'
-import { bigNumberToNormal, normalToBigNumber } from '../../../libs/utils'
+import { bigNumberToNormal, normalToBigNumber, ZERO_ADDRESS } from '../../../libs/utils'
 import { DatePicker } from 'antd';
 import '../../../styles/ant.css'
 import './styles'
@@ -89,6 +89,8 @@ const MintOptions: FC<Props> = ({...props}) => {
     )
         const optionInfo:OptionsInfo = {
             fortAmount: normalToBigNumber(fortNum),
+            optionToken: ZERO_ADDRESS,
+            optionTokenName: tokenName,
             optionTokenAmount: normalToBigNumber('203'),
             type: isLong,
             strikePrice: normalToBigNumber(strikePrice, tokenList['USDT'].decimals),

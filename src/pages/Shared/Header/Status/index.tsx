@@ -2,12 +2,12 @@ import { Trans } from '@lingui/macro'
 import classNames from 'classnames'
 import { FC, useRef } from 'react'
 import Popup from 'reactjs-popup'
-import MainButton from '../../../../components/MainButton'
 import { SupportedChains } from '../../../../libs/constants/chain'
 import useWeb3 from '../../../../libs/hooks/useWeb3'
 import { showEllipsisAddress } from '../../../../libs/utils'
 import Modal from './Modal'
 import './styles'
+import WalletModal from './WalletModal'
 
 const ConnectStatus: FC = () => {
     const { account, chainId } = useWeb3()
@@ -30,7 +30,14 @@ const ConnectStatus: FC = () => {
                 }>
                 <Modal onClose={() => modal.current.close()}/>
               </Popup>) : 
-             (<MainButton>{showEllipsisAddress(account!)}</MainButton>)}
+             (<Popup
+                modal
+                ref={modal}
+                trigger={
+                    <button className={'fort-button'}>{showEllipsisAddress(account || '')}</button>
+                }>
+                <WalletModal onClose={() => modal.current.close()}/>
+              </Popup>)}
         </div>
     )
 }

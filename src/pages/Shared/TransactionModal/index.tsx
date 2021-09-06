@@ -1,10 +1,13 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { FC } from 'react'
 import Popup from 'reactjs-popup'
+import copy from 'copy-to-clipboard'
 import BaseModal from '../../../components/BaseModal'
-import { Loading, Refuse, Success } from '../../../components/Icon'
+import { CopyIcon, Loading, Refuse, Success } from '../../../components/Icon'
+import LineShowInfo from '../../../components/LineShowInfo'
+import MainCard from '../../../components/MainCard'
 import useTransactionListCon from '../../../libs/hooks/useTransactionInfo'
-import { ETHERSCAN_BASE_URL } from '../../../libs/utils'
+import { ETHERSCAN_BASE_URL, showEllipsisAddress } from '../../../libs/utils'
 import './styles'
 
 export enum TransactionModalType {
@@ -50,6 +53,14 @@ const TransactionModal: FC = () => {
         <>
         <Success/>
         <p className={`${classPrefix}-text`}><Trans>European option Token minted successfully</Trans></p>
+        <MainCard classNames={'mainCard-eurModal'}>
+            <LineShowInfo leftText={t`Number of Option Token`} rightText={(showModal.tokenInfo?.tokenValue || '')}/>
+            <div className={`mainCard-eurModal-lastAddress`}>
+                <LineShowInfo leftText={t`Contract address`} rightText={showEllipsisAddress(showModal.tokenInfo?.tokenAddress || '')}/>
+                <button className={'copyButton'} onClick={() => copy(showModal.tokenInfo ? showModal.tokenInfo.tokenAddress : '')}><CopyIcon/></button>
+            </div>
+        </MainCard>
+        <a href={`${ETHERSCAN_BASE_URL}${showModal.hash}`} target="view_window"><Trans>View on etherscan</Trans></a>
         </>
     )
     

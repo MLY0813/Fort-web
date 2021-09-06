@@ -2,7 +2,7 @@ import { Contract } from 'ethers';
 import { useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 import useWeb3 from "./useWeb3";
-import { TransactionModalType } from "../../pages/Shared/TransactionModal";
+import { TransactionModalTokenInfo, TransactionModalType } from "../../pages/Shared/TransactionModal";
 import { notifyTransaction } from "../../pages/Shared/TransactionToast";
 import ERC20ABI from '../../contracts/abis/ERC20.json'
 
@@ -27,10 +27,17 @@ export type TransactionInfoType = {
     endTime: number
 }
 
+type ShoeModalType = {
+    isShow: boolean,
+    hash: string,
+    txType: TransactionModalType,
+    tokenInfo?: TransactionModalTokenInfo
+}
+
 const useTransactionList = () => {
     const {chainId, library} = useWeb3()
     const [txList, setTxList] = useState<TransactionInfoType[]>([])
-    const [showModal, setShowModal] = useState({isShow:false, hash:'0x0', txType:TransactionModalType.wait})
+    const [showModal, setShowModal] = useState<ShoeModalType>({isShow:false, hash:'0x0', txType:TransactionModalType.wait})
     const [pendingList, setPendingList] = useState<TransactionInfoType[]>([])
     const [checking, setChecking] = useState(false)
 
@@ -85,8 +92,14 @@ const useTransactionList = () => {
                         const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library)
                         const newTokenName = await newTokenContract.name()
                         const optionToken = {address: newTokenAddress, name: newTokenName}
-                        console.log(optionToken)
+                        console.log(rec)
                         localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify([...optionTokenList, optionToken]))
+                        const tokenInfo:TransactionModalTokenInfo = {
+                            tokenName: newTokenName,
+                            tokenAddress: newTokenAddress,
+                            tokenValue: '3333333'
+                        }
+                        setShowModal({isShow:true, hash: element.hash, txType:TransactionModalType.eurSuccess, tokenInfo:tokenInfo})
                     }
                     
                     return

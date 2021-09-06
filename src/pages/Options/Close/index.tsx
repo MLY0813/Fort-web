@@ -4,16 +4,18 @@ import classNames from 'classnames'
 import moment from "moment"
 import { FC, useEffect, useMemo, useState } from 'react'
 import { OptionsInfo } from ".."
-import { CopyIcon, OptionLiChoose, TokenFORTBig } from '../../../components/Icon'
+import { CopyIcon, NoOptionToken, OptionLiChoose, TokenFORTBig } from '../../../components/Icon'
 import LineShowInfo from '../../../components/LineShowInfo'
 import MainButton from '../../../components/MainButton'
 import MainCard from '../../../components/MainCard'
 import { SingleTokenShow } from '../../../components/TokenShow'
 import { tokenList } from "../../../libs/constants/addresses"
 import { FortOptionToken } from '../../../libs/hooks/useContract'
+import copy from 'copy-to-clipboard'
 import useWeb3 from '../../../libs/hooks/useWeb3'
 import { bigNumberToNormal, normalToBigNumber, showEllipsisAddress } from "../../../libs/utils"
 import './styles'
+import { Link } from "react-router-dom"
 
 type Props = {
     reviewCall: (info: OptionsInfo, isMint: boolean) => void
@@ -44,6 +46,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
             const selectTokenContract = optionTokenContracts.filter((item:any) => selectToken === item.address)[0]
             setCloseButtonDis(true)
             ;(async () => {
+                console.log(4444)
                 const tokenInfo = await selectTokenContract.getOptionInfo()
                 const balance = await selectTokenContract.balanceOf(account)
                 const latestBlock = await library?.getBlockNumber()
@@ -64,11 +67,13 @@ const CloseOptions: FC<Props> = ({...props}) => {
                 setCloseButtonDis(false)
             })()
         } else {
-            setSelectToken(optionTokenContracts[0].address)
+            if (optionTokenContracts.length > 0) {
+                setSelectToken(optionTokenContracts[0].address)
+            }
         }
-    }, [account, library, optionTokenContracts, optionTokenList, selectToken])
+    }, [account, library, selectToken])
 
-    return (
+    return optionTokenContracts.length > 0 ? (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-leftCard`}>
                 <p className={`${classPrefix}-leftCard-title`}><Trans>Option Token held</Trans></p>
@@ -87,8 +92,8 @@ const CloseOptions: FC<Props> = ({...props}) => {
                     <LineShowInfo leftText={t`Exercise time`} rightText={optionInfo ? optionInfo.exerciseTime : '----'}/>
                     <LineShowInfo leftText={t`Block number`} rightText={optionInfo ? optionInfo.blockNumber.toString() : '----'}/>
                     <div className={`${classPrefix}-rightCard-topInfo-lastAddress`}>
-                        <LineShowInfo leftText={t`Contract address`} rightText={optionInfo ? showEllipsisAddress(optionInfo.optionToken!) : '----'}/>
-                        <button className={'copyButton'}><CopyIcon/></button>
+                        <LineShowInfo leftText={t`Contract address`} rightText={optionInfo ? showEllipsisAddress(optionInfo.optionToken) : '----'}/>
+                        <button className={'copyButton'} onClick={() => copy(optionInfo ? optionInfo.optionToken : '')}><CopyIcon/></button>
                     </div>
                 </div>
                 <div className={`${classPrefix}-rightCard-bottomInfo`}>
@@ -104,6 +109,12 @@ const CloseOptions: FC<Props> = ({...props}) => {
                 </div>
             </MainCard>
         </div>
+    ) : (
+        <MainCard classNames={`noOptionToken`}>
+            <NoOptionToken/>
+            <p><Trans>No option Token</Trans></p>
+            <MainButton><Link to={'/options/mint'}><Trans>Go to Mint</Trans></Link></MainButton>
+        </MainCard>
     )
 }
 

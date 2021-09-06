@@ -123,7 +123,7 @@ const Lever: FC = () => {
             <MainCard classNames={`${classPrefix}-card`}>
                 <InfoShow 
                 topLeftText={t`From`} 
-                bottomRightText={t`Balance: ${fromBalance} ${transactionInfo.fromToken}`}
+                bottomRightText={t`Balance:` + ` ${fromBalance} ${transactionInfo.fromToken}`}
                 balanceRed={transactionInfo.fromNum > fromBalance ? true : false}
                 tokenSelect={transactionInfo.fromToken === 'DCU'? false : true}
                 tokenList={LeverTokenList} 
@@ -137,7 +137,7 @@ const Lever: FC = () => {
                 <button className={`${classPrefix}-card-exchangeButton`} onClick={handleExchange}><ExchangeIcon/></button>
                 <InfoShow 
                 topLeftText={t`Expected get`} 
-                bottomRightText={t`Balance: ${getBalance} ${transactionInfo.getToken}`} 
+                bottomRightText={t`Balance:` + ` ${getBalance} ${transactionInfo.getToken}`} 
                 tokenSelect={transactionInfo.getToken === 'DCU'? false : true}
                 tokenList={LeverTokenList} 
                 getSelectedToken={handleGetTokenSelect_get}>

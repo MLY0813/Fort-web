@@ -11,8 +11,8 @@ import './styles'
 export type OptionsInfo = {
     fortAmount: BigNumber,
     optionTokenAmount: BigNumber,
-    optionToken?: string,
-    optionTokenName?: string,
+    optionToken: string,
+    optionTokenName: string,
     type: boolean,
     strikePrice: BigNumber,
     exerciseTime: string,

@@ -23,10 +23,10 @@ const OptionsReview: FC<Props> = ({...props}) => {
     if (!props.optionsInfo) {
         throw Error('OptionsReview:no info')
     }
-    if (props.optionsInfo.optionToken === undefined && !props.isMint) {
-        throw Error('OptionsReview:no optionToken')
-    }
-
+    // if (props.optionsInfo.optionToken === undefined && !props.isMint) {
+    //     throw Error('OptionsReview:no optionToken')
+    // }
+    
     const open = useFortEuropeanOptionOpen(
         'ETH', 
         BigNumber.from(props.optionsInfo.strikePrice), 
@@ -35,7 +35,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
         props.optionsInfo.fortAmount)
     
     const close = useFortEuropeanOptionExercise(
-        props.optionsInfo.optionToken!,
+        props.optionsInfo.optionToken,
         props.optionsInfo.optionTokenAmount
     )
     return (

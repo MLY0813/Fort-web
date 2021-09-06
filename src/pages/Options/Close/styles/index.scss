@@ -148,3 +148,24 @@
         }
     }
 }
+
+.noOptionToken {
+    width: $baseWidth;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 44px;
+
+    svg {
+        margin-top: 80px;
+    }
+
+    p {
+        margin-top: 10px;
+        font-size: $T2;
+        color: $gray-info-text-color;
+    }
+
+    .fort-button {
+        margin: 80px 0 40px 0;
+    }
+}

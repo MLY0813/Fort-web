@@ -23,6 +23,9 @@ export { ReactComponent as Loading } from './svg/loading.svg'
 export { ReactComponent as Success } from './svg/success.svg'
 export { ReactComponent as Refuse } from './svg/refuse.svg'
 export { ReactComponent as Fail } from './svg/fail.svg'
+export { ReactComponent as MetamaskIconSmall } from './svg/metamaskIconSmall.svg'
+export { ReactComponent as ToEtherscan } from './svg/toEtherscan.svg'
+export { ReactComponent as NoOptionToken } from './svg/noOptionToken.svg'
 
 
 
