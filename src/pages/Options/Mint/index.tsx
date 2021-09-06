@@ -32,6 +32,7 @@ const MintOptions: FC<Props> = ({...props}) => {
     const [fortBalance, setFortBalance] = useState(BigNumber.from(0))
     const [isLong, setIsLong] = useState(false)
     const [exercise, setExercise] = useState({time: '---', blockNum: 0})
+    const [tokenName, setTokenName] = useState('')
 
     useEffect(() => {
         if (fortContract) {
@@ -54,7 +55,18 @@ const MintOptions: FC<Props> = ({...props}) => {
         }
     }, [chainId, nestPriceContract, priceNow])
 
+    useEffect(() => {
+        const oneStr = isLong ? 'C' : 'P'
+        const strikePriceStr = normalToBigNumber(strikePrice, tokenList['USDT'].decimals).toString()
+        const twoStr = strikePriceStr.substr(0,1) + '.' + strikePriceStr.substr(1,6) + '+' + (strikePriceStr.length-7).toString()
+        const threeStr = 'ETH'
+        const fourStr = exercise.blockNum
+        const newTokenName = oneStr + twoStr + threeStr + fourStr
+        setTokenName(newTokenName)
+    }, [exercise.blockNum, isLong, strikePrice])
+
     const handleType = (isLong: boolean) => {
+        console.log(isLong)
         setIsLong(isLong)
     }
 
@@ -76,12 +88,12 @@ const MintOptions: FC<Props> = ({...props}) => {
         [library],
     )
         const optionInfo:OptionsInfo = {
-            fortAmount: normalToBigNumber(fortNum).toString(),
-            optionTokenAmount: '203',
+            fortAmount: normalToBigNumber(fortNum),
+            optionTokenAmount: normalToBigNumber('203'),
             type: isLong,
-            strikePrice: normalToBigNumber(strikePrice, tokenList['USDT'].decimals).toString(),
+            strikePrice: normalToBigNumber(strikePrice, tokenList['USDT'].decimals),
             exerciseTime: exercise.time,
-            blockNumber: exercise.blockNum
+            blockNumber: BigNumber.from(exercise.blockNum)
         }
     return (
         <div className={classPrefix}>
@@ -109,7 +121,7 @@ const MintOptions: FC<Props> = ({...props}) => {
             <MainCard classNames={`${classPrefix}-rightCard`}>
                 <p className={`${classPrefix}-rightCard-tokenTitle`}><Trans>Estimated number of European Options Token</Trans></p>
                 <p className={`${classPrefix}-rightCard-tokenValue`}>21.7876574</p>
-                <p className={`${classPrefix}-rightCard-tokenName`}>ETH-Call3000-38721293823</p>
+                <p className={`${classPrefix}-rightCard-tokenName`}>{tokenName}</p>
                 <MainButton onClick={() => props.reviewCall(optionInfo, true)}>BUY</MainButton>
                 <div className={`${classPrefix}-rightCard-time`}>
                     <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>Compare the spot price with the Srike price at</Trans></p>

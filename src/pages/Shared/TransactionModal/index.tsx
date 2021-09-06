@@ -3,7 +3,7 @@ import { FC } from 'react'
 import Popup from 'reactjs-popup'
 import BaseModal from '../../../components/BaseModal'
 import { Loading, Refuse, Success } from '../../../components/Icon'
-import useTransactionList from '../../../libs/hooks/useTransactionInfo'
+import useTransactionListCon from '../../../libs/hooks/useTransactionInfo'
 import { ETHERSCAN_BASE_URL } from '../../../libs/utils'
 import './styles'
 
@@ -22,7 +22,7 @@ export type TransactionModalTokenInfo = {
 
 const TransactionModal: FC = () => {
     const classPrefix = 'modal-transaction'
-    const { showModal, closeModal } = useTransactionList()
+    const { showModal, closeModal } = useTransactionListCon()
 
     const wait = (
         <>

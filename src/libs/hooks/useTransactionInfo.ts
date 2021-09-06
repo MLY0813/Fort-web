@@ -1,8 +1,10 @@
+import { Contract } from 'ethers';
 import { useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 import useWeb3 from "./useWeb3";
 import { TransactionModalType } from "../../pages/Shared/TransactionModal";
 import { notifyTransaction } from "../../pages/Shared/TransactionToast";
+import ERC20ABI from '../../contracts/abis/ERC20.json'
 
 export enum TransactionState {
     Pending = 0,
@@ -25,7 +27,7 @@ export type TransactionInfoType = {
     endTime: number
 }
 
-const _useTransactionList = () => {
+const useTransactionList = () => {
     const {chainId, library} = useWeb3()
     const [txList, setTxList] = useState<TransactionInfoType[]>([])
     const [showModal, setShowModal] = useState({isShow:false, hash:'0x0', txType:TransactionModalType.wait})
@@ -41,7 +43,7 @@ const _useTransactionList = () => {
             console.log('1' + {cache})
         })()
     }, [chainId])
-
+    
     useEffect(() => {
         if (txList.length === 0) {return}
         ;(async () => {
@@ -72,6 +74,21 @@ const _useTransactionList = () => {
                     // if (element.hash === showModal.hash) {
                     //     setShowModal({isShow:true, hash: element.hash, txState:TransactionState.Success})
                     // }
+                    if (element.title === '购买期权') {
+                        var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
+                        var optionTokenList = []
+                        if (cache) {
+                            optionTokenList = JSON.parse(cache)
+                        }
+                        const newTokenAddress = rec['logs'][1]['address']
+                        console.log(rec['logs'][1]['address'])
+                        const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library)
+                        const newTokenName = await newTokenContract.name()
+                        const optionToken = {address: newTokenAddress, name: newTokenName}
+                        console.log(optionToken)
+                        localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify([...optionTokenList, optionToken]))
+                    }
+                    
                     return
                 }
                 console.log('下一个' + {index})
@@ -81,7 +98,7 @@ const _useTransactionList = () => {
             }, 15000)
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pendingList, checking])
+    }, [pendingList, checking, library])
 
     const pushTx = (hash: string, txInfo:TransactionBaseInfoType) => {
         const nowDate = parseInt((new Date().getTime() / 1000).toString())
@@ -116,12 +133,12 @@ const _useTransactionList = () => {
 
 
 
-const transactionList = createContainer(_useTransactionList)
+const transactionList = createContainer(useTransactionList)
 
-const useTransactionList = () => {
+const useTransactionListCon = () => {
     return transactionList.useContainer()
 }
 
 export const Provider = transactionList.Provider
   
-export default useTransactionList
+export default useTransactionListCon

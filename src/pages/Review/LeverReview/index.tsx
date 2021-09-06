@@ -7,7 +7,7 @@ import MainButton from '../../../components/MainButton'
 import MainCard from '../../../components/MainCard'
 import ReviewInfo from '../../../components/ReviewInfo'
 import { useFortLeverBuy } from '../../../contracts/hooks/useFortLeverTransation'
-import { normalToBigNumber, ZERO_ADDRESS } from '../../../libs/utils'
+import { normalToBigNumber } from '../../../libs/utils'
 import '../styles'
 
 export type LeverReviewModel = {
@@ -38,7 +38,7 @@ const LeverReview: FC<Props> = ({...props}) => {
         details_factor = props.model.fromToken[strLength - 2]
     }
     
-    const buy = useFortLeverBuy(ZERO_ADDRESS, BigNumber.from(details_factor), details_type, normalToBigNumber(props.model.fromNum))
+    const buy = useFortLeverBuy('ETH', BigNumber.from(details_factor), details_type, normalToBigNumber(props.model.fromNum))
     return (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-mainCard`}>

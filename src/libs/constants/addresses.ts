@@ -1,4 +1,5 @@
 import { TokenETH, TokenFORT, TokenLeverDown, TokenLeverUp, TokenUSDT } from "../../components/Icon"
+import { ZERO_ADDRESS } from "../utils"
 
 export type AddressesType = {
     [key: number]: string
@@ -17,9 +18,9 @@ export const tokenList: {[key: string]: TokenType} = {
         Icon: TokenETH,
         decimals: 18,
         addresses: {
-            1: '0x0',
-            2: '',
-            4: '0x0'
+            1: ZERO_ADDRESS,
+            2: ZERO_ADDRESS,
+            4: ZERO_ADDRESS
         }
     },
     "USDT": {

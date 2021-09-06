@@ -2,12 +2,12 @@ import { useCallback } from 'react';
 import { Contract } from "ethers";
 import useWeb3 from "./useWeb3";
 import { addGasLimit } from '../utils';
-import useTransactionList, { TransactionBaseInfoType } from './useTransactionInfo';
+import useTransactionListCon, { TransactionBaseInfoType } from './useTransactionInfo';
 import { TransactionModalType } from '../../pages/Shared/TransactionModal';
 
 export function useSendTransaction(contract: Contract | null, tx: any, txInfo: TransactionBaseInfoType) {
     const { library } = useWeb3()
-    const { pushTx, setShowModal } = useTransactionList()
+    const { pushTx, setShowModal } = useTransactionListCon()
     const txPromise = useCallback(
         async () => {
             setShowModal({isShow: true, hash: '0x0', txType:TransactionModalType.wait})

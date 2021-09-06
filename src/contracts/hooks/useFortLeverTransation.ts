@@ -1,3 +1,4 @@
+import { tokenList } from './../../libs/constants/addresses';
 import { t } from "@lingui/macro";
 import { BigNumber } from "ethers";
 import { FortLeverContract } from "../../libs/constants/addresses";
@@ -7,15 +8,18 @@ import useWeb3 from "../../libs/hooks/useWeb3";
 import { bigNumberToNormal, PRICE_FEE } from "../../libs/utils";
 
 export function useFortLeverBuy(
-    tokenAddress: string, 
+    tokenName: string, 
     lever: BigNumber, 
     orientation: boolean, 
     fortAmount: BigNumber
 ) {
-    const { account } = useWeb3()
+    const { account, chainId } = useWeb3()
     const contract = FortLever(FortLeverContract)
+    if (!chainId) {
+        throw Error('useFortLeverBuy: !chainId')
+    }
     const callData = contract?.interface.encodeFunctionData('buy', [
-        tokenAddress, 
+        tokenList[tokenName].addresses[chainId], 
         lever, 
         orientation, 
         fortAmount]

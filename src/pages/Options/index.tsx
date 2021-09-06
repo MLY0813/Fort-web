@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import classNames from 'classnames'
 import { FC, useState } from 'react'
@@ -8,14 +9,14 @@ import MintOptions from './Mint'
 import './styles'
 
 export type OptionsInfo = {
-    fortAmount: string,
-    optionTokenAmount: string,
+    fortAmount: BigNumber,
+    optionTokenAmount: BigNumber,
     optionToken?: string,
     optionTokenName?: string,
     type: boolean,
-    strikePrice: string,
+    strikePrice: BigNumber,
     exerciseTime: string,
-    blockNumber: number
+    blockNumber: BigNumber
 }
 
 const Options: FC = () => {
@@ -51,7 +52,7 @@ const Options: FC = () => {
                 </Route>
 
                 <Route path="/options/close" exact>
-                    {/* <CloseOptions reviewCall={handleInfo}/> */}
+                    <CloseOptions reviewCall={handleInfo}/>
                 </Route>
 
                 <Redirect to="/options/mint" />
