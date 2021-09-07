@@ -31,8 +31,8 @@ const Lever: FC = () => {
     const [transactionInfo, setTransactionInfo] = useState<LeverTransactionIon>({
         fromToken: 'DCU',
         getToken: 'Margin-ETH1L',
-        fromNum: '0',
-        getNum: '0'
+        fromNum: '',
+        getNum: ''
     })
     const nestPriceContract = NestPriceContract()
     const tokenContracts = [...LeverTokenList, tokenList['DCU']].map((item) => {
@@ -118,6 +118,10 @@ const Lever: FC = () => {
         }
         return false
     }
+    const handleMax = () => {
+        console.log(33333)
+        setTransactionInfo({...transactionInfo, fromNum: fromBalance, getNum: fromBalance})
+    }
     return isReview ? <LeverReview back={() => setIsReview(false)} model={reviewModel}/> : (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-card`}>
@@ -132,7 +136,10 @@ const Lever: FC = () => {
                         <SingleTokenShow tokenNameOne={transactionInfo.fromToken}/>
                         <PutDownIcon/>
                     </div>
-                    <input className={'input-right'} value={transactionInfo.fromNum} onChange={(e) => handleInput(e.target.value)}/>
+                    <div className={`infoView-mainView-maxView`}>
+                        <input className={'input-right'} value={transactionInfo.fromNum} onChange={(e) => handleInput(e.target.value)} placeholder={'请输入'}/>
+                        <button className={'max-button'} onClick={() => handleMax()}>MAX</button>
+                    </div>
                 </InfoShow>
                 <button className={`${classPrefix}-card-exchangeButton`} onClick={handleExchange}><ExchangeIcon/></button>
                 <InfoShow 
@@ -145,7 +152,7 @@ const Lever: FC = () => {
                         <SingleTokenShow tokenNameOne={transactionInfo.getToken}/>
                         <PutDownIcon/>
                     </div>
-                    <input className={'input-right'} value={transactionInfo.getNum} onChange={(e) => handleInput(e.target.value)}/>
+                    <input className={'input-right'} value={transactionInfo.getNum} onChange={(e) => handleInput(e.target.value)} placeholder={'请输入'}/>
                 </InfoShow>
                 <LineShowInfo leftText={t`Current price`} rightText={`1 ETH = ${priceNow} USDT`}/>
                 <MainButton 

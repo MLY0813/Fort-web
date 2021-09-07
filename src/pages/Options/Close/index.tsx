@@ -2,7 +2,7 @@ import { BigNumber } from "@ethersproject/bignumber"
 import { t, Trans } from '@lingui/macro'
 import classNames from 'classnames'
 import moment from "moment"
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { OptionsInfo } from ".."
 import { CopyIcon, NoOptionToken, OptionLiChoose, TokenFORTBig } from '../../../components/Icon'
 import LineShowInfo from '../../../components/LineShowInfo'
@@ -16,6 +16,8 @@ import useWeb3 from '../../../libs/hooks/useWeb3'
 import { bigNumberToNormal, normalToBigNumber, showEllipsisAddress } from "../../../libs/utils"
 import './styles'
 import { Link } from "react-router-dom"
+import { Contract } from "ethers"
+import ERC20ABI from '../../../contracts/abis/ERC20.json'
 
 type Props = {
     reviewCall: (info: OptionsInfo, isMint: boolean) => void
@@ -24,21 +26,32 @@ type Props = {
 const CloseOptions: FC<Props> = ({...props}) => {
     const classPrefix = 'options-closeOptions'
     const {chainId, account, library} = useWeb3()
+    const [showAddButton, setShowAddButton] = useState(false)
+    const [addAddressValue, setAddAddressValue] = useState('')
+    const [latestBlock, setLatestBlock] = useState(0)
     const [selectToken, setSelectToken] = useState<string>()
     const [closeButtonDis, setCloseButtonDis] = useState<boolean>()
     const [optionInfo, setOptionInfo] = useState<OptionsInfo | null>()
-    var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
-    var optionTokenList = useMemo(() => cache ? JSON.parse(cache) : [], [cache])
-    const routes = optionTokenList.map((item: any) => (
+    const [optionTokenList, setOptionTokenList] = useState<Array<{[key:string]:string}>>([])
+    
+    const routes = optionTokenList ? optionTokenList.reverse().map((item: any) => (
         <li key={item.address} className={classNames({
             selected: item.address === selectToken,
           })} onClick={() => setSelectToken(item.address)}>
             <SingleTokenShow tokenNameOne={item.name} isBold/>
             <OptionLiChoose/>
         </li>
-    ))
+    )) : (<></>)
     
-    const optionTokenContracts = optionTokenList.map((item: any) => FortOptionToken(item.address))
+    useEffect(() => {
+        if (chainId && account && library) {
+            var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
+            const optionTokenList = cache ? JSON.parse(cache) : []
+            setOptionTokenList(optionTokenList)
+        }
+    }, [chainId, account, library])
+
+    const optionTokenContracts = useMemo(() => optionTokenList.reverse().map((item: any) => FortOptionToken(item.address)), [optionTokenList])
 
     useEffect(() => {
         if (selectToken) {
@@ -47,8 +60,8 @@ const CloseOptions: FC<Props> = ({...props}) => {
             setCloseButtonDis(true)
             ;(async () => {
                 console.log(4444)
-                const tokenInfo = await selectTokenContract.getOptionInfo()
-                const balance = await selectTokenContract.balanceOf(account)
+                const tokenInfo = await selectTokenContract?.getOptionInfo()
+                const balance = await selectTokenContract?.balanceOf(account)
                 const latestBlock = await library?.getBlockNumber()
                 const endBlock = BigNumber.from(tokenInfo[3])
                 const subBlock = endBlock.sub(BigNumber.from(latestBlock))
@@ -56,22 +69,47 @@ const CloseOptions: FC<Props> = ({...props}) => {
                 const newOptionInfo:OptionsInfo = {
                     fortAmount: normalToBigNumber('203'),
                     optionTokenAmount: BigNumber.from(balance),
-                    optionToken: selectTokenContract.address,
+                    optionToken: selectTokenContract?.address || '',
                     optionTokenName: tokenName,
                     type: tokenInfo[2],
                     strikePrice: BigNumber.from(tokenInfo[1]),
                     exerciseTime: moment(nowTime).format('YYYY[-]MM[-]DD hh:mm:ss'),
                     blockNumber: endBlock
                 }
+                setLatestBlock(latestBlock || 0)
                 setOptionInfo(newOptionInfo)
-                setCloseButtonDis(false)
+                setCloseButtonDis((latestBlock || 0) > endBlock.toNumber() ? false : true)
             })()
         } else {
-            if (optionTokenContracts.length > 0) {
+            if (optionTokenContracts.length > 0 && optionTokenContracts[0]) {
                 setSelectToken(optionTokenContracts[0].address)
             }
         }
-    }, [account, library, selectToken])
+    }, [account, library, selectToken, optionTokenContracts, optionTokenList])
+
+    
+    const addToken = useCallback(() => {
+        console.log(1)
+        var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
+        var optionTokenList = cache ? JSON.parse(cache) : []
+        const newTokenAddress = addAddressValue
+        const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library)
+        ;(async () => {
+            const newTokenName = await newTokenContract?.name()
+            const optionToken = {address: newTokenAddress, name: newTokenName}
+            const newOptionTokenList = [...optionTokenList, optionToken]
+            console.log(newOptionTokenList)
+            localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify(newOptionTokenList))
+            setOptionTokenList(newOptionTokenList)
+        })()
+    },[addAddressValue, chainId, library])
+
+    const addTokenView = (
+        <div className={`${classPrefix}-leftCard-addToken-addTokenView`}>
+            <input placeholder={t`Please input Contract address`} value={addAddressValue} onChange={(e) => setAddAddressValue(e.target.value)}/>
+            <button onClick={addToken}>Add</button>
+        </div>
+    )
 
     return optionTokenContracts.length > 0 ? (
         <div className={classPrefix}>
@@ -81,7 +119,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
                     {routes}
                 </ul>
                 <div className={`${classPrefix}-leftCard-addToken`}>
-                    <button><Trans>+ Add option Token</Trans></button>
+                    {showAddButton ? addTokenView : (<button onClick={() => setShowAddButton(true)}><Trans>+ Add option Token</Trans></button>)}
                 </div>
             </MainCard>
             <MainCard classNames={`${classPrefix}-rightCard`}>
@@ -101,11 +139,15 @@ const CloseOptions: FC<Props> = ({...props}) => {
                     <TokenFORTBig/>
                     <div className={`${classPrefix}-rightCard-bottomInfo-fortNum`}>
                         <div className={`${classPrefix}-rightCard-bottomInfo-fortNum-value`}>
-                            23.2345353
+                            {latestBlock > (optionInfo?.blockNumber || 0) ? '敬请期待' : '---'}
                             <span className={`${classPrefix}-rightCard-bottomInfo-fortNum-name`}>FORT</span>
                         </div>
                     </div>
-                    <MainButton disable={closeButtonDis} onClick={() => !closeButtonDis ? props.reviewCall(optionInfo!, false) : null}><Trans>Close</Trans></MainButton>
+                    <div className={`${classPrefix}-rightCard-bottomInfo-buttonDiv`}>
+                        {latestBlock > (optionInfo?.blockNumber || 0) ? (<></>) : (<p><Trans>The Option Token has not reached the exercise time</Trans></p>)}
+                        <MainButton disable={closeButtonDis} onClick={() => !closeButtonDis ? props.reviewCall(optionInfo!, false) : null}><Trans>Close</Trans></MainButton>
+                    </div>
+                    
                 </div>
             </MainCard>
         </div>

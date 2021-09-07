@@ -27,7 +27,7 @@ const WalletModal: FC<Props> = ({...props}) => {
 
     const liList = useMemo(() => {
         if (transactionList) {
-            return transactionList.map((item) => {
+            return transactionList.reverse().map((item) => {
                 var icon:JSX.Element
                 if (item.txState === 0) {
                     icon = (<><Loading className={'animation-spin'}/></>)
