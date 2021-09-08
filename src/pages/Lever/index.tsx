@@ -27,7 +27,6 @@ const Lever: FC = () => {
     const [getBalance, setGetBalance] = useState('--.--')
     const [priceNow, setPriceNow] = useState('--.--')
     const { account, chainId } = useWeb3()
-    
     const [transactionInfo, setTransactionInfo] = useState<LeverTransactionIon>({
         fromToken: 'DCU',
         getToken: 'Margin-ETH1L',
@@ -119,7 +118,6 @@ const Lever: FC = () => {
         return false
     }
     const handleMax = () => {
-        console.log(33333)
         setTransactionInfo({...transactionInfo, fromNum: fromBalance, getNum: fromBalance})
     }
     return isReview ? <LeverReview back={() => setIsReview(false)} model={reviewModel}/> : (
@@ -137,7 +135,7 @@ const Lever: FC = () => {
                         <PutDownIcon/>
                     </div>
                     <div className={`infoView-mainView-maxView`}>
-                        <input className={'input-right'} value={transactionInfo.fromNum} onChange={(e) => handleInput(e.target.value)} placeholder={'请输入'}/>
+                        <input className={'input-right'} value={transactionInfo.fromNum} onChange={(e) => handleInput(e.target.value)} placeholder={t`Input`}/>
                         <button className={'max-button'} onClick={() => handleMax()}>MAX</button>
                     </div>
                 </InfoShow>
@@ -152,7 +150,7 @@ const Lever: FC = () => {
                         <SingleTokenShow tokenNameOne={transactionInfo.getToken}/>
                         <PutDownIcon/>
                     </div>
-                    <input className={'input-right'} value={transactionInfo.getNum} onChange={(e) => handleInput(e.target.value)} placeholder={'请输入'}/>
+                    <input className={'input-right'} value={transactionInfo.getNum} onChange={(e) => handleInput(e.target.value)} placeholder={t`Input`}/>
                 </InfoShow>
                 <LineShowInfo leftText={t`Current price`} rightText={`1 ETH = ${priceNow} USDT`}/>
                 <MainButton 

@@ -1,10 +1,21 @@
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { useEffect, useState } from "react";
 import { createContainer } from "unstated-next";
 import useWeb3 from "./useWeb3";
 import { TransactionModalTokenInfo, TransactionModalType } from "../../pages/Shared/TransactionModal";
 import { notifyTransaction } from "../../pages/Shared/TransactionToast";
 import ERC20ABI from '../../contracts/abis/ERC20.json'
+
+export enum TransactionType {
+    buyLever = 0,
+    closeLever = 1,
+    buyOption = 2,
+    closeOption = 3,
+    approve = 4,
+    stake = 5,
+    claim = 6,
+    unStake = 7
+}
 
 export enum TransactionState {
     Pending = 0,
@@ -15,7 +26,8 @@ export enum TransactionState {
 
 export type TransactionBaseInfoType = {
     title: string,
-    info: string
+    info: string,
+    type: TransactionType
 }
 
 export type TransactionInfoType = {
@@ -24,7 +36,8 @@ export type TransactionInfoType = {
     hash: string,
     txState: TransactionState,
     addTime: number,
-    endTime: number
+    endTime: number,
+    type: TransactionType
 }
 
 type ShoeModalType = {
@@ -78,10 +91,8 @@ const useTransactionList = () => {
                     setChecking(false)
                     console.log('成功' + {index})
                     notifyTransaction(element)
-                    // if (element.hash === showModal.hash) {
-                    //     setShowModal({isShow:true, hash: element.hash, txState:TransactionState.Success})
-                    // }
-                    if (element.title === '购买期权') {
+                    
+                    if (element.type === TransactionType.buyOption) {
                         var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
                         var optionTokenList = []
                         if (cache) {
@@ -97,11 +108,10 @@ const useTransactionList = () => {
                         const tokenInfo:TransactionModalTokenInfo = {
                             tokenName: newTokenName,
                             tokenAddress: newTokenAddress,
-                            tokenValue: '3333333'
+                            tokenValue: BigNumber.from(rec['logs'][1]['data']).toString()
                         }
                         setShowModal({isShow:true, hash: element.hash, txType:TransactionModalType.eurSuccess, tokenInfo:tokenInfo})
                     }
-                    
                     return
                 }
                 console.log('下一个' + {index})
@@ -122,7 +132,8 @@ const useTransactionList = () => {
             hash: hash,
             txState: TransactionState.Pending,
             addTime: nowDate,
-            endTime: monthDate
+            endTime: monthDate,
+            type: txInfo.type
         }
         updateList(newTxInfo)
     }

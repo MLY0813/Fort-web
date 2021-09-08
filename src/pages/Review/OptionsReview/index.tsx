@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { FC, MouseEventHandler } from 'react'
 import { BackIcon } from '../../../components/Icon'
-import LineShowInfo from '../../../components/LineShowInfo'
+import LineShowInfo, { LineShowInfoForOracleFee } from '../../../components/LineShowInfo'
 import MainButton from '../../../components/MainButton'
 import MainCard from '../../../components/MainCard'
 import ReviewInfo from '../../../components/ReviewInfo'
@@ -23,9 +23,6 @@ const OptionsReview: FC<Props> = ({...props}) => {
     if (!props.optionsInfo) {
         throw Error('OptionsReview:no info')
     }
-    // if (props.optionsInfo.optionToken === undefined && !props.isMint) {
-    //     throw Error('OptionsReview:no optionToken')
-    // }
     
     const open = useFortEuropeanOptionOpen(
         'ETH', 
@@ -61,7 +58,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
                         <LineShowInfo leftText={t`Block number`} rightText={props.optionsInfo.blockNumber.toString()}/>
                     </div>
                 </div>
-                <LineShowInfo leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
+                <LineShowInfoForOracleFee leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
                 <MainButton onClick={props.isMint ? open : close}><Trans>{props.isMint ? 'Mint Confirm' : 'Close Confirm'}</Trans></MainButton>
             </MainCard>
         </div>

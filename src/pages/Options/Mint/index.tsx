@@ -37,7 +37,7 @@ const MintOptions: FC<Props> = ({...props}) => {
     const [priceNow, setPriceNow] = useState('--.--')
     const [fortBalance, setFortBalance] = useState(BigNumber.from(0))
     const [tokenName, setTokenName] = useState('')
-    const [optionTokenValue, setOptionTokenValue] = useState('0')
+    const [optionTokenValue, setOptionTokenValue] = useState(BigNumber.from(0))
 
     useEffect(() => {
         if (fortContract) {
@@ -71,7 +71,6 @@ const MintOptions: FC<Props> = ({...props}) => {
     }, [exercise.blockNum, isLong, strikePrice])
 
     const handleType = (isLong: boolean) => {
-        console.log(isLong)
         setIsLong(isLong)
     }
 
@@ -97,7 +96,7 @@ const MintOptions: FC<Props> = ({...props}) => {
         fortAmount: normalToBigNumber(fortNum),
         optionToken: ZERO_ADDRESS,
         optionTokenName: tokenName,
-        optionTokenAmount: normalToBigNumber('203'),
+        optionTokenAmount: optionTokenValue,
         type: isLong,
         strikePrice: normalToBigNumber(strikePrice, tokenList['USDT'].decimals),
         exerciseTime: exercise.time,
@@ -110,12 +109,6 @@ const MintOptions: FC<Props> = ({...props}) => {
             optionTokenNumBaseInfo.fortNum !== '0' && 
             priceNow !== '--.--' && exercise.blockNum !== 0) {
             ;(async () => {
-                console.log(ZERO_ADDRESS)
-                console.log(priceNow)
-                console.log(normalToBigNumber(optionTokenNumBaseInfo.strikePrice, tokenList['USDT'].decimals).toString())
-                console.log(isLong)
-                console.log(exercise.blockNum.toString())
-                console.log(normalToBigNumber(optionTokenNumBaseInfo.fortNum).toString())
                 const value = await fortEuropeanOption.estimate(
                     ZERO_ADDRESS, 
                     normalToBigNumber(priceNow, tokenList['USDT'].decimals).toString(),
@@ -123,8 +116,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                     isLong, 
                     exercise.blockNum.toString(), 
                     normalToBigNumber(optionTokenNumBaseInfo.fortNum).toString())
-                    console.log(ZERO_ADDRESS)
-                setOptionTokenValue(bigNumberToNormal(BigNumber.from(value)))
+                setOptionTokenValue(BigNumber.from(value))
             })()
         }
     }, [isLong, optionTokenNumBaseInfo, exercise.blockNum, priceNow, fortEuropeanOption])
@@ -142,7 +134,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 
                 <InfoShow topLeftText={t`Strike price`} bottomRightText={`1 ETH = ${priceNow} USDT`}>
                     <input 
-                    placeholder={'请输入'}
+                    placeholder={t`Input`}
                     className={'input-left'} 
                     value={strikePrice} 
                     onChange={(e) => setStrikePrice(e.target.value)} 
@@ -152,7 +144,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <InfoShow topLeftText={t`Mint amount`} bottomRightText={`Balance: ${bigNumberToNormal(fortBalance)} DCU`} balanceRed={normalToBigNumber(fortNum).gt(fortBalance) ? true : false}>
                     <SingleTokenShow tokenNameOne={'DCU'} isBold/>
                     <input 
-                    placeholder={'请输入'}
+                    placeholder={t`Input`}
                     className={'input-middle'} 
                     value={fortNum} 
                     onChange={(e) => setFortNum(e.target.value)} 
@@ -163,7 +155,7 @@ const MintOptions: FC<Props> = ({...props}) => {
 
             <MainCard classNames={`${classPrefix}-rightCard`}>
                 <p className={`${classPrefix}-rightCard-tokenTitle`}><Trans>Estimated number of European Options Token</Trans></p>
-                <p className={`${classPrefix}-rightCard-tokenValue`}>{parseFloat(optionTokenValue).toFixed(8).toString()}</p>
+                <p className={`${classPrefix}-rightCard-tokenValue`}>{bigNumberToNormal(optionTokenValue,18,6)}</p>
                 <p className={`${classPrefix}-rightCard-tokenName`}>{tokenName}</p>
                 <MainButton onClick={() => props.reviewCall(optionInfo, true)}>BUY</MainButton>
                 <div className={`${classPrefix}-rightCard-time`}>
@@ -177,7 +169,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                             <p><Trans>Spot price</Trans>{isLong ? '>' : '<'}{strikePrice}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
-                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? '(现货价-行权价)*' : '(行权价-现货价)*'}{parseFloat(optionTokenValue).toFixed(4).toString()}</p>
+                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? '(现货价-行权价)*' : '(行权价-现货价)*'}{bigNumberToNormal(optionTokenValue,18,2)}</p>
                         <p className={`${classPrefix}-rightCard-smallCard-name`}>FORT</p>
                     </MainCard>
                     <MainCard>
@@ -185,7 +177,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                             <p><Trans>Spot price</Trans>{isLong ? '<=' : '>='}{strikePrice}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
-                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? '(现货价-行权价)*' : '(行权价-现货价)*'}{parseFloat(optionTokenValue).toFixed(4).toString()}</p>
+                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? '(现货价-行权价)*' : '(行权价-现货价)*'}{bigNumberToNormal(optionTokenValue,18,2)}</p>
                         <p className={`${classPrefix}-rightCard-smallCard-name`}>FORT</p>
                     </MainCard>
                 </div>

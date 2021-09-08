@@ -10,7 +10,7 @@ export const ETHERSCAN_BASE_URL = 'https://etherscan.io/tx/'
  * @param decimals token精度（USDT为6位，大部分为18位）
  * @returns 浮点字符串
  */
-export function bigNumberToNormal(num: BigNumber, decimals: number = 18): string {
+export function bigNumberToNormal(num: BigNumber, decimals: number = 18, fix: number = 18): string {
     const str = num.toString()
     const strLength = str.length
     var newStr: string
@@ -23,7 +23,12 @@ export function bigNumberToNormal(num: BigNumber, decimals: number = 18): string
         }
         newStr = "0." + baseStr + str
     }
-    return parseFloat(newStr).toString()
+    const resultBaseStr = parseFloat(newStr).toString()
+    if (resultBaseStr.indexOf('.') !== -1) {
+        const resultBaseStrArray = resultBaseStr.split('.')
+        return resultBaseStrArray[0] + '.' + resultBaseStrArray[1].substr(0,fix)
+    }
+    return resultBaseStr
 }
 
 /**

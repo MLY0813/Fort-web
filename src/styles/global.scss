@@ -1,4 +1,4 @@
-
+@import 'shared.scss';
 * {
     box-sizing: border-box;
     margin: 0;
@@ -51,6 +51,24 @@ button {
 
 input {
     background-color: transparent;
+}
+input::-webkit-input-placeholder {
+    font-family: Montserrat;
+    color:$button-disable-color;
+    font-size: $T2;
+    font-weight: normal;
+}
+input::-moz-placeholder {   /* Mozilla Firefox 19+ */
+    font-family: Montserrat;
+    color:$button-disable-color;
+    font-size: $T2;
+    font-weight: normal;
+}
+input:-moz-placeholder {    /* Mozilla Firefox 4 to 18 */
+    font-family: Montserrat;
+    color:$button-disable-color;
+    font-size: $T2;
+    font-weight: normal;
 }
 
 a {

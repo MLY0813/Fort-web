@@ -13,15 +13,12 @@ const Option = loadable(() => import('./Options'))
 const Mining = loadable(() => import('./Farm'))
 
 const App: FC = () => {
-    // const {account, library, chainId} = useWeb3()
-    // useEffect(() => {
-    //     console.log(account, library, chainId)
-    // }, [account, library, chainId])
     return (
         <main>
             <div className={'main-content'}>
                 <TransactionModal/>
-                <ToastContainer autoClose={8000}/>
+                {/* <ToastContainer autoClose={8000}/> */}
+                <ToastContainer/>
                 <HashRouter>
                     <Header/>
                     <Switch>

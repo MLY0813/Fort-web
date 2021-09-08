@@ -5,7 +5,8 @@ import { FortLeverContract } from "../../libs/constants/addresses";
 import { FortLever } from "../../libs/hooks/useContract";
 import { useSendTransaction } from "../../libs/hooks/useSendTransaction";
 import useWeb3 from "../../libs/hooks/useWeb3";
-import { bigNumberToNormal, PRICE_FEE } from "../../libs/utils";
+import { PRICE_FEE } from "../../libs/utils";
+import { TransactionType } from '../../libs/hooks/useTransactionInfo';
 
 export function useFortLeverBuy(
     tokenName: string, 
@@ -30,7 +31,7 @@ export function useFortLeverBuy(
         data: callData,
         value: PRICE_FEE
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Buying Leveraged Token`, info:`${bigNumberToNormal(fortAmount)} FORT`})
+    const txPromise = useSendTransaction(contract, tx, {title:t`Buy Leveraged Token`, info:'', type: TransactionType.buyLever})
     return txPromise
 }
 
@@ -51,7 +52,7 @@ export function useFortLeverSell(
         value: PRICE_FEE
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const txPromise = useSendTransaction(contract, tx, {title:t`sELLING Leveraged Token`, info:`amount FORT`})
+    const txPromise = useSendTransaction(contract, tx, {title:t`Sell Leveraged Token`, info:'', type: TransactionType.closeLever})
     return txPromise
 }
 

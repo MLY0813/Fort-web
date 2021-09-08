@@ -18,6 +18,7 @@ import './styles'
 import { Link } from "react-router-dom"
 import { Contract } from "ethers"
 import ERC20ABI from '../../../contracts/abis/ERC20.json'
+import { message } from 'antd';
 
 type Props = {
     reviewCall: (info: OptionsInfo, isMint: boolean) => void
@@ -59,7 +60,6 @@ const CloseOptions: FC<Props> = ({...props}) => {
             const selectTokenContract = optionTokenContracts.filter((item:any) => selectToken === item.address)[0]
             setCloseButtonDis(true)
             ;(async () => {
-                console.log(4444)
                 const tokenInfo = await selectTokenContract?.getOptionInfo()
                 const balance = await selectTokenContract?.balanceOf(account)
                 const latestBlock = await library?.getBlockNumber()
@@ -89,18 +89,21 @@ const CloseOptions: FC<Props> = ({...props}) => {
 
     
     const addToken = useCallback(() => {
-        console.log(1)
         var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
         var optionTokenList = cache ? JSON.parse(cache) : []
         const newTokenAddress = addAddressValue
         const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library)
         ;(async () => {
-            const newTokenName = await newTokenContract?.name()
-            const optionToken = {address: newTokenAddress, name: newTokenName}
-            const newOptionTokenList = [...optionTokenList, optionToken]
-            console.log(newOptionTokenList)
-            localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify(newOptionTokenList))
-            setOptionTokenList(newOptionTokenList)
+            try {
+                const newTokenName = await newTokenContract?.name()
+                const optionToken = {address: newTokenAddress, name: newTokenName}
+                const newOptionTokenList = [...optionTokenList, optionToken]
+                localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify(newOptionTokenList))
+                setOptionTokenList(newOptionTokenList)
+                message.success(t`Add option token address success`)
+            } catch {
+                message.error(t`Add option token address fail`)
+            }
         })()
     },[addAddressValue, chainId, library])
 
@@ -131,7 +134,14 @@ const CloseOptions: FC<Props> = ({...props}) => {
                     <LineShowInfo leftText={t`Block number`} rightText={optionInfo ? optionInfo.blockNumber.toString() : '----'}/>
                     <div className={`${classPrefix}-rightCard-topInfo-lastAddress`}>
                         <LineShowInfo leftText={t`Contract address`} rightText={optionInfo ? showEllipsisAddress(optionInfo.optionToken) : '----'}/>
-                        <button className={'copyButton'} onClick={() => copy(optionInfo ? optionInfo.optionToken : '')}><CopyIcon/></button>
+                        <button 
+                        className={'copyButton'} 
+                        onClick={() => {
+                            copy(optionInfo ? optionInfo.optionToken : '')
+                            message.success(t`Copy success`);
+                        }}>
+                            <CopyIcon/>
+                        </button>
                     </div>
                 </div>
                 <div className={`${classPrefix}-rightCard-bottomInfo`}>

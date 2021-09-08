@@ -7,11 +7,23 @@
     height: 44px;
     text-align: center;
     background-color: $gray-background-color;
+    display: flex;
+    justify-content: space-between;
+
+    &.isHidden {
+        display: none;
+    }
 
     b {
+        width: 100%;
         font-size: $T4;
         color: $gray-background-text-color;
         line-height: 44px;
+        text-align: center;
+    }
+
+    button {
+        margin-right: 44px;
     }
 }
 

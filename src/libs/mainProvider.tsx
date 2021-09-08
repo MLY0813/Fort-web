@@ -6,6 +6,8 @@ import useWeb3, { Provider as Web3Provider } from './hooks/useWeb3';
 import injected from './connectors/injected';
 import { Provider as I18nProvider } from './i18nConfig';
 import { Provider as TransactionProvider } from './hooks/useTransactionInfo';
+import { message } from 'antd';
+import { t } from '@lingui/macro';
 
 function getLibrary(provider:any): TypeWeb3Provider {
     const library = new ethers.providers.Web3Provider(provider)
@@ -13,19 +15,26 @@ function getLibrary(provider:any): TypeWeb3Provider {
 }
 
 const Inner: FC = ({children}) => {
-    const { account ,activate } = useWeb3()
+    const {activate, chainId} = useWeb3()
+   
     useEffect(() => {
-      (async () => {
-        try {
+      if (chainId) {
+         if (chainId === 4) {
+           message.warning(t`this is rinkeby`)
+         } else {
+           message.error(t`this is wrong chain`)
+         }
+        ;(async () => {
           const isAuthorized = await injected.connector.isAuthorized()
           if (isAuthorized) {
             activate(injected.connector, undefined, true)
           }
-        } finally {
-          
-        }
-      })()
-    }, [account, activate])
+        })()
+      } else {
+        message.error(t`this is wrong chain`)
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chainId])
     return <>{children}</>
 }
 

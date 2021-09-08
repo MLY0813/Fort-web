@@ -79,14 +79,7 @@
                 p {
                     margin: auto 0;
                     font-size: $T2;
-                }
-
-                & > p:first-child {
                     color: $gray-info-text-color;
-                }
-
-                p + p {
-                    font-family: $boldFont;
                 }
             }
 
