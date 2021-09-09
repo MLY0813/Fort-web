@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { ProblemIcon } from '../Icon'
 import { Popover } from 'antd';
 import './styles'
+import { Trans } from '@lingui/macro';
 
 type Props = {
     leftText: string,
@@ -22,8 +23,8 @@ export const LineShowInfoForOracleFee: FC<Props> = ({...props}) => {
     const classPrefix = 'lineShowInfo'
     const content = (
         <div className={`${classPrefix}-content`}>
-            <h4>预言机调用费</h4>
-            <p>您需要向 NEST 协议支付预言机价格使用费，以便为智能合约提供准确的市场价格数据。</p>
+            <p><Trans>Oracle Fee is what you pay to the NEST protocol for providing accurate 
+market price data to the smart contract.</Trans></p>
         </div>
     )
     return (

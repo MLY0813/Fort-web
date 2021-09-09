@@ -159,8 +159,8 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <p className={`${classPrefix}-rightCard-tokenName`}>{tokenName}</p>
                 <MainButton onClick={() => props.reviewCall(optionInfo, true)}>BUY</MainButton>
                 <div className={`${classPrefix}-rightCard-time`}>
-                    <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>Compare the spot price with the Srike price at</Trans></p>
-                    <p className={`${classPrefix}-rightCard-timeValue`}>{exercise.time}</p>
+                    <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>At</Trans>{exercise.time}</p>
+                    <p className={`${classPrefix}-rightCard-timeValue`}><Trans>compare with spot price and srike price</Trans></p>
                 </div>
                 
                 <div className={`${classPrefix}-rightCard-smallCard`}>

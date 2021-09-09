@@ -62,7 +62,7 @@ const WalletModal: FC<Props> = ({...props}) => {
                     className={'copyButton'} 
                     onClick={() => {
                         copy(account ? account : '')
-                        message.success(t`copy Success`)
+                        message.success(t`Copied`)
                     }}>
                         <CopyIcon/>
                     </button>

@@ -36,15 +36,15 @@ const Farm: FC = () => {
                     <p>{item.name}</p>
                 </div>
                 <div className={`${classPrefix}-middleInfo`}>
-                    <LineShowInfo leftText={t`Lock-in period`} rightText={t`1 Month`}/>
-                    <LineShowInfo leftText={t`Current mining rate`} rightText={t`0.03 FORT/USDT`}/>
-                    <LineShowInfo leftText={t`Current lock volume`} rightText={t`172,218.26 USDT`}/>
-                    <LineShowInfo leftText={t`Mining pools`} rightText={t`10,000,000,00 FORT`}/>
+                    <LineShowInfo leftText={t`Lock period`} rightText={`1 Month`}/>
+                    <LineShowInfo leftText={t`Current mining rate`} rightText={`0.03 FORT/USDT`}/>
+                    <LineShowInfo leftText={t`Staking number`} rightText={`172,218.26 USDT`}/>
+                    <LineShowInfo leftText={t`Mining pool number`} rightText={`10,000,000,00 FORT`}/>
                 </div>
                 <div className={`${classPrefix}-bottomInfo`}>
-                    <LineShowInfo leftText={t`My lockout`} rightText={t`12.483 USDT`}/>
-                    <LineShowInfo leftText={t`Expected mine output`} rightText={t`172,218.26 FORT`}/>
-                    <LineShowInfo leftText={t`Award collection time`} rightText={t`2021-11-31 12:00`}/>
+                    <LineShowInfo leftText={t`My staking`} rightText={`12.483 USDT`}/>
+                    <LineShowInfo leftText={t`Expected mining`} rightText={`172,218.26 FORT`}/>
+                    <LineShowInfo leftText={t`Reward claim time`} rightText={`2021-11-31 12:00`}/>
                 </div>
                 {StakeButton}
             </MainCard>
@@ -53,7 +53,7 @@ const Farm: FC = () => {
     })
     return (
         <div className={classPrefix}>
-            <div className={`${classPrefix}-circleInfo`}>
+            {/* <div className={`${classPrefix}-circleInfo`}>
                 <div className={`${classPrefix}-circleInfo-one`}>
                     <p className={`${classPrefix}-circleInfo-value`}>$ 2,037,482</p>
                     <p><Trans>FORT Price</Trans></p>
@@ -70,7 +70,7 @@ const Farm: FC = () => {
                     <p className={`${classPrefix}-circleInfo-value`}>3,674,921</p>
                     <p><Trans>Fort Mine</Trans></p>
                 </div>
-            </div>
+            </div> */}
             <ul>
                 {farms}
             </ul>

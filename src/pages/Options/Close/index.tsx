@@ -100,16 +100,16 @@ const CloseOptions: FC<Props> = ({...props}) => {
                 const newOptionTokenList = [...optionTokenList, optionToken]
                 localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify(newOptionTokenList))
                 setOptionTokenList(newOptionTokenList)
-                message.success(t`Add option token address success`)
+                message.success(t`Option Token add success`)
             } catch {
-                message.error(t`Add option token address fail`)
+                message.error(t`Option Token add failed`)
             }
         })()
     },[addAddressValue, chainId, library])
 
     const addTokenView = (
         <div className={`${classPrefix}-leftCard-addToken-addTokenView`}>
-            <input placeholder={t`Please input Contract address`} value={addAddressValue} onChange={(e) => setAddAddressValue(formatInputAddress(e.target.value))}/>
+            <input placeholder={t`Input`} value={addAddressValue} onChange={(e) => setAddAddressValue(formatInputAddress(e.target.value))}/>
             <button onClick={addToken}>Add</button>
         </div>
     )
@@ -138,7 +138,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
                         className={'copyButton'} 
                         onClick={() => {
                             copy(optionInfo ? optionInfo.optionToken : '')
-                            message.success(t`Copy success`);
+                            message.success(t`Copied`);
                         }}>
                             <CopyIcon/>
                         </button>

@@ -11,7 +11,7 @@ const Header: FC = () => {
     const [noticeHidden, setNoticeHidden] = useState(false)
     const header = 'header'
     const routes = [
-        {path: '/lever', content: t`Leveraged Coins`},
+        {path: '/lever', content: t`Leveraged Token`},
         {path: '/options', content: t`Opions`},
         {path: '/farm', content: t`Farm`}
     ].map((item) => (

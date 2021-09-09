@@ -60,7 +60,7 @@ const TransactionModal: FC = () => {
             <div className={`mainCard-eurModal-lastAddress`}>
                 <LineShowInfo leftText={t`Contract address`} rightText={showEllipsisAddress(showModal.tokenInfo?.tokenAddress || '0')}/>
                 <button className={'copyButton'} onClick={() => {
-                    message.success(t`copy Success`)
+                    message.success(t`Copied`)
                     copy(showModal.tokenInfo ? showModal.tokenInfo.tokenAddress : '')
                 }}><CopyIcon/></button>
             </div>

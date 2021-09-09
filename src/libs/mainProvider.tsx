@@ -19,11 +19,10 @@ const Inner: FC = ({children}) => {
     const {activate, chainId, error, deactivate} = useWeb3()
     useEffect(() => {
       if (error === undefined) {
-        console.log(99999)
          if (chainId === 4) {
-           message.warning(t`this is rinkeby`)
+           message.warning(t`The current network is rinkeby`)
          } else if (chainId !== 1 && chainId !== undefined) {
-           message.error(t`this is wrong chain`)
+           message.error(t`This network is not supported, please switch the network`)
          }
         ;(async () => {
           const isAuthorized = await injected.connector.isAuthorized()
@@ -31,7 +30,7 @@ const Inner: FC = ({children}) => {
           if (isAuthorized) {
             activate(injected.connector, (error) => {
               deactivate()
-              message.error(t`this is wrong chain`)
+              message.error(t`This network is not supported, please switch the network`)
             }, false)
           }
         })()
