@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { FC } from 'react'
 import LineShowInfo from '../../components/LineShowInfo'
 import MainCard from '../../components/MainCard'

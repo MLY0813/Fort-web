@@ -17,7 +17,7 @@ i18n.loadLocaleData({
     'zh-CN': { plurals: zh },
 })
 
-async function dynamicActivate(locale: string = defaultLocale) {
+export async function dynamicActivate(locale: string = defaultLocale) {
     if (!(locale in locales)) {
       locale = 'en-US'
     }
