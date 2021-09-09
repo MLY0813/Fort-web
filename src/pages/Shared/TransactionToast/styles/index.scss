@@ -5,13 +5,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 270px;
 
     &-left {
         display: flex;
         align-items: center;
-        // justify-content: space-between;
         margin-left: 10px;
-        width: 100%;
+        width: 200px;
 
         svg {
             margin: auto 0;
@@ -26,9 +26,11 @@
         }
     }
 
-    & > a {
+    a {
         color: $main-button-text-color;
+        text-align: center;
         font-size: $T4;
+        width: 60px;
         height: 20px;
         padding: 0 10px;
         border-radius: 10px;

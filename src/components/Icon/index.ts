@@ -28,6 +28,9 @@ export { ReactComponent as ToEtherscan } from './svg/toEtherscan.svg'
 export { ReactComponent as NoOptionToken } from './svg/noOptionToken.svg'
 export { ReactComponent as XIconGray } from './svg/xIconGray.svg'
 export { ReactComponent as ProblemIcon } from './svg/problemIcon.svg'
+export { ReactComponent as WhiteLoading } from './svg/whiteLoading.svg'
+
+
 
 
 

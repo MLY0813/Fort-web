@@ -7,6 +7,7 @@ import injected from './connectors/injected';
 import { Provider as I18nProvider } from './i18nConfig';
 import { Provider as TransactionProvider } from './hooks/useTransactionInfo';
 import { message } from 'antd';
+import '../../src/styles/ant.css'
 import { t } from '@lingui/macro';
 
 function getLibrary(provider:any): TypeWeb3Provider {
@@ -15,23 +16,25 @@ function getLibrary(provider:any): TypeWeb3Provider {
 }
 
 const Inner: FC = ({children}) => {
-    const {activate, chainId} = useWeb3()
-   
+    const {activate, chainId, error, deactivate} = useWeb3()
     useEffect(() => {
-      if (chainId) {
+      if (error === undefined) {
+        console.log(99999)
          if (chainId === 4) {
            message.warning(t`this is rinkeby`)
-         } else {
+         } else if (chainId !== 1 && chainId !== undefined) {
            message.error(t`this is wrong chain`)
          }
         ;(async () => {
           const isAuthorized = await injected.connector.isAuthorized()
+          console.log(isAuthorized)
           if (isAuthorized) {
-            activate(injected.connector, undefined, true)
+            activate(injected.connector, (error) => {
+              deactivate()
+              message.error(t`this is wrong chain`)
+            }, false)
           }
         })()
-      } else {
-        message.error(t`this is wrong chain`)
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chainId])

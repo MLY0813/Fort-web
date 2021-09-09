@@ -7,8 +7,10 @@ import { CopyIcon, Loading, Refuse, Success } from '../../../components/Icon'
 import LineShowInfo from '../../../components/LineShowInfo'
 import MainCard from '../../../components/MainCard'
 import useTransactionListCon from '../../../libs/hooks/useTransactionInfo'
-import { ETHERSCAN_BASE_URL, showEllipsisAddress } from '../../../libs/utils'
+import { bigNumberToNormal, ETHERSCAN_BASE_URL, showEllipsisAddress } from '../../../libs/utils'
 import './styles'
+import { BigNumber } from '@ethersproject/bignumber'
+import { message } from 'antd'
 
 export enum TransactionModalType {
     wait = 0,
@@ -54,10 +56,13 @@ const TransactionModal: FC = () => {
         <Success/>
         <p className={`${classPrefix}-text`}><Trans>European option Token minted successfully</Trans></p>
         <MainCard classNames={'mainCard-eurModal'}>
-            <LineShowInfo leftText={t`Number of Option Token`} rightText={(showModal.tokenInfo?.tokenValue || '')}/>
+            <LineShowInfo leftText={t`Number of Option Token`} rightText={bigNumberToNormal(BigNumber.from(showModal.tokenInfo?.tokenValue || '0'), 18, 6)}/>
             <div className={`mainCard-eurModal-lastAddress`}>
-                <LineShowInfo leftText={t`Contract address`} rightText={showEllipsisAddress(showModal.tokenInfo?.tokenAddress || '')}/>
-                <button className={'copyButton'} onClick={() => copy(showModal.tokenInfo ? showModal.tokenInfo.tokenAddress : '')}><CopyIcon/></button>
+                <LineShowInfo leftText={t`Contract address`} rightText={showEllipsisAddress(showModal.tokenInfo?.tokenAddress || '0')}/>
+                <button className={'copyButton'} onClick={() => {
+                    message.success(t`copy Success`)
+                    copy(showModal.tokenInfo ? showModal.tokenInfo.tokenAddress : '')
+                }}><CopyIcon/></button>
             </div>
         </MainCard>
         <a href={`${ETHERSCAN_BASE_URL}${showModal.hash}`} target="view_window"><Trans>View on etherscan</Trans></a>

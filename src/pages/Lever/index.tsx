@@ -9,7 +9,7 @@ import LineShowInfo from '../../components/LineShowInfo'
 import { SingleTokenShow } from '../../components/TokenShow'
 import LeverReview, { LeverReviewModel } from '../Review/LeverReview'
 import { ERC20Contract, NestPriceContract } from '../../libs/hooks/useContract'
-import { bigNumberToNormal } from '../../libs/utils'
+import { bigNumberToNormal, formatInputNum } from '../../libs/utils'
 import { LeverTokenList, tokenList } from '../../libs/constants/addresses'
 import useWeb3 from '../../libs/hooks/useWeb3'
 import { BigNumber } from 'ethers'
@@ -99,7 +99,8 @@ const Lever: FC = () => {
     }
 
     const handleInput = (value: string) => {
-        setTransactionInfo({...transactionInfo, fromNum: value, getNum: value})
+        const formatValue = formatInputNum(value)
+        setTransactionInfo({...transactionInfo, fromNum: formatValue, getNum: formatValue})
     }
 
     const classPrefix = 'lever'
@@ -112,7 +113,10 @@ const Lever: FC = () => {
         price: priceNow
     }
     const checkBalance = () => {
-        if (transactionInfo.fromNum > fromBalance) {
+        if (
+        fromBalance !== '--.--' && 
+        transactionInfo.fromNum !== '' && 
+        BigNumber.from(transactionInfo.fromNum).gt(BigNumber.from(fromBalance))) {
             return true
         }
         return false
@@ -135,7 +139,12 @@ const Lever: FC = () => {
                         <PutDownIcon/>
                     </div>
                     <div className={`infoView-mainView-maxView`}>
-                        <input className={'input-right'} value={transactionInfo.fromNum} onChange={(e) => handleInput(e.target.value)} placeholder={t`Input`}/>
+                        <input 
+                        type={'text'}
+                        className={'input-right'} 
+                        value={transactionInfo.fromNum} 
+                        onChange={(e) => handleInput(e.target.value)} 
+                        placeholder={t`Input`}/>
                         <button className={'max-button'} onClick={() => handleMax()}>MAX</button>
                     </div>
                 </InfoShow>

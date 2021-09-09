@@ -13,7 +13,7 @@ import { tokenList } from "../../../libs/constants/addresses"
 import { FortOptionToken } from '../../../libs/hooks/useContract'
 import copy from 'copy-to-clipboard'
 import useWeb3 from '../../../libs/hooks/useWeb3'
-import { bigNumberToNormal, normalToBigNumber, showEllipsisAddress } from "../../../libs/utils"
+import { bigNumberToNormal, formatInputAddress, normalToBigNumber, showEllipsisAddress } from "../../../libs/utils"
 import './styles'
 import { Link } from "react-router-dom"
 import { Contract } from "ethers"
@@ -109,7 +109,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
 
     const addTokenView = (
         <div className={`${classPrefix}-leftCard-addToken-addTokenView`}>
-            <input placeholder={t`Please input Contract address`} value={addAddressValue} onChange={(e) => setAddAddressValue(e.target.value)}/>
+            <input placeholder={t`Please input Contract address`} value={addAddressValue} onChange={(e) => setAddAddressValue(formatInputAddress(e.target.value))}/>
             <button onClick={addToken}>Add</button>
         </div>
     )

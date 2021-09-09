@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { FC, MouseEventHandler } from 'react'
+import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { BackIcon } from '../../../components/Icon'
 import LineShowInfo, { LineShowInfoForOracleFee } from '../../../components/LineShowInfo'
 import MainButton from '../../../components/MainButton'
@@ -8,8 +8,10 @@ import MainCard from '../../../components/MainCard'
 import ReviewInfo from '../../../components/ReviewInfo'
 import { useFortEuropeanOptionExercise, useFortEuropeanOptionOpen } from '../../../contracts/hooks/useFortEuropeanOptionTransation'
 import { tokenList } from '../../../libs/constants/addresses'
+import useTransactionListCon, { TransactionState } from '../../../libs/hooks/useTransactionInfo'
 import { bigNumberToNormal } from '../../../libs/utils'
 import { OptionsInfo } from '../../Options'
+import { TransactionModalType } from '../../Shared/TransactionModal'
 import '../styles'
 
 type Props = {
@@ -20,10 +22,12 @@ type Props = {
 
 const OptionsReview: FC<Props> = ({...props}) => {
     const classPrefix = 'optionsReview'
+    const {txList,showModal} = useTransactionListCon()
+    const [txHash, setTxHash] = useState('')
+    const [buttonLoading, setButtonLoading] = useState(false)
     if (!props.optionsInfo) {
         throw Error('OptionsReview:no info')
     }
-    
     const open = useFortEuropeanOptionOpen(
         'ETH', 
         BigNumber.from(props.optionsInfo.strikePrice), 
@@ -35,6 +39,19 @@ const OptionsReview: FC<Props> = ({...props}) => {
         props.optionsInfo.optionToken,
         props.optionsInfo.optionTokenAmount
     )
+
+    useEffect(() => {
+        if (showModal.txType === TransactionModalType.success && !buttonLoading) {
+            setButtonLoading(true)
+            setTxHash(showModal.hash)
+        } 
+        if (buttonLoading) {
+            if (txList.filter((item) => item.hash === txHash)[0].txState !== TransactionState.Pending) {
+                setButtonLoading(false)
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showModal.txType, txList])
     return (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-mainCard`}>
@@ -59,7 +76,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
                     </div>
                 </div>
                 <LineShowInfoForOracleFee leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
-                <MainButton onClick={props.isMint ? open : close}><Trans>{props.isMint ? 'Mint Confirm' : 'Close Confirm'}</Trans></MainButton>
+                <MainButton onClick={props.isMint ? open : close} loading={buttonLoading} disable={buttonLoading}><Trans>{props.isMint ? 'Mint Confirm' : 'Close Confirm'}</Trans></MainButton>
             </MainCard>
         </div>
     )

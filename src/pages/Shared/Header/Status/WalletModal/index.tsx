@@ -38,7 +38,7 @@ const WalletModal: FC<Props> = ({...props}) => {
                     icon = (<><Fail/></>)
                 }
                 return (
-                <li key={item.address}>
+                <li key={item.hash}>
                     {icon}
                     <div className={`transactionInfo`}>
                         <p>{item.title}</p>

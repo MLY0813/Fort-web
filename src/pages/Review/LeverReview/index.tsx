@@ -1,13 +1,15 @@
 import { t, Trans } from '@lingui/macro'
 import { BigNumber } from 'ethers'
-import { FC, MouseEventHandler } from 'react'
+import { FC, MouseEventHandler, useEffect, useState } from 'react'
 import { BackIcon } from '../../../components/Icon'
 import LineShowInfo, { LineShowInfoForOracleFee } from '../../../components/LineShowInfo'
 import MainButton from '../../../components/MainButton'
 import MainCard from '../../../components/MainCard'
 import ReviewInfo from '../../../components/ReviewInfo'
 import { useFortLeverBuy } from '../../../contracts/hooks/useFortLeverTransation'
+import useTransactionListCon, { TransactionState } from '../../../libs/hooks/useTransactionInfo'
 import { normalToBigNumber } from '../../../libs/utils'
+import { TransactionModalType } from '../../Shared/TransactionModal'
 import '../styles'
 
 export type LeverReviewModel = {
@@ -28,6 +30,9 @@ const LeverReview: FC<Props> = ({...props}) => {
     const classPrefix = 'leverReview'
     var details_type: boolean
     var details_factor: string = ''
+    const {txList,showModal} = useTransactionListCon()
+    const [txHash, setTxHash] = useState('')
+    const [buttonLoading, setButtonLoading] = useState(false)
     if (props.model.fromToken === 'DCU') {
         const strLength = props.model.getToken.length
         details_type = props.model.getToken[strLength - 1] === 'L' ? true : false
@@ -37,6 +42,19 @@ const LeverReview: FC<Props> = ({...props}) => {
         details_type = props.model.fromToken[strLength - 1] === 'L' ? true : false
         details_factor = props.model.fromToken[strLength - 2]
     }
+
+    useEffect(() => {
+        if (showModal.txType === TransactionModalType.success && !buttonLoading) {
+            setButtonLoading(true)
+            setTxHash(showModal.hash)
+        } 
+        if (buttonLoading) {
+            if (txList.filter((item) => item.hash === txHash)[0].txState !== TransactionState.Pending) {
+                setButtonLoading(false)
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showModal.txType, txList])
     
     const buy = useFortLeverBuy('ETH', BigNumber.from(details_factor), details_type, normalToBigNumber(props.model.fromNum))
     return (
@@ -63,7 +81,7 @@ const LeverReview: FC<Props> = ({...props}) => {
                 </div>
                 <LineShowInfo leftText={t`Current price`} rightText={`1 ETH = ${props.model.price} USDT`}/>
                 <LineShowInfoForOracleFee leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
-                <MainButton onClick={buy}><Trans>Swap Confirm</Trans></MainButton>
+                <MainButton onClick={buy} loading={buttonLoading} disable={buttonLoading}><Trans>Swap Confirm</Trans></MainButton>
             </MainCard>
         </div>
     )

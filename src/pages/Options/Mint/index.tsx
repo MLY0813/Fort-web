@@ -10,7 +10,7 @@ import { DoubleTokenShow, SingleTokenShow } from '../../../components/TokenShow'
 import { FortEuropeanOptionContract, tokenList } from '../../../libs/constants/addresses'
 import { ERC20Contract, FortEuropeanOption, NestPriceContract } from '../../../libs/hooks/useContract'
 import useWeb3 from '../../../libs/hooks/useWeb3'
-import { bigNumberToNormal, normalToBigNumber, ZERO_ADDRESS } from '../../../libs/utils'
+import { bigNumberToNormal, formatInputNum, normalToBigNumber, ZERO_ADDRESS } from '../../../libs/utils'
 import { DatePicker } from 'antd';
 import '../../../styles/ant.css'
 import './styles'
@@ -137,7 +137,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                     placeholder={t`Input`}
                     className={'input-left'} 
                     value={strikePrice} 
-                    onChange={(e) => setStrikePrice(e.target.value)} 
+                    onChange={(e) => setStrikePrice(formatInputNum(e.target.value))} 
                     onBlur={(e:any) => setOptionTokenNumBaseInfo({...optionTokenNumBaseInfo, strikePrice:e.target.value})}/>
                     <span>USDT</span>
                 </InfoShow>
@@ -147,7 +147,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                     placeholder={t`Input`}
                     className={'input-middle'} 
                     value={fortNum} 
-                    onChange={(e) => setFortNum(e.target.value)} 
+                    onChange={(e) => setFortNum(formatInputNum(e.target.value))} 
                     onBlur={(e:any) => setOptionTokenNumBaseInfo({...optionTokenNumBaseInfo, fortNum:e.target.value})}/>
                     <button className={'max-button'} onClick={() => setFortNum(bigNumberToNormal(fortBalance))}>MAX</button>
                 </InfoShow>
