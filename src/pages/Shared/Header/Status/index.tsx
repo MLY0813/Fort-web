@@ -22,7 +22,7 @@ const ConnectStatus: FC = () => {
             [`${classPrefix}`]: true,
             [`isConnect`]: false
         })}>
-            {thisChain !== undefined ? (<div className={`${classPrefix}-chainName`}>{thisChain.name}</div>) : null}
+            {thisChain !== undefined  && thisChain.chainId !== 1 ? (<div className={`${classPrefix}-chainName`}>{thisChain.name}</div>) : null}
             
             {account === undefined ?
              (<Popup

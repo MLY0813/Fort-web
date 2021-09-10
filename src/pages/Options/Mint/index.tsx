@@ -169,7 +169,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                             <p><Trans>Spot price</Trans>{isLong ? '>' : '<'}{strikePrice}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
-                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? '(现货价-行权价)*' : '(行权价-现货价)*'}{bigNumberToNormal(optionTokenValue,18,2)}</p>
+                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? t`(Spot price - Strike price)*` : t`(Strike price - Spot price)*`}{bigNumberToNormal(optionTokenValue,18,2)}</p>
                         <p className={`${classPrefix}-rightCard-smallCard-name`}>FORT</p>
                     </MainCard>
                     <MainCard>
@@ -177,7 +177,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                             <p><Trans>Spot price</Trans>{isLong ? '<=' : '>='}{strikePrice}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
-                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? '(现货价-行权价)*' : '(行权价-现货价)*'}{bigNumberToNormal(optionTokenValue,18,2)}</p>
+                        <p className={`${classPrefix}-rightCard-smallCard-value`}>{'0'}</p>
                         <p className={`${classPrefix}-rightCard-smallCard-name`}>FORT</p>
                     </MainCard>
                 </div>

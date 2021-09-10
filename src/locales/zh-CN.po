@@ -13,6 +13,14 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/pages/Options/Mint/index.tsx
+msgid "(Spot price - Strike price)*"
+msgstr "(现货价) - 行权价)*"
+
+#: src/pages/Options/Mint/index.tsx
+msgid "(行权价 - 现货价)*"
+msgstr ""
+
 #: src/pages/Options/Close/index.tsx
 msgid "+ Add option Token"
 msgstr "+ 添加期权币"
@@ -48,6 +56,7 @@ msgstr "杠杆币买入"
 msgid "Close"
 msgstr "结算"
 
+#: src/pages/Review/OptionsReview/index.tsx
 #: src/pages/Review/OptionsReview/index.tsx
 msgid "Close Confirm"
 msgstr "确认结算"
@@ -191,6 +200,7 @@ msgid "Mint"
 msgstr "铸币"
 
 #: src/pages/Review/OptionsReview/index.tsx
+#: src/pages/Review/OptionsReview/index.tsx
 msgid "Mint Confirm"
 msgstr "确认铸币"
 
@@ -217,6 +227,7 @@ msgstr "期权币数量"
 msgid "Opions"
 msgstr "期权币"
 
+#: src/pages/Options/Close/index.tsx
 #: src/pages/Options/Close/index.tsx
 msgid "Option Token add failed"
 msgstr "期权币添加失败"

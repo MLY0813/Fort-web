@@ -35,7 +35,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
     const [optionInfo, setOptionInfo] = useState<OptionsInfo | null>()
     const [optionTokenList, setOptionTokenList] = useState<Array<{[key:string]:string}>>([])
     
-    const routes = optionTokenList ? optionTokenList.reverse().map((item: any) => (
+    const routes = optionTokenList ? optionTokenList.reverse().map((item: any, index) => (
         <li key={item.address} className={classNames({
             selected: item.address === selectToken,
           })} onClick={() => setSelectToken(item.address)}>
@@ -92,6 +92,10 @@ const CloseOptions: FC<Props> = ({...props}) => {
         var cache = localStorage.getItem("optionTokensList" + chainId?.toString())
         var optionTokenList = cache ? JSON.parse(cache) : []
         const newTokenAddress = addAddressValue
+        if (optionTokenList.filter((item: { address: string }) => item.address === newTokenAddress).length === 0) {
+            message.success(t`Option Token add failed`)
+            return
+        }
         const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library)
         ;(async () => {
             try {

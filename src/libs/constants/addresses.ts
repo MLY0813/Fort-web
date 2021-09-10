@@ -43,6 +43,16 @@ export const tokenList: {[key: string]: TokenType} = {
             4: '0xDB7b4FdF99eEE8E4Cb8373630c923c51c1275382'
         }
     },
+    "HBTC": {
+        symbol: 'HBTC',
+        Icon: TokenETH,
+        decimals: 18,
+        addresses: {
+            1: ZERO_ADDRESS,
+            2: ZERO_ADDRESS,
+            4: '0xaE73d363Cb4aC97734E07e48B01D0a1FF5D1190B'
+        }
+    },
     "Margin-ETH1L": {
         symbol: 'Margin-ETH1L',
         Icon: TokenLeverUp,

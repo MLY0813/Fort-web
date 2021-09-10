@@ -87,3 +87,14 @@ export function formatInputAddress(value: string): string {
     // eslint-disable-next-line no-useless-escape
     return value.replace(/[^\w\.\/]/ig,'')
 }
+
+export function forMoney(value: string) {
+    // eslint-disable-next-line no-useless-escape
+    value = parseFloat((value + "").replace(/[^\d\.-]/g, "")) + "";  
+    var l = value.split(".")[0].split("").reverse(), r = value.split(".")[1];  
+    var t = "";  
+    for (var i = 0; i < l.length; i++) {  
+        t += l[i] + ((i + 1) % 3 === 0 && (i + 1) !== l.length ? "," : "");  
+    }  
+    return t.split("").reverse().join("") + "." + r;  
+} 

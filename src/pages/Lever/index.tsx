@@ -13,6 +13,7 @@ import { bigNumberToNormal, formatInputNum } from '../../libs/utils'
 import { LeverTokenList, tokenList } from '../../libs/constants/addresses'
 import useWeb3 from '../../libs/hooks/useWeb3'
 import { BigNumber } from 'ethers'
+import { message } from 'antd'
 
 type LeverTransactionIon = {
     fromToken: string,
@@ -113,10 +114,14 @@ const Lever: FC = () => {
         price: priceNow
     }
     const checkBalance = () => {
+        console.log(chainId)
         if (
-        fromBalance !== '--.--' && 
-        transactionInfo.fromNum !== '' && 
-        BigNumber.from(transactionInfo.fromNum).gt(BigNumber.from(fromBalance))) {
+        fromBalance === '--.--' || 
+        transactionInfo.fromNum === '') {
+            return true
+        } 
+        if (BigNumber.from(transactionInfo.fromNum).gt(BigNumber.from(fromBalance)) &&
+        chainId !== 1 && chainId !== 4) {
             return true
         }
         return false
@@ -164,7 +169,13 @@ const Lever: FC = () => {
                 <LineShowInfo leftText={t`Current price`} rightText={`1 ETH = ${priceNow} USDT`}/>
                 <MainButton 
                 className={`${classPrefix}-card-buyButton`} 
-                onClick={() => setIsReview(true)} disable={checkBalance()}>
+                onClick={() => {
+                    if (BigNumber.from(transactionInfo.fromNum).lt(BigNumber.from(100))) {
+                        message.error('输入金额必须大于等于100')
+                        return 
+                    }
+                    setIsReview(true)
+                }} disable={checkBalance()}>
                     <Trans>BUY</Trans>
                 </MainButton>
             </MainCard>

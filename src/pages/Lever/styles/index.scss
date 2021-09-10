@@ -17,10 +17,12 @@
             .infoView-mainView-maxView {
                 display: flex;
                 justify-content: flex-end;
+                margin-left: 0;
 
                 .input-right {
                     margin-left: 0px;
                     margin-right: 10px;
+                    width: 100%;
                 }
             }
         }

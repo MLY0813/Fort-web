@@ -65,6 +65,7 @@ const useTransactionList = () => {
     }, [chainId])
     
     useEffect(() => {
+        if (!chainId) {return}
         if (txList.length === 0) {return}
         ;(async () => {
             localStorage.setItem('transactionList' + chainId?.toString(), JSON.stringify(txList))
@@ -74,7 +75,7 @@ const useTransactionList = () => {
             console.log('2' + {txList})
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [txList])
+    }, [txList, chainId])
 
     useEffect(() => {
         if (pendingList.length === 0 || checking) {return}
@@ -89,7 +90,6 @@ const useTransactionList = () => {
                     element.txState = status
                     updateList(element)
                     setChecking(false)
-                    console.log('成功' + {index})
                     notifyTransaction(element)
                     
                     if (element.type === TransactionType.buyOption) {
@@ -99,12 +99,12 @@ const useTransactionList = () => {
                             optionTokenList = JSON.parse(cache)
                         }
                         const newTokenAddress = rec['logs'][1]['address']
-                        console.log(rec['logs'][1]['address'])
                         const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library)
                         const newTokenName = await newTokenContract.name()
-                        const optionToken = {address: newTokenAddress, name: newTokenName}
-                        console.log(rec)
-                        localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify([...optionTokenList, optionToken]))
+                        if (optionTokenList.filter((item: { address: string; }) => item.address === newTokenAddress).length === 0) {
+                            const optionToken = {address: newTokenAddress, name: newTokenName}
+                            localStorage.setItem('optionTokensList' + chainId?.toString(), JSON.stringify([...optionTokenList, optionToken]))
+                        }
                         const tokenInfo:TransactionModalTokenInfo = {
                             tokenName: newTokenName,
                             tokenAddress: newTokenAddress,
@@ -114,7 +114,6 @@ const useTransactionList = () => {
                     }
                     return
                 }
-                console.log('下一个' + {index})
             }
             setTimeout(() => {
                 setChecking(false)
