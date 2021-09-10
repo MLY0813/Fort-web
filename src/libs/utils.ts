@@ -60,6 +60,14 @@ export function normalToBigNumber(num: string, decimals: number = 18): BigNumber
     }
 }
 
+export function getBaseBigNumber(num: number): BigNumber {
+    var numStr = '1'
+    for (var i = 0; i < num; i++) {
+        numStr += '0'
+    }
+    return BigNumber.from(numStr)
+}
+
 /**
  * gasLimit默认增加
  * @param value 默认gaslImit

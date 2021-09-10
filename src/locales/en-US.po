@@ -179,7 +179,6 @@ msgid "Leveraged Token"
 msgstr "Leveraged Token"
 
 #: src/pages/Review/LeverReview/index.tsx
-#: src/pages/Review/OptionsReview/index.tsx
 msgid "Leveraged Token details"
 msgstr "Leveraged Token details"
 
@@ -224,8 +223,8 @@ msgid "Number of Option Token"
 msgstr "Number of Option Token"
 
 #: src/pages/Shared/Header/index.tsx
-msgid "Opions"
-msgstr "Opions"
+msgid "Opions Token"
+msgstr "Opions Token"
 
 #: src/pages/Options/Close/index.tsx
 #: src/pages/Options/Close/index.tsx
@@ -247,6 +246,10 @@ msgstr "Option Token held"
 #: src/contracts/hooks/useFortEuropeanOptionTransation.ts
 msgid "Option Token mint"
 msgstr "Option Token mint"
+
+#: src/pages/Review/OptionsReview/index.tsx
+msgid "Options Token details"
+msgstr "Options Token details"
 
 #: src/components/LineShowInfo/index.tsx
 msgid "Oracle Fee is what you pay to the NEST protocol for providing accurate market price data to the smart contract."

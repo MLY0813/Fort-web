@@ -15,11 +15,11 @@ msgstr ""
 
 #: src/pages/Options/Mint/index.tsx
 msgid "(Spot price - Strike price)*"
-msgstr "(现货价) - 行权价)*"
+msgstr "(现货价 - 行权价)*"
 
 #: src/pages/Options/Mint/index.tsx
-msgid "(行权价 - 现货价)*"
-msgstr ""
+msgid "(Strike price - Spot price)*"
+msgstr "(行权价 - 现货价)*"
 
 #: src/pages/Options/Close/index.tsx
 msgid "+ Add option Token"
@@ -179,7 +179,6 @@ msgid "Leveraged Token"
 msgstr "杠杆币"
 
 #: src/pages/Review/LeverReview/index.tsx
-#: src/pages/Review/OptionsReview/index.tsx
 msgid "Leveraged Token details"
 msgstr "杠杆币详情"
 
@@ -224,7 +223,7 @@ msgid "Number of Option Token"
 msgstr "期权币数量"
 
 #: src/pages/Shared/Header/index.tsx
-msgid "Opions"
+msgid "Opions Token"
 msgstr "期权币"
 
 #: src/pages/Options/Close/index.tsx
@@ -247,6 +246,10 @@ msgstr "持有的期权币"
 #: src/contracts/hooks/useFortEuropeanOptionTransation.ts
 msgid "Option Token mint"
 msgstr "期权币铸币"
+
+#: src/pages/Review/OptionsReview/index.tsx
+msgid "Options Token details"
+msgstr "期权币详情"
 
 #: src/components/LineShowInfo/index.tsx
 msgid "Oracle Fee is what you pay to the NEST protocol for providing accurate market price data to the smart contract."

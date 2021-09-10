@@ -66,7 +66,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
                 name={props.isMint ? 'DCU' : props.optionsInfo?.optionTokenName || ''}/>
                 {props.isMint ? null : (<ReviewInfo title={t`Expected get `} value={bigNumberToNormal(props.optionsInfo?.fortAmount)} name={'DCU'}/>)}
                 <div className={`${classPrefix}-mainCard-details`}>
-                    <p className={`${classPrefix}-mainCard-details-title`}><Trans>Leveraged Token details</Trans></p>
+                    <p className={`${classPrefix}-mainCard-details-title`}><Trans>Options Token details</Trans></p>
                     <div className={`${classPrefix}-mainCard-details-infoCard`}>
                         <LineShowInfo leftText={t`Type`} rightText={props.optionsInfo?.type ? 'ETH Long Leveraged Token' : 'ETH Short Leveraged Token'}/>
                         <LineShowInfo leftText={t`Number of Option Token`} rightText={bigNumberToNormal(props.optionsInfo.optionTokenAmount)}/>

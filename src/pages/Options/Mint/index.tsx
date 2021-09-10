@@ -166,7 +166,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <div className={`${classPrefix}-rightCard-smallCard`}>
                     <MainCard>
                         <div className={`${classPrefix}-rightCard-smallCard-title`}>
-                            <p><Trans>Spot price</Trans>{isLong ? '>' : '<'}{strikePrice}</p>
+                            <p><Trans>Spot price</Trans>{isLong ? '>' : '<'}{bigNumberToNormal(normalToBigNumber(strikePrice))}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
                         <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? t`(Spot price - Strike price)*` : t`(Strike price - Spot price)*`}{bigNumberToNormal(optionTokenValue,18,2)}</p>
@@ -174,7 +174,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                     </MainCard>
                     <MainCard>
                         <div className={`${classPrefix}-rightCard-smallCard-title`}>
-                            <p><Trans>Spot price</Trans>{isLong ? '<=' : '>='}{strikePrice}</p>
+                            <p><Trans>Spot price</Trans>{isLong ? '<=' : '>='}{bigNumberToNormal(normalToBigNumber(strikePrice))}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
                         <p className={`${classPrefix}-rightCard-smallCard-value`}>{'0'}</p>

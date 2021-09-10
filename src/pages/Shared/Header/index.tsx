@@ -12,7 +12,7 @@ const Header: FC = () => {
     const header = 'header'
     const routes = [
         {path: '/lever', content: t`Leveraged Token`},
-        {path: '/options', content: t`Opions`},
+        {path: '/options', content: t`Opions Token`},
         {path: '/farm', content: t`Farm`}
     ].map((item) => (
         <li key={item.path} className={classNames({
