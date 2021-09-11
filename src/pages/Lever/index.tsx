@@ -82,7 +82,7 @@ const Lever: FC = () => {
         setGetBalance('--.--')
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account, chainId, transactionInfo.getToken])
-
+    console.log('刷新一次')
     const handleExchange = () => {
         const oldTransactionInfo = transactionInfo
         setTransactionInfo({

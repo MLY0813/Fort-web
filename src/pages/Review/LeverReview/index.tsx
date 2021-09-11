@@ -1,12 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import { BigNumber } from 'ethers'
-import { FC, MouseEventHandler, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { BackIcon } from '../../../components/Icon'
 import LineShowInfo, { LineShowInfoForOracleFee } from '../../../components/LineShowInfo'
 import MainButton from '../../../components/MainButton'
 import MainCard from '../../../components/MainCard'
 import ReviewInfo from '../../../components/ReviewInfo'
-import { useFortLeverBuy } from '../../../contracts/hooks/useFortLeverTransation'
+import { useFortLeverBuy, useFortLeverSell } from '../../../contracts/hooks/useFortLeverTransation'
 import useTransactionListCon, { TransactionState } from '../../../libs/hooks/useTransactionInfo'
 import { normalToBigNumber } from '../../../libs/utils'
 import { TransactionModalType } from '../../Shared/TransactionModal'
@@ -23,7 +23,7 @@ export type LeverReviewModel = {
 
 type Props = {
     model: LeverReviewModel
-    back: MouseEventHandler<HTMLButtonElement>
+    back: () => void
 }
 
 const LeverReview: FC<Props> = ({...props}) => {
@@ -55,8 +55,21 @@ const LeverReview: FC<Props> = ({...props}) => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showModal.txType, txList])
+    var action: any = null
+    try {
+        if (props.model.fromToken === 'DCU') {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            action = useFortLeverBuy('ETH', BigNumber.from(details_factor), details_type, normalToBigNumber(props.model.fromNum))
+        } else {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            action = useFortLeverSell(props.model.fromToken, normalToBigNumber(props.model.fromNum).toString())
+        }
+    } catch (error) {
+        props.back()
+        console.log(error)
+        return (<></>)
+    }
     
-    const buy = useFortLeverBuy('ETH', BigNumber.from(details_factor), details_type, normalToBigNumber(props.model.fromNum))
     return (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-mainCard`}>
@@ -81,7 +94,7 @@ const LeverReview: FC<Props> = ({...props}) => {
                 </div>
                 <LineShowInfo leftText={t`Current price`} rightText={`1 ETH = ${props.model.price} USDT`}/>
                 <LineShowInfoForOracleFee leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
-                <MainButton onClick={buy} loading={buttonLoading} disable={buttonLoading}><Trans>Swap Confirm</Trans></MainButton>
+                <MainButton onClick={action} loading={buttonLoading} disable={buttonLoading}><Trans>Swap Confirm</Trans></MainButton>
             </MainCard>
         </div>
     )

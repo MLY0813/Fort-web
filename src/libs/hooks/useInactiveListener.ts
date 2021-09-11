@@ -17,6 +17,7 @@ const useInactiveListener = (suppress = false) => {
       }
 
       const handleChainChanged = () => {
+        
         // eat errors
         activate(injected.connector, undefined, true).catch((error) => {
           console.error('Failed to activate after chain changed', error)

@@ -16,14 +16,20 @@ export function useFortEuropeanOptionOpen(
     fortAmount: BigNumber
 ) { 
     const { account, chainId } = useWeb3()
-    const contract = FortEuropeanOption(FortEuropeanOptionContract)
-    const callData = contract?.interface.encodeFunctionData('open', [
-        tokenList[tokenName].addresses[chainId ? chainId : 1], 
-        price, 
-        orientation, 
-        endblock, 
-        fortAmount]
-    )
+    var contract = FortEuropeanOption(FortEuropeanOptionContract)
+    var callData: string | undefined
+    if (!chainId) {
+        contract = null
+    } else {
+        callData = contract?.interface.encodeFunctionData('open', [
+            tokenList[tokenName].addresses[chainId], 
+            price, 
+            orientation, 
+            endblock, 
+            fortAmount]
+        )
+    }
+    
     const tx = {
         from: account,
         to: contract?.address,
@@ -38,12 +44,18 @@ export function useFortEuropeanOptionExercise(
     optionAddress: string,
     amount: BigNumber
 ) {
-    const { account } = useWeb3()
-    const contract = FortEuropeanOption(FortEuropeanOptionContract)
-    const callData = contract?.interface.encodeFunctionData('exercise', [
-        optionAddress, 
-        amount]
-    )
+    const { account, chainId } = useWeb3()
+    var contract = FortEuropeanOption(FortEuropeanOptionContract)
+    var callData: string | undefined
+    if (!chainId) {
+        contract = null
+    } else {
+        callData = contract?.interface.encodeFunctionData('exercise', [
+            optionAddress, 
+            amount]
+        )
+    }
+    
     const tx = {
         from: account,
         to: contract?.address,

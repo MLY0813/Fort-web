@@ -15,16 +15,18 @@ export function useFortLeverBuy(
     fortAmount: BigNumber
 ) {
     const { account, chainId } = useWeb3()
-    const contract = FortLever(FortLeverContract)
+    var contract = FortLever(FortLeverContract)
+    var callData: string | undefined
     if (!chainId) {
-        throw Error('useFortLeverBuy: !chainId')
+        contract = null
+    } else {
+        callData = contract?.interface.encodeFunctionData('buy', [
+            tokenList[tokenName].addresses[chainId || 9], 
+            lever, 
+            orientation, 
+            fortAmount]
+        )
     }
-    const callData = contract?.interface.encodeFunctionData('buy', [
-        tokenList[tokenName].addresses[chainId], 
-        lever, 
-        orientation, 
-        fortAmount]
-    )
     const tx = {
         from: account,
         to: contract?.address,
@@ -36,15 +38,20 @@ export function useFortLeverBuy(
 }
 
 export function useFortLeverSell(
-    leverAddress: string, 
+    leverTokenName: string, 
     amount: string
 ) {
-    const { account } = useWeb3()
-    const contract = FortLever(FortLeverContract)
-    const callData = contract?.interface.encodeFunctionData('buy', [
-        leverAddress, 
-        amount]
-    )
+    const { account, chainId } = useWeb3()
+    var contract = FortLever(FortLeverContract)
+    var callData: string | undefined
+    if (!chainId) {
+        contract = null
+    } else {
+        callData = contract?.interface.encodeFunctionData('sell', [
+            tokenList[leverTokenName].addresses[chainId], 
+            amount]
+        )
+    }
     const tx = {
         from: account,
         to: contract?.address,
