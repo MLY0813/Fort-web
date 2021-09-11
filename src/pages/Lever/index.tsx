@@ -114,7 +114,6 @@ const Lever: FC = () => {
         price: priceNow
     }
     const checkBalance = () => {
-        console.log(chainId)
         if (
         fromBalance === '--.--' || 
         transactionInfo.fromNum === '') {

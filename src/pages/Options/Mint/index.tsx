@@ -135,13 +135,22 @@ const MintOptions: FC<Props> = ({...props}) => {
         return false
     }
     function disabledDate(current: any) {
-        // Can not select days before today and today
+        const nowHour = Number(moment().format('HH'))
+        if (nowHour > 22) {
+            return current && current < moment().endOf('day');
+        }
         return current && current < moment().startOf('day');
       }
       
-    function disabledDateTime() {
+    function disabledDateTime(date: any) {
+        var nowHour:number
+        if (date && moment().format("MMM Do YY") === date.format("MMM Do YY")) {
+            nowHour = Number(moment().format('HH')) + 2
+        } else {
+            nowHour = 0
+        }
         return {
-            disabledHours: () => range(0, 24).splice(0,Number(moment().format('hh')) + 2)
+            disabledHours: () => range(0, 24).splice(0, nowHour)
         };
     }
 
@@ -165,7 +174,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 format="YYYY-MM-DD HH:mm:ss"
                 disabledDate={disabledDate}
                 disabledTime={disabledDateTime} 
-                showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }} 
+                showTime
                 onOk={onOk} 
                 bordered={false} 
                 suffixIcon={(<PutDownIcon/>)} 

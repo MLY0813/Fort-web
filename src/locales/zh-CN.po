@@ -305,12 +305,9 @@ msgstr "交易确认"
 msgid "The Option Token has not reached the exercise time"
 msgstr "当前期权币未到行权时间"
 
-#: src/libs/mainProvider.tsx
-msgid "The current network is rinkeby"
-msgstr "当前网络为rinkeby"
-
-#: src/libs/mainProvider.tsx
-#: src/libs/mainProvider.tsx
+#: src/libs/hooks/useEagerConnect.ts
+#: src/pages/Shared/Header/Status/Modal/index.tsx
+#: src/pages/Shared/Header/Status/Modal/index.tsx
 msgid "This network is not supported, please switch the network"
 msgstr "暂不支持该网络，请切换网络"
 
