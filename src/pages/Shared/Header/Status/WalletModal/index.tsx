@@ -3,10 +3,11 @@ import { t, Trans } from '@lingui/macro'
 import BaseModal from '../../../../../components/BaseModal'
 import { CopyIcon, Fail, Loading, MetamaskIconSmall, Success, ToEtherscan } from '../../../../../components/Icon'
 import useWeb3 from '../../../../../libs/hooks/useWeb3'
-import { ETHERSCAN_BASE_URL, showEllipsisAddress } from '../../../../../libs/utils'
+import { showEllipsisAddress } from '../../../../../libs/utils'
 import copy from 'copy-to-clipboard'
 import { message } from 'antd';
 import './styles'
+import { useEtherscanBaseUrl } from '../../../../../libs/hooks/useEtherscanBaseUrl'
 
 type Props = {
     onClose?: MouseEventHandler<HTMLButtonElement>
@@ -16,6 +17,7 @@ const WalletModal: FC<Props> = ({...props}) => {
     const { account, chainId, deactivate } = useWeb3()
     const [transactionList, setTransactionList] = useState<Array<any>>()
     const classPrefix = 'modal-wallet'
+    const etherscanBase = useEtherscanBaseUrl()
 
     useEffect(() => {
         if (chainId) {
@@ -43,13 +45,14 @@ const WalletModal: FC<Props> = ({...props}) => {
                     <div className={`transactionInfo`}>
                         <p>{item.title}</p>
                     </div>
-                    <a href={ETHERSCAN_BASE_URL + item.hash} target="view_window"><ToEtherscan/></a>
+                    <a href={etherscanBase + item.hash} target="view_window"><ToEtherscan/></a>
                 </li>)
             })
         } else {
             return (<></>)
         }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [transactionList])
 
     return (

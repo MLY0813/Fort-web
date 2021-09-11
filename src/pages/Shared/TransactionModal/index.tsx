@@ -7,10 +7,11 @@ import { CopyIcon, Loading, Refuse, Success } from '../../../components/Icon'
 import LineShowInfo from '../../../components/LineShowInfo'
 import MainCard from '../../../components/MainCard'
 import useTransactionListCon from '../../../libs/hooks/useTransactionInfo'
-import { bigNumberToNormal, ETHERSCAN_BASE_URL, showEllipsisAddress } from '../../../libs/utils'
+import { bigNumberToNormal, showEllipsisAddress } from '../../../libs/utils'
 import './styles'
 import { BigNumber } from '@ethersproject/bignumber'
 import { message } from 'antd'
+import { useEtherscanBaseUrl } from '../../../libs/hooks/useEtherscanBaseUrl'
 
 export enum TransactionModalType {
     wait = 0,
@@ -28,6 +29,7 @@ export type TransactionModalTokenInfo = {
 const TransactionModal: FC = () => {
     const classPrefix = 'modal-transaction'
     const { showModal, closeModal } = useTransactionListCon()
+    const etherscanBase = useEtherscanBaseUrl()
 
     const wait = (
         <>
@@ -40,7 +42,7 @@ const TransactionModal: FC = () => {
         <>
         <Success/>
         <p className={`${classPrefix}-text`}><Trans>Transaction submitted</Trans></p>
-        <a href={`${ETHERSCAN_BASE_URL}${showModal.hash}`} target="view_window"><Trans>View on etherscan</Trans></a>
+        <a href={`${etherscanBase}${showModal.hash}`} target="view_window"><Trans>View on etherscan</Trans></a>
         </>
     )
 
@@ -65,7 +67,7 @@ const TransactionModal: FC = () => {
                 }}><CopyIcon/></button>
             </div>
         </MainCard>
-        <a href={`${ETHERSCAN_BASE_URL}${showModal.hash}`} target="view_window"><Trans>View on etherscan</Trans></a>
+        <a href={`${etherscanBase}${showModal.hash}`} target="view_window"><Trans>View on etherscan</Trans></a>
         </>
     )
     

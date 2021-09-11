@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 import { FC } from 'react'
 import { toast } from 'react-toastify'
 import { Fail, Success } from '../../../components/Icon'
+import { useEtherscanBaseUrl } from '../../../libs/hooks/useEtherscanBaseUrl'
 import { TransactionInfoType } from '../../../libs/hooks/useTransactionInfo'
-import { ETHERSCAN_BASE_URL } from '../../../libs/utils'
 import './styles'
 
 export type TransactionToastInfo = {
@@ -20,6 +20,7 @@ type Props = {
 const TransactionToast: FC<Props> = ({...props}) => {
     const classPrefix = 'transactionToast'
     const icon = props.info.isSuccess ? <Success/> : <Fail/>
+    const etherscanBase = useEtherscanBaseUrl()
     
     return (
         <div className={classPrefix}>
@@ -29,7 +30,7 @@ const TransactionToast: FC<Props> = ({...props}) => {
                 {props.info.title}
                 </div>
             </div>
-            <a href={`${ETHERSCAN_BASE_URL}${props.info.hash}`} target="view_window" className={`${classPrefix}-right`}><Trans>View</Trans></a>
+            <a href={`${etherscanBase}${props.info.hash}`} target="view_window" className={`${classPrefix}-right`}><Trans>View</Trans></a>
         </div>
     )
 }

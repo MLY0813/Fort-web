@@ -61,13 +61,18 @@ const MintOptions: FC<Props> = ({...props}) => {
     }, [chainId, nestPriceContract, priceNow])
 
     useEffect(() => {
-        const oneStr = isLong ? 'C' : 'P'
-        const strikePriceStr = normalToBigNumber(strikePrice, tokenList['USDT'].decimals).toString()
-        const twoStr = strikePriceStr.substr(0,1) + '.' + strikePriceStr.substr(1,6) + '+' + (strikePriceStr.length-7).toString()
-        const threeStr = 'ETH'
-        const fourStr = exercise.blockNum
-        const newTokenName = oneStr + twoStr + threeStr + fourStr
-        setTokenName(newTokenName)
+        if (exercise.blockNum === 0 || strikePrice === '') {
+            setTokenName('---')
+        } else {
+            const oneStr = isLong ? 'C' : 'P'
+            const strikePriceStr = normalToBigNumber(strikePrice, tokenList['USDT'].decimals).toString()
+            const twoStr = strikePriceStr.substr(0,1) + '.' + strikePriceStr.substr(1,6) + '+' + (strikePriceStr.length-7).toString()
+            const threeStr = 'ETH'
+            const fourStr = exercise.blockNum
+            const newTokenName = oneStr + twoStr + threeStr + fourStr
+            setTokenName(newTokenName)
+        }
+        
     }, [exercise.blockNum, isLong, strikePrice])
 
     const handleType = (isLong: boolean) => {
@@ -120,16 +125,51 @@ const MintOptions: FC<Props> = ({...props}) => {
             })()
         }
     }, [isLong, optionTokenNumBaseInfo, exercise.blockNum, priceNow, fortEuropeanOption])
+
+    const checkButton = () => {
+        if (fortNum === '' || strikePrice === '' || exercise.blockNum === 0 ||
+            normalToBigNumber(fortNum).gt(fortBalance) || 
+            normalToBigNumber(strikePrice, tokenList['USDT'].decimals).eq(BigNumber.from('0'))) {
+                return true
+        }
+        return false
+    }
+    function disabledDate(current: any) {
+        // Can not select days before today and today
+        return current && current < moment().startOf('day');
+      }
+      
+    function disabledDateTime() {
+        return {
+            disabledHours: () => range(0, 24).splice(0,Number(moment().format('hh')) + 2)
+        };
+    }
+
+    function range(start: number, end: number) {
+        const result = [];
+        for (let i = start; i < end; i++) {
+            result.push(i);
+        }
+        return result;
+    }
     return (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-leftCard`}>
                 <InfoShow topLeftText={t`Token pair`} bottomRightText={''}>
-                    <DoubleTokenShow tokenNameOne={'USDT'} tokenNameTwo={'ETH'}/>
+                    <DoubleTokenShow tokenNameOne={'ETH'} tokenNameTwo={'USDT'}/>
                     <button className={'select-button'}><PutDownIcon/></button>
                 </InfoShow>
                 <ChooseType callBack={handleType} isLong={isLong}/>
                 <InfoShow topLeftText={t`Exercise time`} bottomRightText={`Block number: ${exercise.blockNum}`}>
-                <DatePicker showTime onOk={onOk} bordered={false} suffixIcon={(<PutDownIcon/>)} placeholder={t`Exercise time`} allowClear={false}/>
+                <DatePicker 
+                format="YYYY-MM-DD HH:mm:ss"
+                disabledDate={disabledDate}
+                disabledTime={disabledDateTime} 
+                showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }} 
+                onOk={onOk} 
+                bordered={false} 
+                suffixIcon={(<PutDownIcon/>)} 
+                placeholder={t`Exercise time`} allowClear={false}/>
                 </InfoShow>
                 
                 <InfoShow topLeftText={t`Strike price`} bottomRightText={`1 ETH = ${priceNow} USDT`}>
@@ -157,7 +197,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <p className={`${classPrefix}-rightCard-tokenTitle`}><Trans>Estimated number of European Options Token</Trans></p>
                 <p className={`${classPrefix}-rightCard-tokenValue`}>{bigNumberToNormal(optionTokenValue,18,6)}</p>
                 <p className={`${classPrefix}-rightCard-tokenName`}>{tokenName}</p>
-                <MainButton onClick={() => props.reviewCall(optionInfo, true)}>BUY</MainButton>
+                <MainButton disable={checkButton()} onClick={() => props.reviewCall(optionInfo, true)}><Trans>Mint</Trans></MainButton>
                 <div className={`${classPrefix}-rightCard-time`}>
                     <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>At</Trans>{exercise.time}</p>
                     <p className={`${classPrefix}-rightCard-timeValue`}><Trans>compare with spot price and srike price</Trans></p>
@@ -166,7 +206,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <div className={`${classPrefix}-rightCard-smallCard`}>
                     <MainCard>
                         <div className={`${classPrefix}-rightCard-smallCard-title`}>
-                            <p><Trans>Spot price</Trans>{isLong ? '>' : '<'}{bigNumberToNormal(normalToBigNumber(strikePrice))}</p>
+                            <p><Trans>Spot price</Trans>{isLong ? '>' : '<'}{bigNumberToNormal(normalToBigNumber(strikePrice),18,6)}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
                         <p className={`${classPrefix}-rightCard-smallCard-value`}>{isLong ? t`(Spot price - Strike price)*` : t`(Strike price - Spot price)*`}{bigNumberToNormal(optionTokenValue,18,2)}</p>
@@ -174,7 +214,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                     </MainCard>
                     <MainCard>
                         <div className={`${classPrefix}-rightCard-smallCard-title`}>
-                            <p><Trans>Spot price</Trans>{isLong ? '<=' : '>='}{bigNumberToNormal(normalToBigNumber(strikePrice))}</p>
+                            <p><Trans>Spot price</Trans>{isLong ? '<=' : '>='}{bigNumberToNormal(normalToBigNumber(strikePrice),18,6)}</p>
                             <p><Trans>Expected get</Trans></p>
                         </div>
                         <p className={`${classPrefix}-rightCard-smallCard-value`}>{'0'}</p>

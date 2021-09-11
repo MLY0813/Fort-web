@@ -194,6 +194,7 @@ msgstr "Long"
 msgid "Mining pool number"
 msgstr "Mining pool number"
 
+#: src/pages/Options/Mint/index.tsx
 #: src/pages/Options/index.tsx
 msgid "Mint"
 msgstr "Mint"

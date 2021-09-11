@@ -194,6 +194,7 @@ msgstr "看涨"
 msgid "Mining pool number"
 msgstr "矿池总量"
 
+#: src/pages/Options/Mint/index.tsx
 #: src/pages/Options/index.tsx
 msgid "Mint"
 msgstr "铸币"

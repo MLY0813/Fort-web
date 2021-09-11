@@ -2,7 +2,6 @@ import { BigNumber } from "ethers";
 
 export const PRICE_FEE = BigNumber.from(normalToBigNumber('0.01'))
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
-export const ETHERSCAN_BASE_URL = 'https://etherscan.io/tx/'
 
 /**
  * BigNumber转为浮点字符串
