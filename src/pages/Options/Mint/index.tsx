@@ -86,11 +86,11 @@ const MintOptions: FC<Props> = ({...props}) => {
             const latestBlock = await library?.getBlockNumber()
             
             if (selectTime > nowTime) {
-                const timeString = moment(value).format('YYYY[-]MM[-]DD hh:mm:ss')
+                const timeString = moment(value).format('YYYY[-]MM[-]DD')
                 const blockNum = parseFloat(((selectTime - nowTime) / 13000).toString()).toFixed(0)
                 setExercise({time:timeString, blockNum:Number(blockNum) + (latestBlock || 0)})
             } else {
-                const timeString = moment().format('YYYY[-]MM[-]DD hh:mm:ss')
+                const timeString = moment().format('YYYY[-]MM[-]DD')
                 setExercise({time:timeString, blockNum:latestBlock || 0})
             }
         },
@@ -135,32 +135,28 @@ const MintOptions: FC<Props> = ({...props}) => {
         return false
     }
     function disabledDate(current: any) {
-        const nowHour = Number(moment().format('HH'))
-        if (nowHour > 22) {
-            return current && current < moment().endOf('day');
-        }
-        return current && current < moment().startOf('day');
+        return current && current < moment().add(7, 'days').startOf('day');
       }
       
-    function disabledDateTime(date: any) {
-        var nowHour:number
-        if (date && moment().format("MMM Do YY") === date.format("MMM Do YY")) {
-            nowHour = Number(moment().format('HH')) + 2
-        } else {
-            nowHour = 0
-        }
-        return {
-            disabledHours: () => range(0, 24).splice(0, nowHour)
-        };
-    }
+    // function disabledDateTime(date: any) {
+    //     var nowHour:number
+    //     if (date && moment().format("MMM Do YY") === date.format("MMM Do YY")) {
+    //         nowHour = Number(moment().format('HH')) + 2
+    //     } else {
+    //         nowHour = 0
+    //     }
+    //     return {
+    //         disabledHours: () => range(0, 24).splice(0, nowHour)
+    //     };
+    // }
 
-    function range(start: number, end: number) {
-        const result = [];
-        for (let i = start; i < end; i++) {
-            result.push(i);
-        }
-        return result;
-    }
+    // function range(start: number, end: number) {
+    //     const result = [];
+    //     for (let i = start; i < end; i++) {
+    //         result.push(i);
+    //     }
+    //     return result;
+    // }
     return (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-leftCard`}>
@@ -171,6 +167,13 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <ChooseType callBack={handleType} isLong={isLong}/>
                 <InfoShow topLeftText={t`Exercise time`} bottomRightText={`Block number: ${exercise.blockNum}`}>
                 <DatePicker 
+                format="YYYY-MM-DD"
+                disabledDate={disabledDate}
+                onChange={onOk} 
+                bordered={false} 
+                suffixIcon={(<PutDownIcon/>)} 
+                placeholder={t`Exercise time`} allowClear={false}/>
+                {/* <DatePicker 
                 format="YYYY-MM-DD HH:mm:ss"
                 disabledDate={disabledDate}
                 disabledTime={disabledDateTime} 
@@ -178,7 +181,7 @@ const MintOptions: FC<Props> = ({...props}) => {
                 onOk={onOk} 
                 bordered={false} 
                 suffixIcon={(<PutDownIcon/>)} 
-                placeholder={t`Exercise time`} allowClear={false}/>
+                placeholder={t`Exercise time`} allowClear={false}/> */}
                 </InfoShow>
                 
                 <InfoShow topLeftText={t`Strike price`} bottomRightText={`1 ETH = ${priceNow} USDT`}>
