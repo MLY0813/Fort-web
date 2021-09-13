@@ -75,7 +75,7 @@ const useTransactionList = () => {
             console.log('2' + {txList})
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [txList, chainId])
+    }, [txList])
 
     useEffect(() => {
         if (pendingList.length === 0 || checking) {return}
