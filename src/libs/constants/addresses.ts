@@ -135,6 +135,12 @@ export const FortLeverContract: AddressesType = {
     4: '0x1820A4c392d71B65C3C32c1a6E8d94A3FB785fae',
 }
 
+export const FortVaultForStakingContract: AddressesType = {
+    1: '',
+    2: '',
+    4: '0xF06Ca516B6e11AB7843FB0B1a7eECBf0e57B3B64',
+}
+
 export const NestPrice: AddressesType = {
     1: '',
     2: '',

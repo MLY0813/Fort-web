@@ -99,7 +99,7 @@ const CloseOptions: FC<Props> = ({...props}) => {
                     optionTokenName: tokenName,
                     type: tokenInfo[2],
                     strikePrice: BigNumber.from(tokenInfo[1]),
-                    exerciseTime: moment(nowTime).format('YYYY[-]MM[-]DD hh:mm:ss'),
+                    exerciseTime: moment(nowTime).format('YYYY[-]MM[-]DD HH:mm:ss'),
                     blockNumber: endBlock
                 }
                 setLatestBlock(latestBlock || 0)

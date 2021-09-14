@@ -7,12 +7,15 @@ import { TransactionType } from "../../libs/hooks/useTransactionInfo";
 import useWeb3 from "../../libs/hooks/useWeb3";
 
 export function useERC20Approve(
-    tokenName: string, 
-    to: string, 
-    amount: BigNumber
+    tokenName: string,
+    amount: BigNumber,
+    to?: string, 
 ) {
-    const contract = ERC20Contract(tokenList[tokenName].addresses)
+    var contract = ERC20Contract(tokenList[tokenName].addresses)
     const { account } = useWeb3()
+    if (!to) {
+        contract = null
+    }
     const callData = contract?.interface.encodeFunctionData('approve', [
         to, 
         amount]

@@ -1,4 +1,4 @@
-import { NestPrice as NestPriceAddress } from './../constants/addresses';
+import { FortVaultForStakingContract, NestPrice as NestPriceAddress } from './../constants/addresses';
 import useWeb3 from '../hooks/useWeb3';
 import { getAddress } from "@ethersproject/address"
 import { Contract } from "@ethersproject/contracts"
@@ -74,8 +74,8 @@ export function FortOptionToken(address: string): Contract | null {
     return getContract(address, OptionTokenABI, library, account)
 }
 
-export function FortForStaking(addresses: AddressesType): Contract | null {
-    return useContract(addresses, FortForStakingABI)
+export function FortForStaking(): Contract | null {
+    return useContract(FortVaultForStakingContract, FortForStakingABI)
 }
 
 export function NestPriceContract(): Contract | null {
