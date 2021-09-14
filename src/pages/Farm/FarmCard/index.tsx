@@ -50,10 +50,10 @@ export const FarmCard: FC<Props> = ({...props}) => {
     const tokenContract = ERC20Contract(tokenList[props.name].addresses)
     const classPrefix = 'farm'
     const TokenIcon = tokenList[props.name].Icon
-    const getReward = useFortForStakingGetReward(props.name, BigNumber.from((props.time * 10).toString()))
-    const stake = useFortForStakingStake(props.name, BigNumber.from((props.time * 10).toString()), normalToBigNumber(inputValue))
+    const getReward = useFortForStakingGetReward(props.name, BigNumber.from((props.time * 1000).toString()))
+    const stake = useFortForStakingStake(props.name, BigNumber.from((props.time * 1000).toString()), normalToBigNumber(inputValue))
     // TODO:不需要第三个参数，等合约修改，同时修改ABI
-    const withdraw = useFortForStakingWithdraw(props.name, BigNumber.from((props.time * 10).toString()), BigNumber.from('0'))
+    const withdraw = useFortForStakingWithdraw(props.name, BigNumber.from((props.time * 1000).toString()), BigNumber.from('0'))
     const approve = useERC20Approve(props.name, MaxUint256, stakingContract?.address)
 
     const buttonJSX = useCallback(
@@ -106,8 +106,8 @@ export const FarmCard: FC<Props> = ({...props}) => {
         if (!account || !chainId || !stakingContract || !library || !tokenContract) { return }
         ;(async () => {
             const config = await stakingContract.getConfig()
-            const channelInfo = await stakingContract.getChannelInfo(tokenList[props.name].addresses[chainId], (props.time * 10))
-            const balanceOf = await stakingContract.balanceOf(tokenList[props.name].addresses[chainId], (props.time * 10), account)
+            const channelInfo = await stakingContract.getChannelInfo(tokenList[props.name].addresses[chainId], (props.time * 100))
+            const balanceOf = await stakingContract.balanceOf(tokenList[props.name].addresses[chainId], (props.time * 100), account)
             const latestBlock = await library.getBlockNumber()
             // 开始锁仓
             const startBlock:BigNumber = config[1]
@@ -150,9 +150,9 @@ export const FarmCard: FC<Props> = ({...props}) => {
             }
             setStakingInfo(newStakingInfo)
             
-            if (tokenList[props.name].addresses[chainId] === '0xDB7b4FdF99eEE8E4Cb8373630c923c51c1275382' && props.time === 1) {
-                console.log(startBlock.toString(), stopBlock.toString(), totalStaked.toString(), totalRewards.toString(), unlockBlock.toString(), myStakeAmount.toString())
-            }
+            // if (tokenList[props.name].addresses[chainId] === '0xDB7b4FdF99eEE8E4Cb8373630c923c51c1275382' && props.time === 1) {
+            //     console.log(startBlock.toString(), stopBlock.toString(), totalStaked.toString(), totalRewards.toString(), unlockBlock.toString(), myStakeAmount.toString())
+            // }
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account, chainId, library, pendingList])
