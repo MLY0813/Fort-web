@@ -106,8 +106,8 @@ export const FarmCard: FC<Props> = ({...props}) => {
         if (!account || !chainId || !stakingContract || !library || !tokenContract) { return }
         ;(async () => {
             const config = await stakingContract.getConfig()
-            const channelInfo = await stakingContract.getChannelInfo(tokenList[props.name].addresses[chainId], (props.time * 100))
-            const balanceOf = await stakingContract.balanceOf(tokenList[props.name].addresses[chainId], (props.time * 100), account)
+            const channelInfo = await stakingContract.getChannelInfo(tokenList[props.name].addresses[chainId], (props.time * 1000))
+            const balanceOf = await stakingContract.balanceOf(tokenList[props.name].addresses[chainId], (props.time * 1000), account)
             const latestBlock = await library.getBlockNumber()
             // 开始锁仓
             const startBlock:BigNumber = config[1]
