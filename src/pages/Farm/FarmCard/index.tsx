@@ -86,6 +86,7 @@ export const FarmCard: FC<Props> = ({...props}) => {
             onClick={() => {
                 if (approveTrue) {
                     stake()
+                    setShowInput(false)
                 } else {
                     approve()
                 }
