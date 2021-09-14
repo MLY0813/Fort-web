@@ -122,7 +122,7 @@ export const FarmCard: FC<Props> = ({...props}) => {
             // 我的锁仓数量
             const myStakeAmount:BigNumber = balanceOf
 
-            const rate = totalStaked.toString() === '0' ? BigNumber.from('0') : totalRewards.div(totalStaked)
+            const rate = totalStaked.toString() === '0' ? BigNumber.from('0') : totalRewards.mul(BigNumber.from('1000000000000000000')).div(totalStaked)
             const stakingNumber = totalStaked
             const miningPoolNumber = totalRewards
             const myStaking = myStakeAmount
@@ -150,9 +150,9 @@ export const FarmCard: FC<Props> = ({...props}) => {
             }
             setStakingInfo(newStakingInfo)
             
-            // if (tokenList[props.name].addresses[chainId] === '0xDB7b4FdF99eEE8E4Cb8373630c923c51c1275382' && props.time === 1) {
-            //     console.log(startBlock.toString(), stopBlock.toString(), totalStaked.toString(), totalRewards.toString(), unlockBlock.toString(), myStakeAmount.toString())
-            // }
+            if (tokenList[props.name].addresses[chainId] === '0xDB7b4FdF99eEE8E4Cb8373630c923c51c1275382' && props.time === 1) {
+                console.log(startBlock.toString(), stopBlock.toString(), totalStaked.toString(), totalRewards.toString(), unlockBlock.toString(), myStakeAmount.toString())
+            }
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account, chainId, library, pendingList])
@@ -165,13 +165,13 @@ export const FarmCard: FC<Props> = ({...props}) => {
             </div>
             <div className={`${classPrefix}-middleInfo`}>
                 <LineShowInfo leftText={t`Lock period`} rightText={`${props.time} Month`}/>
-                <LineShowInfo leftText={t`Current mining rate`} rightText={`${bigNumberToNormal(stakingInfo?.rate || BigNumber.from('0'), 18, 2)} FORT/${props.name}`}/>
+                <LineShowInfo leftText={t`Current mining rate`} rightText={`${bigNumberToNormal(stakingInfo?.rate || BigNumber.from('0'), 18, 8)} FORT/${props.name}`}/>
                 <LineShowInfo leftText={t`Staking number`} rightText={`${bigNumberToNormal(stakingInfo?.stakingNumber || BigNumber.from('0'), 18, 2)} ${props.name}`}/>
                 <LineShowInfo leftText={t`Mining pool number`} rightText={`${bigNumberToNormal(stakingInfo?.miningPoolNumber || BigNumber.from('0'), 18, 2)} DCU`}/>
             </div>
             <div className={`${classPrefix}-bottomInfo`}>
                 <LineShowInfo leftText={t`My staking`} rightText={`${bigNumberToNormal(stakingInfo?.myStaking || BigNumber.from('0'), 18, 2)} ${props.name}`}/>
-                <LineShowInfo leftText={t`Expected mining`} rightText={`${bigNumberToNormal(stakingInfo?.expectedMining || BigNumber.from('0'), 18, 2)} DCU`}/>
+                <LineShowInfo leftText={t`Expected mining`} rightText={`${bigNumberToNormal(stakingInfo?.expectedMining || BigNumber.from('0'), 18, 8)} DCU`}/>
                 <LineShowInfo leftText={t`Reward claim time`} rightText={`${moment(stakingInfo?.claimTime).format('YYYY[-]MM[-]DD HH:mm')}`}/>
             </div>
             {StakeButton}
