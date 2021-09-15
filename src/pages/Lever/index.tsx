@@ -9,7 +9,7 @@ import LineShowInfo from '../../components/LineShowInfo'
 import { SingleTokenShow } from '../../components/TokenShow'
 import LeverReview, { LeverReviewModel } from '../Review/LeverReview'
 import { ERC20Contract, NestPriceContract } from '../../libs/hooks/useContract'
-import { bigNumberToNormal, formatInputNum } from '../../libs/utils'
+import { bigNumberToNormal, formatInputNum, normalToBigNumber } from '../../libs/utils'
 import { LeverTokenList, tokenList } from '../../libs/constants/addresses'
 import useWeb3 from '../../libs/hooks/useWeb3'
 import { BigNumber } from 'ethers'
@@ -24,8 +24,8 @@ type LeverTransactionIon = {
 
 const Lever: FC = () => {
     const [isReview, setIsReview] = useState(false)
-    const [fromBalance, setFromBalance] = useState('--.--')
-    const [getBalance, setGetBalance] = useState('--.--')
+    const [fromBalance, setFromBalance] = useState(BigNumber.from('0'))
+    const [getBalance, setGetBalance] = useState(BigNumber.from('0'))
     const [priceNow, setPriceNow] = useState('--.--')
     const { account, chainId } = useWeb3()
     const [transactionInfo, setTransactionInfo] = useState<LeverTransactionIon>({
@@ -58,12 +58,11 @@ const Lever: FC = () => {
             if (tokenContract[0]) {
                 tokenContract[0].balanceOf(account)
                 .then((value: any) => {
-                    setFromBalance(bigNumberToNormal(BigNumber.from(value)))
+                    setFromBalance(BigNumber.from(value))
                 })
                 return
             }
         }
-        setFromBalance('--.--')
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account, chainId, transactionInfo.fromToken])
 
@@ -75,14 +74,12 @@ const Lever: FC = () => {
             if (tokenContract[0]) {
                 tokenContract[0].balanceOf(account)
                 .then((value: any) => {
-                    setGetBalance(bigNumberToNormal(BigNumber.from(value)))
+                    setGetBalance(BigNumber.from(value))
                 })
             }
         }
-        setGetBalance('--.--')
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [account, chainId, transactionInfo.getToken])
-    console.log('刷新一次')
     const handleExchange = () => {
         const oldTransactionInfo = transactionInfo
         setTransactionInfo({
@@ -115,26 +112,31 @@ const Lever: FC = () => {
     }
     const checkBalance = () => {
         if (
-        fromBalance === '--.--' || 
+        fromBalance === BigNumber.from('0') || 
         transactionInfo.fromNum === '') {
             return true
-        } 
-        if (BigNumber.from(transactionInfo.fromNum).gt(BigNumber.from(fromBalance)) &&
-        chainId !== 1 && chainId !== 4) {
+        }
+
+        if (chainId !== 1 && chainId !== 4) {
+            return true
+        }
+
+        if (normalToBigNumber(transactionInfo.fromNum).gt(fromBalance)) {
             return true
         }
         return false
     }
     const handleMax = () => {
-        setTransactionInfo({...transactionInfo, fromNum: fromBalance, getNum: fromBalance})
+        setTransactionInfo({...transactionInfo, fromNum: bigNumberToNormal(fromBalance), getNum: bigNumberToNormal(fromBalance)})
     }
+    
     return isReview ? <LeverReview back={() => setIsReview(false)} model={reviewModel}/> : (
         <div className={classPrefix}>
             <MainCard classNames={`${classPrefix}-card`}>
                 <InfoShow 
                 topLeftText={t`From`} 
-                bottomRightText={t`Balance:` + ` ${fromBalance} ${transactionInfo.fromToken}`}
-                balanceRed={transactionInfo.fromNum > fromBalance ? true : false}
+                bottomRightText={t`Balance:` + ` ${bigNumberToNormal(fromBalance,18,4)} ${transactionInfo.fromToken}`}
+                balanceRed={normalToBigNumber(transactionInfo.fromNum).gt(fromBalance) ? true : false}
                 tokenSelect={transactionInfo.fromToken === 'DCU'? false : true}
                 tokenList={LeverTokenList} 
                 getSelectedToken={handleGetTokenSelect_from}>
@@ -155,7 +157,7 @@ const Lever: FC = () => {
                 <button className={`${classPrefix}-card-exchangeButton`} onClick={handleExchange}><ExchangeIcon/></button>
                 <InfoShow 
                 topLeftText={t`Expected get`} 
-                bottomRightText={t`Balance:` + ` ${getBalance} ${transactionInfo.getToken}`} 
+                bottomRightText={t`Balance:` + ` ${bigNumberToNormal(getBalance,18,4)} ${transactionInfo.getToken}`} 
                 tokenSelect={transactionInfo.getToken === 'DCU'? false : true}
                 tokenList={LeverTokenList} 
                 getSelectedToken={handleGetTokenSelect_get}>
@@ -169,8 +171,12 @@ const Lever: FC = () => {
                 <MainButton 
                 className={`${classPrefix}-card-buyButton`} 
                 onClick={() => {
-                    if (BigNumber.from(transactionInfo.fromNum).lt(BigNumber.from(100))) {
-                        message.error('输入金额必须大于等于100')
+                    if (normalToBigNumber(transactionInfo.fromNum).lt(normalToBigNumber('100'))) {
+                        message.error(t`Minimum input 100`)
+                        return 
+                    }
+                    if (normalToBigNumber(transactionInfo.fromNum).gt(fromBalance)) {
+                        message.error(t`Insufficient balance`)
                         return 
                     }
                     setIsReview(true)

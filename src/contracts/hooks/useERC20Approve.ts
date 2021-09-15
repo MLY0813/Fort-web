@@ -1,4 +1,3 @@
-import { t } from "@lingui/macro";
 import { BigNumber } from "ethers";
 import { tokenList } from "../../libs/constants/addresses";
 import { ERC20Contract } from "../../libs/hooks/useContract";
@@ -25,6 +24,6 @@ export function useERC20Approve(
         to: contract?.address,
         data: callData
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Approve`, info:'', type: TransactionType.approve})
+    const txPromise = useSendTransaction(contract, tx, {title:`Approve`, info:'', type: TransactionType.approve})
     return txPromise
 }

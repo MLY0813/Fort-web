@@ -24,13 +24,13 @@ const WalletModal: FC<Props> = ({...props}) => {
             var cache = localStorage.getItem("transactionList" + chainId.toString())
             if (!cache) {return}
             const transactionList = JSON.parse(cache)
-            setTransactionList(transactionList)
+            setTransactionList(transactionList.reverse())
         }
     }, [chainId])
 
     const liList = useMemo(() => {
         if (transactionList) {
-            return transactionList.reverse().map((item) => {
+            return transactionList.map((item) => {
                 var icon:JSX.Element
                 if (item.txState === 0) {
                     icon = (<><Loading className={'animation-spin'}/></>)
@@ -43,7 +43,7 @@ const WalletModal: FC<Props> = ({...props}) => {
                 <li key={item.hash}>
                     {icon}
                     <div className={`transactionInfo`}>
-                        <p>{item.title}</p>
+                        <p>{t`${item.title}`}</p>
                     </div>
                     <a href={etherscanBase + item.hash} target="view_window"><ToEtherscan/></a>
                 </li>)

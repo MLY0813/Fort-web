@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { FC } from 'react'
 import { toast } from 'react-toastify'
 import { Fail, Success } from '../../../components/Icon'
@@ -27,7 +27,7 @@ const TransactionToast: FC<Props> = ({...props}) => {
             <div className={`${classPrefix}-left`}>
                 {icon}
                 <div className={`${classPrefix}-left-info`}>
-                {props.info.title}
+                {t`${props.info.title}`}
                 </div>
             </div>
             <a href={`${etherscanBase}${props.info.hash}`} target="view_window" className={`${classPrefix}-right`}><Trans>View</Trans></a>

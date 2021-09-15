@@ -1,5 +1,4 @@
 import { tokenList } from './../../libs/constants/addresses';
-import { t } from "@lingui/macro";
 import { BigNumber } from "ethers";
 import { FortLeverContract } from "../../libs/constants/addresses";
 import { FortLever } from "../../libs/hooks/useContract";
@@ -33,7 +32,7 @@ export function useFortLeverBuy(
         data: callData,
         value: PRICE_FEE
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Buy Leveraged Token`, info:'', type: TransactionType.buyLever})
+    const txPromise = useSendTransaction(contract, tx, {title:`Buy Leveraged Token`, info:'', type: TransactionType.buyLever})
     return txPromise
 }
 
@@ -59,7 +58,7 @@ export function useFortLeverSell(
         value: PRICE_FEE
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const txPromise = useSendTransaction(contract, tx, {title:t`Sell Leveraged Token`, info:'', type: TransactionType.closeLever})
+    const txPromise = useSendTransaction(contract, tx, {title:`Sell Leveraged Token`, info:'', type: TransactionType.closeLever})
     return txPromise
 }
 

@@ -11,7 +11,7 @@ import { FortEuropeanOptionContract, tokenList } from '../../../libs/constants/a
 import { ERC20Contract, FortEuropeanOption, NestPriceContract } from '../../../libs/hooks/useContract'
 import useWeb3 from '../../../libs/hooks/useWeb3'
 import { bigNumberToNormal, formatInputNum, normalToBigNumber, ZERO_ADDRESS } from '../../../libs/utils'
-import { DatePicker } from 'antd';
+import { DatePicker, message } from 'antd';
 import '../../../styles/ant.css'
 import './styles'
 import moment from 'moment'
@@ -209,9 +209,20 @@ const MintOptions: FC<Props> = ({...props}) => {
                 <p className={`${classPrefix}-rightCard-tokenTitle`}><Trans>Estimated number of European Options Token</Trans></p>
                 <p className={`${classPrefix}-rightCard-tokenValue`}>{bigNumberToNormal(optionTokenValue,18,6)}</p>
                 <p className={`${classPrefix}-rightCard-tokenName`}>{tokenName}</p>
-                <MainButton disable={checkButton()} onClick={() => props.reviewCall(optionInfo, true)}><Trans>Mint</Trans></MainButton>
+                <MainButton 
+                disable={checkButton()} 
+                onClick={() => {
+                    if (normalToBigNumber(fortNum).gt(fortBalance)) {
+                        message.error(t`Insufficient balance`)
+                        return
+                    }
+                    if (checkButton()) { return }
+                    props.reviewCall(optionInfo, true)
+                }}>
+                    <Trans>Mint</Trans>
+                </MainButton>
                 <div className={`${classPrefix}-rightCard-time`}>
-                    <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>At</Trans>{exercise.time}</p>
+                    <p className={`${classPrefix}-rightCard-timeTitle`}><Trans>At</Trans>{` ${exercise.time}`}</p>
                     <p className={`${classPrefix}-rightCard-timeValue`}><Trans>compare with spot price and srike price</Trans></p>
                 </div>
                 

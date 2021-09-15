@@ -5,7 +5,6 @@ import { FortEuropeanOption } from "../../libs/hooks/useContract";
 import { useSendTransaction } from "../../libs/hooks/useSendTransaction";
 import useWeb3 from "../../libs/hooks/useWeb3";
 import { PRICE_FEE } from "../../libs/utils";
-import { t } from '@lingui/macro';
 import { TransactionType } from '../../libs/hooks/useTransactionInfo';
 
 export function useFortEuropeanOptionOpen(
@@ -36,7 +35,7 @@ export function useFortEuropeanOptionOpen(
         data: callData,
         value: PRICE_FEE
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Option Token mint`, info:'', type: TransactionType.buyOption})
+    const txPromise = useSendTransaction(contract, tx, {title:`Option Token mint`, info:'', type: TransactionType.buyOption})
     return txPromise
 }
 
@@ -62,6 +61,6 @@ export function useFortEuropeanOptionExercise(
         data: callData,
         value: PRICE_FEE
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Option Token close`, info:'', type: TransactionType.buyOption})
+    const txPromise = useSendTransaction(contract, tx, {title:`Option Token close`, info:'', type: TransactionType.buyOption})
     return txPromise
 }

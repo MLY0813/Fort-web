@@ -53,7 +53,7 @@ export const FarmCard: FC<Props> = ({...props}) => {
     const getReward = useFortForStakingGetReward(props.name, BigNumber.from((props.time * 1000).toString()))
     const stake = useFortForStakingStake(props.name, BigNumber.from((props.time * 1000).toString()), normalToBigNumber(inputValue))
     // TODO:不需要第三个参数，等合约修改，同时修改ABI
-    const withdraw = useFortForStakingWithdraw(props.name, BigNumber.from((props.time * 1000).toString()), BigNumber.from('0'))
+    const withdraw = useFortForStakingWithdraw(props.name, BigNumber.from((props.time * 1000).toString()), BigNumber.from('10000000000000000000'))
     const approve = useERC20Approve(props.name, MaxUint256, stakingContract?.address)
 
     const buttonJSX = useCallback(
@@ -150,7 +150,7 @@ export const FarmCard: FC<Props> = ({...props}) => {
                 setApproveAmount(allowance)
             }
             setStakingInfo(newStakingInfo)
-            
+            // TODO:删除
             if (tokenList[props.name].addresses[chainId] === '0xDB7b4FdF99eEE8E4Cb8373630c923c51c1275382' && props.time === 1) {
                 console.log(startBlock.toString(), stopBlock.toString(), totalStaked.toString(), totalRewards.toString(), unlockBlock.toString(), myStakeAmount.toString())
             }
@@ -159,7 +159,7 @@ export const FarmCard: FC<Props> = ({...props}) => {
     }, [account, chainId, library, pendingList])
 
     return (
-        <MainCard>
+        <MainCard classNames={`stakeCard`}>
             <div className={`${classPrefix}-li-tokenInfo`}>
                 <TokenIcon/>
                 <p>{props.name}</p>

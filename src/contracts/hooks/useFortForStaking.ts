@@ -3,7 +3,6 @@ import { BigNumber } from "ethers";
 import { FortForStaking } from "../../libs/hooks/useContract";
 import { useSendTransaction } from "../../libs/hooks/useSendTransaction";
 import useWeb3 from "../../libs/hooks/useWeb3";
-import { t } from '@lingui/macro';
 import { TransactionType } from '../../libs/hooks/useTransactionInfo';
 
 export function useFortForStakingStake(
@@ -30,7 +29,7 @@ export function useFortForStakingStake(
         to: contract?.address,
         data: callData
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Stake`, info:'', type: TransactionType.stake})
+    const txPromise = useSendTransaction(contract, tx, {title:`Stake`, info:'', type: TransactionType.stake})
     return txPromise
 }
 
@@ -58,7 +57,7 @@ export function useFortForStakingWithdraw(
         to: contract?.address,
         data: callData
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`Withdraw`, info:'', type: TransactionType.unStake})
+    const txPromise = useSendTransaction(contract, tx, {title:`Withdraw`, info:'', type: TransactionType.unStake})
     return txPromise
 }
 
@@ -84,6 +83,6 @@ export function useFortForStakingGetReward(
         to: contract?.address,
         data: callData
     }
-    const txPromise = useSendTransaction(contract, tx, {title:t`GetReward`, info:'', type: TransactionType.claim})
+    const txPromise = useSendTransaction(contract, tx, {title:`GetReward`, info:'', type: TransactionType.claim})
     return txPromise
 }
