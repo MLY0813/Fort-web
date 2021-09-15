@@ -112,10 +112,12 @@ msgid "ETH Short Leveraged Token"
 msgstr "ETH看跌杠杆币"
 
 #: src/pages/Options/Close/index.tsx
+#: src/pages/Review/OptionsReview/index.tsx
 msgid "ETH call option Token"
 msgstr "ETH看涨期权币"
 
 #: src/pages/Options/Close/index.tsx
+#: src/pages/Review/OptionsReview/index.tsx
 msgid "ETH put option Token"
 msgstr "ETH看跌期权币"
 

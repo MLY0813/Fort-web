@@ -7,22 +7,23 @@
 }
 
 .options-mintOptions {
-    
+
     margin: 0 auto;
     margin-bottom: 44px;
     display: flex;
     justify-content: center;
-    
+
     .mainCard {
         width: $baseWidth;
         padding: 40px 44px;
     }
 
-    &-leftCard{
-        
+    &-leftCard {
+
         margin-right: 22px;
 
-        .infoView + .infoView, .chooseType + .infoView {
+        .infoView+.infoView,
+        .chooseType+.infoView {
             margin-top: 20px;
         }
     }
@@ -68,11 +69,11 @@
                 padding: 44px 0;
             }
 
-            .mainCard + .mainCard {
+            .mainCard+.mainCard {
                 margin-right: 0;
             }
 
-            &-title{
+            &-title {
                 p {
                     color: $gray-info-text-color;
                     font-size: $T3;
@@ -105,7 +106,8 @@
     .ant-picker-suffix {
         justify-self: end;
         line-height: 0;
-        & > svg {
+
+        &>svg {
             margin: auto 0;
         }
     }

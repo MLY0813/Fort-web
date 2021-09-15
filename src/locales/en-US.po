@@ -112,10 +112,12 @@ msgid "ETH Short Leveraged Token"
 msgstr "ETH Short Leveraged Token"
 
 #: src/pages/Options/Close/index.tsx
+#: src/pages/Review/OptionsReview/index.tsx
 msgid "ETH call option Token"
 msgstr "ETH call option Token"
 
 #: src/pages/Options/Close/index.tsx
+#: src/pages/Review/OptionsReview/index.tsx
 msgid "ETH put option Token"
 msgstr "ETH put option Token"
 

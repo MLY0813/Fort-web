@@ -5,7 +5,7 @@
     width: $baseWidth;
     text-align: center;
 
-    & > svg {
+    &>svg {
         margin: 0 auto;
     }
 
@@ -15,7 +15,7 @@
         font-size: $T1;
     }
 
-    & > a {
+    &>a {
         color: $main-button-color;
         font-size: $T4;
         margin-top: 12px;
@@ -28,7 +28,7 @@
         background-color: $gray-info-background-color;
         box-shadow: none;
 
-        & > .lineShowInfo {
+        &>.lineShowInfo {
             font-size: $T4;
         }
 

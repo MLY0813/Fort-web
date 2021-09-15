@@ -47,7 +47,7 @@
 
     ul {
         height: 66px;
-        list-style:none;
+        list-style: none;
         justify-self: center;
         justify-content: space-between;
         display: flex;
@@ -61,7 +61,7 @@
             color: $black-text-color;
 
             &.selected {
-                border-bottom: 2px solid $main-button-color;  
+                border-bottom: 2px solid $main-button-color;
                 box-sizing: border-box;
 
                 a {
@@ -72,7 +72,7 @@
         }
     }
 
-    .connectStatus{
+    .connectStatus {
         width: 320px;
         margin-right: 40px;
         margin-top: auto;

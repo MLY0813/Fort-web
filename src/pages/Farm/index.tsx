@@ -1,26 +1,26 @@
-import { FC } from 'react'
-import { FarmCard } from './FarmCard'
-import './styles'
+import { FC } from "react";
+import { FarmCard } from "./FarmCard";
+import "./styles";
 
 const Farm: FC = () => {
-    const classPrefix = 'farm'
-    const farms = [
-        {name: 'DCU', time: 1},
-        {name: 'DCU', time: 2},
-        {name: 'DCU', time: 24},
-        {name: 'USDT', time: 1},
-        {name: 'USDT', time: 2},
-        {name: 'USDT', time: 3}
-    ].map((item) => {
-        return (
-            <li key={item.name + item.time.toString()}>
-                <FarmCard name={item.name} time={item.time}/>
-            </li>
-        )
-    })
+  const classPrefix = "farm";
+  const farms = [
+    { name: "DCU", time: 1 },
+    { name: "DCU", time: 2 },
+    { name: "DCU", time: 24 },
+    { name: "USDT", time: 1 },
+    { name: "USDT", time: 2 },
+    { name: "USDT", time: 3 },
+  ].map((item) => {
     return (
-        <div className={classPrefix}>
-            {/* <div className={`${classPrefix}-circleInfo`}>
+      <li key={item.name + item.time.toString()}>
+        <FarmCard name={item.name} time={item.time} />
+      </li>
+    );
+  });
+  return (
+    <div className={classPrefix}>
+      {/* <div className={`${classPrefix}-circleInfo`}>
                 <div className={`${classPrefix}-circleInfo-one`}>
                     <p className={`${classPrefix}-circleInfo-value`}>$ 2,037,482</p>
                     <p><Trans>FORT Price</Trans></p>
@@ -38,11 +38,9 @@ const Farm: FC = () => {
                     <p><Trans>Fort Mine</Trans></p>
                 </div>
             </div> */}
-            <ul>
-                {farms}
-            </ul>
-        </div>
-    )
-}
+      <ul>{farms}</ul>
+    </div>
+  );
+};
 
-export default Farm
+export default Farm;
