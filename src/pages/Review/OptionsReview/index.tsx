@@ -57,7 +57,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
             <MainCard classNames={`${classPrefix}-mainCard`}>
                 <div className={`${classPrefix}-mainCard-top`}>
                     <button onClick={props.back}><BackIcon/></button>
-                    <p><Trans>{props.isMint ? t`Mint Confirm` : t`Close Confirm`}</Trans></p>
+                    <p>{props.isMint ? t`Mint Confirm` : t`Close Confirm`}</p>
                     <button></button>
                 </div>
                 <ReviewInfo 
@@ -76,7 +76,7 @@ const OptionsReview: FC<Props> = ({...props}) => {
                     </div>
                 </div>
                 <LineShowInfoForOracleFee leftText={t`Oracle fee`} rightText={'0.01 ETH'}/>
-                <MainButton onClick={props.isMint ? open : close} loading={buttonLoading} disable={buttonLoading}><Trans>{props.isMint ? t`Mint Confirm` : t`Close Confirm`}</Trans></MainButton>
+                <MainButton onClick={props.isMint ? open : close} loading={buttonLoading} disable={buttonLoading}>{props.isMint ? t`Mint Confirm` : t`Close Confirm`}</MainButton>
             </MainCard>
         </div>
     )

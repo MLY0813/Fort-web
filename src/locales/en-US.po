@@ -26,6 +26,7 @@ msgid "+ Add option Token"
 msgstr "+ Add option Token"
 
 #: src/pages/Farm/FarmCard/index.tsx
+#: src/pages/Shared/TransactionToast/index.tsx
 msgid "Approve"
 msgstr "Approve"
 
@@ -46,6 +47,14 @@ msgstr "Balance:"
 #: src/pages/Review/OptionsReview/index.tsx
 msgid "Block number"
 msgstr "Block number"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Buy Leveraged Token"
+msgstr "Buy Leveraged Token"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Claim reward"
+msgstr "Claim reward"
 
 #: src/pages/Options/Close/index.tsx
 #: src/pages/Options/index.tsx
@@ -171,6 +180,7 @@ msgid "Input"
 msgstr "Input"
 
 #: src/pages/Lever/index.tsx
+#: src/pages/Options/Mint/index.tsx
 msgid "Insufficient balance"
 msgstr "Insufficient balance"
 
@@ -244,9 +254,17 @@ msgstr "Option Token add failed"
 msgid "Option Token add success"
 msgstr "Option Token add success"
 
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Option Token close"
+msgstr "Option Token close"
+
 #: src/pages/Options/Close/index.tsx
 msgid "Option Token held"
 msgstr "Option Token held"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Option Token mint"
+msgstr "Option Token mint"
 
 #: src/pages/Review/OptionsReview/index.tsx
 msgid "Options Token details"
@@ -273,6 +291,10 @@ msgstr "Recent transactions"
 msgid "Reward claim time"
 msgstr "Reward claim time"
 
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Sell Leveraged Token"
+msgstr "Sell Leveraged Token"
+
 #: src/components/ChooseType/index.tsx
 msgid "Short"
 msgstr "Short"
@@ -281,6 +303,10 @@ msgstr "Short"
 #: src/pages/Options/Mint/index.tsx
 msgid "Spot price"
 msgstr "Spot price"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Staking"
+msgstr "Staking"
 
 #: src/pages/Farm/FarmCard/index.tsx
 msgid "Staking number"
@@ -343,6 +369,10 @@ msgstr "Wait for confirm"
 msgid "Wallet"
 msgstr "Wallet"
 
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Withdraw"
+msgstr "Withdraw"
+
 #: src/pages/Options/Mint/index.tsx
 msgid "compare with spot price and srike price"
 msgstr "compare with spot price and srike price"
@@ -350,10 +380,3 @@ msgstr "compare with spot price and srike price"
 #: src/pages/Farm/FarmCard/index.tsx
 msgid "wallet:"
 msgstr "wallet:"
-
-#: src/pages/Review/OptionsReview/index.tsx
-#: src/pages/Review/OptionsReview/index.tsx
-#: src/pages/Shared/Header/Status/WalletModal/index.tsx
-#: src/pages/Shared/TransactionToast/index.tsx
-msgid "{0}"
-msgstr "{0}"

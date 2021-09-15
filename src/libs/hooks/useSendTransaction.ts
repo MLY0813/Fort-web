@@ -24,8 +24,7 @@ export function useSendTransaction(contract: Contract | null, tx: any, txInfo: T
             return library?.getSigner().sendTransaction(newTx).then((res) => {
                 pushTx(res.hash, txInfo)
                 setShowModal({isShow: true, hash: res.hash, txType:TransactionModalType.success})
-            }).catch((error) => {
-                console.log(error)
+            }).catch(() => {
                 setShowModal({isShow: true, hash: '0x0', txType:TransactionModalType.fail})
             })
         }

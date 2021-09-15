@@ -8,6 +8,7 @@ import copy from 'copy-to-clipboard'
 import { message } from 'antd';
 import './styles'
 import { useEtherscanBaseUrl } from '../../../../../libs/hooks/useEtherscanBaseUrl'
+import { transactionTitle } from '../../../TransactionToast'
 
 type Props = {
     onClose?: MouseEventHandler<HTMLButtonElement>
@@ -43,7 +44,7 @@ const WalletModal: FC<Props> = ({...props}) => {
                 <li key={item.hash}>
                     {icon}
                     <div className={`transactionInfo`}>
-                        <p>{t`${item.title}`}</p>
+                        <p>{transactionTitle(item.type)}</p>
                     </div>
                     <a href={etherscanBase + item.hash} target="view_window"><ToEtherscan/></a>
                 </li>)

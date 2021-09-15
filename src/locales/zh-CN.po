@@ -26,6 +26,7 @@ msgid "+ Add option Token"
 msgstr "+ 添加期权币"
 
 #: src/pages/Farm/FarmCard/index.tsx
+#: src/pages/Shared/TransactionToast/index.tsx
 msgid "Approve"
 msgstr "授权"
 
@@ -46,6 +47,14 @@ msgstr "余额:"
 #: src/pages/Review/OptionsReview/index.tsx
 msgid "Block number"
 msgstr "区块号"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Buy Leveraged Token"
+msgstr "杠杆币买入"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Claim reward"
+msgstr "领取奖励"
 
 #: src/pages/Options/Close/index.tsx
 #: src/pages/Options/index.tsx
@@ -171,6 +180,7 @@ msgid "Input"
 msgstr "请输入"
 
 #: src/pages/Lever/index.tsx
+#: src/pages/Options/Mint/index.tsx
 msgid "Insufficient balance"
 msgstr "余额不足"
 
@@ -244,9 +254,17 @@ msgstr "期权币添加失败"
 msgid "Option Token add success"
 msgstr "期权币添加成功"
 
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Option Token close"
+msgstr "期权币结算"
+
 #: src/pages/Options/Close/index.tsx
 msgid "Option Token held"
 msgstr "持有的期权币"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Option Token mint"
+msgstr "期权币铸币"
 
 #: src/pages/Review/OptionsReview/index.tsx
 msgid "Options Token details"
@@ -273,6 +291,10 @@ msgstr "最近交易"
 msgid "Reward claim time"
 msgstr "奖励领取时间"
 
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Sell Leveraged Token"
+msgstr "杠杆币卖出"
+
 #: src/components/ChooseType/index.tsx
 msgid "Short"
 msgstr "看跌"
@@ -281,6 +303,10 @@ msgstr "看跌"
 #: src/pages/Options/Mint/index.tsx
 msgid "Spot price"
 msgstr "现货价"
+
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Staking"
+msgstr "锁仓"
 
 #: src/pages/Farm/FarmCard/index.tsx
 msgid "Staking number"
@@ -343,6 +369,10 @@ msgstr "等待钱包确认交易"
 msgid "Wallet"
 msgstr "钱包"
 
+#: src/pages/Shared/TransactionToast/index.tsx
+msgid "Withdraw"
+msgstr "取回"
+
 #: src/pages/Options/Mint/index.tsx
 msgid "compare with spot price and srike price"
 msgstr "比较ETH的现货价格与行权价"
@@ -350,10 +380,3 @@ msgstr "比较ETH的现货价格与行权价"
 #: src/pages/Farm/FarmCard/index.tsx
 msgid "wallet:"
 msgstr "钱包:"
-
-#: src/pages/Review/OptionsReview/index.tsx
-#: src/pages/Review/OptionsReview/index.tsx
-#: src/pages/Shared/Header/Status/WalletModal/index.tsx
-#: src/pages/Shared/TransactionToast/index.tsx
-msgid "{0}"
-msgstr ""
