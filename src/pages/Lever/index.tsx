@@ -116,8 +116,8 @@ const Lever: FC = () => {
         transactionInfo.fromNum === '') {
             return true
         }
-
-        if (chainId !== 1 && chainId !== 4) {
+        // TODO:去掉3
+        if (chainId !== 1 && chainId !== 4 && chainId !== 3) {
             return true
         }
 

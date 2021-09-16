@@ -9,6 +9,8 @@ export function useEtherscanBaseUrl(): string {
                 return 'https://etherscan.io/tx/'
             } else if (chainId === 4) {
                 return 'https://rinkeby.etherscan.io/tx/'
+            } else if (chainId === 3) {
+                return 'https://ropsten.etherscan.io/tx/'
             }
         }
         return ''
