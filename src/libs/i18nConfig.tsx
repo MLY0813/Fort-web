@@ -10,7 +10,7 @@ const locales = {
     'zh-CN': '中文',
 }
 const DEFAULT_FALLBACK = () => 'en-US'
-const defaultLocale = detect(fromUrl('lang'), fromStorage('lang'), fromNavigator(), DEFAULT_FALLBACK) || 'en-US'
+const defaultLocale = 'en-US'
 
 i18n.loadLocaleData({
     'en-US': { plurals: en },

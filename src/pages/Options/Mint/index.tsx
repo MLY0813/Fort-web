@@ -1,6 +1,6 @@
 import { t, Trans } from "@lingui/macro";
 import { BigNumber } from "ethers";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ChooseType from "../../../components/ChooseType";
 import { PutDownIcon } from "../../../components/Icon";
 import InfoShow from "../../../components/InfoShow";
@@ -26,10 +26,10 @@ import {
   normalToBigNumber,
   ZERO_ADDRESS,
 } from "../../../libs/utils";
-import { DatePicker, message } from "antd";
+import { message } from "antd";
 import "../../../styles/ant.css";
 import "./styles";
-import moment from "moment";
+// import moment from "moment";
 import { OptionsInfo } from "..";
 
 type Props = {
@@ -38,13 +38,13 @@ type Props = {
 
 const MintOptions: FC<Props> = ({ ...props }) => {
   const classPrefix = "options-mintOptions";
-  const { account, chainId, library } = useWeb3();
+  const { account, chainId } = useWeb3();
   const nestPriceContract = NestPriceContract();
   const fortEuropeanOption = FortEuropeanOption(FortEuropeanOptionContract);
   const fortContract = ERC20Contract(tokenList["DCU"].addresses);
 
   const [isLong, setIsLong] = useState(false);
-  const [exercise, setExercise] = useState({ time: "---", blockNum: 0 });
+  const [exercise, setExercise] = useState({ time: '', blockNum: 0 });
   const [strikePrice, setStrikePrice] = useState("");
   const [fortNum, setFortNum] = useState("");
 
@@ -56,6 +56,21 @@ const MintOptions: FC<Props> = ({ ...props }) => {
   const [fortBalance, setFortBalance] = useState(BigNumber.from(0));
   const [tokenName, setTokenName] = useState("");
   const [optionTokenValue, setOptionTokenValue] = useState(BigNumber.from(0));
+
+  const timeDatalist = [
+    {title:'2021-9-18', value:'11000000'},
+    {title:'2021-10-18', value:'12000000'},
+    {title:'2021-11-18', value:'13000000'},
+    {title:'2021-12-18', value:'14000000'},
+    {title:'2021-13-18', value:'15000000'}
+  ]
+  const strikePriceDataList = [
+    {title:'1000', value:'1000'},
+    {title:'2000', value:'2000'},
+    {title:'3000', value:'3000'},
+    {title:'4000', value:'4000'},
+    {title:'5000', value:'5000'}
+  ]
 
   useEffect(() => {
     if (fortContract) {
@@ -103,28 +118,28 @@ const MintOptions: FC<Props> = ({ ...props }) => {
     setIsLong(isLong);
   };
 
-  const onOk = useCallback(
-    async (value: any) => {
-      const nowTime = moment().valueOf();
-      const selectTime = moment(value).valueOf();
-      const latestBlock = await library?.getBlockNumber();
+  // const onOk = useCallback(
+  //   async (value: any) => {
+  //     const nowTime = moment().valueOf();
+  //     const selectTime = moment(value).valueOf();
+  //     const latestBlock = await library?.getBlockNumber();
 
-      if (selectTime > nowTime) {
-        const timeString = moment(value).format("YYYY[-]MM[-]DD");
-        const blockNum = parseFloat(
-          ((selectTime - nowTime) / 13000).toString()
-        ).toFixed(0);
-        setExercise({
-          time: timeString,
-          blockNum: Number(blockNum) + (latestBlock || 0),
-        });
-      } else {
-        const timeString = moment().format("YYYY[-]MM[-]DD");
-        setExercise({ time: timeString, blockNum: latestBlock || 0 });
-      }
-    },
-    [library]
-  );
+  //     if (selectTime > nowTime) {
+  //       const timeString = moment(value).format("YYYY[-]MM[-]DD");
+  //       const blockNum = parseFloat(
+  //         ((selectTime - nowTime) / 13000).toString()
+  //       ).toFixed(0);
+  //       setExercise({
+  //         time: timeString,
+  //         blockNum: Number(blockNum) + (latestBlock || 0),
+  //       });
+  //     } else {
+  //       const timeString = moment().format("YYYY[-]MM[-]DD");
+  //       setExercise({ time: timeString, blockNum: latestBlock || 0 });
+  //     }
+  //   },
+  //   [library]
+  // );
 
   const optionInfo: OptionsInfo = {
     fortAmount: normalToBigNumber(fortNum),
@@ -146,18 +161,22 @@ const MintOptions: FC<Props> = ({ ...props }) => {
       exercise.blockNum !== 0
     ) {
       (async () => {
-        const value = await fortEuropeanOption.estimate(
-          ZERO_ADDRESS,
-          normalToBigNumber(priceNow, tokenList["USDT"].decimals).toString(),
-          normalToBigNumber(
-            optionTokenNumBaseInfo.strikePrice,
-            tokenList["USDT"].decimals
-          ).toString(),
-          isLong,
-          exercise.blockNum.toString(),
-          normalToBigNumber(optionTokenNumBaseInfo.fortNum).toString()
-        );
-        setOptionTokenValue(BigNumber.from(value));
+        try {
+          const value = await fortEuropeanOption.estimate(
+            ZERO_ADDRESS,
+            normalToBigNumber(priceNow, tokenList["USDT"].decimals).toString(),
+            normalToBigNumber(
+              optionTokenNumBaseInfo.strikePrice,
+              tokenList["USDT"].decimals
+            ).toString(),
+            isLong,
+            exercise.blockNum.toString(),
+            normalToBigNumber(optionTokenNumBaseInfo.fortNum).toString()
+          );
+          setOptionTokenValue(BigNumber.from(value));
+        } catch {
+          setOptionTokenValue(BigNumber.from(0));
+        }
       })();
     }
   }, [
@@ -182,9 +201,9 @@ const MintOptions: FC<Props> = ({ ...props }) => {
     }
     return false;
   };
-  function disabledDate(current: any) {
-    return current && current < moment().add(7, "days").startOf("day");
-  }
+  // function disabledDate(current: any) {
+  //   return current && current < moment().add(7, "days").startOf("day");
+  // }
 
   // function disabledDateTime(date: any) {
   //     var nowHour:number
@@ -205,6 +224,19 @@ const MintOptions: FC<Props> = ({ ...props }) => {
   //     }
   //     return result;
   // }
+
+  const handleGetTime = (title: string) => {
+    const value = timeDatalist.filter((item) => item.title === title)[0].value
+    setExercise({ time: title, blockNum: Number(value)});
+  }
+  const handleGetStrikePrice = (title: string) => {
+    const value = strikePriceDataList.filter((item) => item.title === title)[0].value
+    setStrikePrice(value)
+    setOptionTokenNumBaseInfo({
+      ...optionTokenNumBaseInfo,
+      strikePrice: value
+    })
+  }
   return (
     <div className={classPrefix}>
       <MainCard classNames={`${classPrefix}-leftCard`}>
@@ -218,8 +250,17 @@ const MintOptions: FC<Props> = ({ ...props }) => {
         <InfoShow
           topLeftText={t`Exercise time`}
           bottomRightText={`Block number: ${exercise.blockNum}`}
+          dataSelect
+          dataList={timeDatalist} 
+          getSelectedToken={handleGetTime}
         >
-          <DatePicker
+          <input 
+          type={'text'}
+          className={'input-left'} 
+          value={exercise.time} 
+          readOnly
+          placeholder={t`Input`}/>
+          {/* <DatePicker
             format="YYYY-MM-DD"
             disabledDate={disabledDate}
             onChange={onOk}
@@ -227,33 +268,21 @@ const MintOptions: FC<Props> = ({ ...props }) => {
             suffixIcon={<PutDownIcon />}
             placeholder={t`Exercise time`}
             allowClear={false}
-          />
-          {/* <DatePicker 
-                format="YYYY-MM-DD HH:mm:ss"
-                disabledDate={disabledDate}
-                disabledTime={disabledDateTime} 
-                showTime
-                onOk={onOk} 
-                bordered={false} 
-                suffixIcon={(<PutDownIcon/>)} 
-                placeholder={t`Exercise time`} allowClear={false}/> */}
+          /> */}
         </InfoShow>
 
         <InfoShow
           topLeftText={t`Strike price`}
           bottomRightText={`1 ETH = ${priceNow} USDT`}
+          dataSelect
+          dataList={strikePriceDataList} 
+          getSelectedToken={handleGetStrikePrice}
         >
           <input
             placeholder={t`Input`}
             className={"input-left"}
             value={strikePrice}
-            onChange={(e) => setStrikePrice(formatInputNum(e.target.value))}
-            onBlur={(e: any) =>
-              setOptionTokenNumBaseInfo({
-                ...optionTokenNumBaseInfo,
-                strikePrice: e.target.value,
-              })
-            }
+            readOnly
           />
           <span>USDT</span>
         </InfoShow>

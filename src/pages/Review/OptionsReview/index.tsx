@@ -2,9 +2,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { t, Trans } from "@lingui/macro";
 import { FC, MouseEventHandler, useEffect, useState } from "react";
 import { BackIcon } from "../../../components/Icon";
-import LineShowInfo, {
-  LineShowInfoForOracleFee,
-} from "../../../components/LineShowInfo";
+import LineShowInfo from "../../../components/LineShowInfo";
 import MainButton from "../../../components/MainButton";
 import MainCard from "../../../components/MainCard";
 import ReviewInfo from "../../../components/ReviewInfo";
@@ -125,10 +123,6 @@ const OptionsReview: FC<Props> = ({ ...props }) => {
             />
           </div>
         </div>
-        <LineShowInfoForOracleFee
-          leftText={t`Oracle fee`}
-          rightText={"0.01 ETH"}
-        />
         <MainButton
           onClick={props.isMint ? open : close}
           loading={buttonLoading}

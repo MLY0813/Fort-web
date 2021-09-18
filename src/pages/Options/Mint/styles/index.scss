@@ -26,6 +26,14 @@
         .chooseType+.infoView {
             margin-top: 20px;
         }
+        
+        & .infoView:nth-child(5) {
+            .TokenShow {
+                svg {
+                    z-index: auto;
+                }
+            } 
+        }
     }
 
     &-rightCard {

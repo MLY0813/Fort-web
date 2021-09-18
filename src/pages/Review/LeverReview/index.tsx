@@ -2,9 +2,7 @@ import { t, Trans } from "@lingui/macro";
 import { BigNumber } from "ethers";
 import { FC, useEffect, useState } from "react";
 import { BackIcon } from "../../../components/Icon";
-import LineShowInfo, {
-  LineShowInfoForOracleFee,
-} from "../../../components/LineShowInfo";
+import LineShowInfo from "../../../components/LineShowInfo";
 import MainButton from "../../../components/MainButton";
 import MainCard from "../../../components/MainCard";
 import ReviewInfo from "../../../components/ReviewInfo";
@@ -141,10 +139,6 @@ const LeverReview: FC<Props> = ({ ...props }) => {
         <LineShowInfo
           leftText={t`Current price`}
           rightText={`1 ETH = ${props.model.price} USDT`}
-        />
-        <LineShowInfoForOracleFee
-          leftText={t`Oracle fee`}
-          rightText={"0.01 ETH"}
         />
         <MainButton
           onClick={action}

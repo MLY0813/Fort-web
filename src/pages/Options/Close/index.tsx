@@ -25,7 +25,6 @@ import {
   showEllipsisAddress,
 } from "../../../libs/utils";
 import "./styles";
-import { Link } from "react-router-dom";
 import { Contract } from "ethers";
 import ERC20ABI from "../../../contracts/abis/ERC20.json";
 import { message } from "antd";
@@ -65,6 +64,15 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
     <></>
   );
 
+  const noOptionToken = (
+    <div className={'noOptionToken'}>
+      <NoOptionToken />
+      <p>
+        <Trans>No option Token</Trans>
+      </p>
+    </div>
+  )
+
   useEffect(() => {
     if (chainId && account && library) {
       var cache = localStorage.getItem(
@@ -82,7 +90,7 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
         .map((item: any) => FortOptionToken(item.address)),
     [optionTokenList]
   );
-
+  const isOptionTokenContracts = optionTokenContracts.length > 0 ? true : false
   useEffect(() => {
     if (!chainId) {
       return;
@@ -155,25 +163,19 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
         setSelectToken(optionTokenContracts[0].address);
       }
     }
-  }, [
-    account,
-    library,
-    selectToken,
-    optionTokenContracts,
-    optionTokenList,
-    chainId,
-  ]);
+  }, [account, library, selectToken, optionTokenContracts, optionTokenList, chainId]);
 
   const addToken = useCallback(() => {
     var cache = localStorage.getItem("optionTokensList" + chainId?.toString());
     var optionTokenList = cache ? JSON.parse(cache) : [];
     const newTokenAddress = addAddressValue;
-    if (
+    
+    if (optionTokenList.length > 0 &&
       optionTokenList.filter(
         (item: { address: string }) => item.address === newTokenAddress
-      ).length === 0
+      ).length !== 0
     ) {
-      message.success(t`Option Token add failed`);
+      message.error(t`Option Token add failed`);
       return;
     }
     const newTokenContract = new Contract(newTokenAddress, ERC20ABI, library);
@@ -205,13 +207,15 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
     </div>
   );
 
-  return optionTokenContracts.length > 0 ? (
+  return (
     <div className={classPrefix}>
       <MainCard classNames={`${classPrefix}-leftCard`}>
         <p className={`${classPrefix}-leftCard-title`}>
-          <Trans>Option Token held</Trans>
+          {isOptionTokenContracts ? (<Trans>Option Token held</Trans>) : null}
         </p>
+        {isOptionTokenContracts ? (
         <ul>{routes}</ul>
+        ) : noOptionToken}
         <div className={`${classPrefix}-leftCard-addToken`}>
           {showAddButton ? (
             addTokenView
@@ -229,7 +233,7 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
             rightText={
               optionInfo?.type
                 ? t`ETH call option Token`
-                : t`ETH put option Token`
+                : (isOptionTokenContracts ? t`ETH put option Token` : '----') 
             }
           />
           <LineShowInfo
@@ -303,7 +307,7 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
             </div>
           </div>
           <div className={`${classPrefix}-rightCard-bottomInfo-buttonDiv`}>
-            {latestBlock > (optionInfo?.blockNumber || 0) ? (
+            {((latestBlock > (optionInfo?.blockNumber || 0)) || !isOptionTokenContracts) ? (
               <></>
             ) : (
               <p>
@@ -324,19 +328,7 @@ const CloseOptions: FC<Props> = ({ ...props }) => {
         </div>
       </MainCard>
     </div>
-  ) : (
-    <MainCard classNames={`noOptionToken`}>
-      <NoOptionToken />
-      <p>
-        <Trans>No option Token</Trans>
-      </p>
-      <MainButton>
-        <Link to={"/options/mint"}>
-          <Trans>Go to Mint</Trans>
-        </Link>
-      </MainButton>
-    </MainCard>
-  );
+  )
 };
 
 export default CloseOptions;
