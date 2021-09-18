@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 import classNames from "classnames";
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import Popup from "reactjs-popup";
 import { WhiteLoading } from "../../../../components/Icon";
 import { SupportedChains } from "../../../../libs/constants/chain";
@@ -13,6 +13,7 @@ import WalletModal from "./WalletModal";
 
 const ConnectStatus: FC = () => {
   const { account, chainId } = useWeb3();
+  const [isFirst, setIsFirst] = useState(true)
   const modal = useRef<any>();
   const thisChain = SupportedChains.filter(
     (item) => item.chainId === chainId
@@ -29,6 +30,10 @@ const ConnectStatus: FC = () => {
       {thisChain !== undefined && thisChain.chainId !== 1 ? (
         <div className={`${classPrefix}-chainName`}>{thisChain.name}</div>
       ) : null}
+
+      {(isFirst && !account) ? (<Popup open><Modal onClose={() => {
+    setIsFirst(false)
+    modal.current.close()}} /></Popup>) : null}
 
       {account === undefined ? (
         <Popup
