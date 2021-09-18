@@ -1,7 +1,7 @@
 import { i18n } from '@lingui/core'
 import { en, zh } from 'make-plural/plurals'
 
-import { detect, fromUrl, fromStorage, fromNavigator } from '@lingui/detect-locale'
+import { detect, fromUrl, fromStorage } from '@lingui/detect-locale'
 import { FC, useEffect } from 'react'
 import { I18nProvider } from '@lingui/react'
 
@@ -10,7 +10,7 @@ const locales = {
     'zh-CN': '中文',
 }
 const DEFAULT_FALLBACK = () => 'en-US'
-const defaultLocale = 'en-US'
+const defaultLocale = detect(fromUrl('lang'), fromStorage('lang'), DEFAULT_FALLBACK) || 'en-US'
 
 i18n.loadLocaleData({
     'en-US': { plurals: en },
